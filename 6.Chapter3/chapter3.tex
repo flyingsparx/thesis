@@ -1,0 +1,134 @@
+Introduction to online interestness inference.
+\\ \\
+
+Mention:
+\begin{itemize}
+\item How this chapter builds upon network stuff in previous chapter
+\item We hope to compare and contrast two better ways of predicting retweet volume \emph{and} interestness
+\item What needs to be improved (speed, usability - more users with more followers etc.)
+\item Why do improvements need to be made?
+\item How is this useful, and how does first chapter relate to work done here?
+\end{itemize}
+
+%\section{Inference Generation Using Pseudo-Networks}
+%Discuss:
+%\begin{itemize}
+%\item Estimation of local network size from number of followers
+%\item Model trained on existing dataset with features and an outcome of type boolean (true/false)
+%\item Further estimation of local network \emph{density} from network size and number of followers (and shared followers, if any)
+%\item Generation of estimated local network
+%\item Use this network as a testbed for retweet predictions similar to previous chapter
+%\item This approach uses the regression to model a particular user's retweet decision on a tweet at any one time.
+%\end{itemize}
+
+Discuss:
+\begin{itemize}
+\item Does not use network to simulate tweets - instead uses a set of user features
+\item Previous chapter shown how basic features can be used to generate a scale-free network, which is what twitter is
+\item Use these features as input attributes of a new machine learning technique model.
+\item This method does not use a network or model individual user decisions
+\item Trained on a set of that particular user's tweets with the retweet outcome of integer type
+\item A new tweet modelled with the regression outputs a retweet volume prediction without having to simulate the Tweet's travels through the network. 
+\item Discuss about the machine learning approach used (logistic regression and how it works)
+\item Talk about the 'binning' of retweet outcome volumes and its approaches (distribution dependent / independent, tables of precisions, etc.)
+\item Link 'retweet volume' to 'retweet group size'
+\end{itemize}
+
+\section{Background}
+Stuff introducing this section and its differences to the things in the previous chapter.
+Whilst machine learning was used in the previous chapter... more in depth in this area.
+
+\section{Machine Learning}
+Explain about Machine Learning, its uses, techniques and how this is useful.
+\\
+Talk about how it was used in previous chapter, but that more in depth here.
+Bayesian Network
+
+
+
+\section{Features}
+To train the Bayesian Network model, a series of new features were harvested. Generally, each of these features fell into one of two categories; user features and tweet features.
+\\
+The Tweet features follow the same ideas as the features used in the previous chapter: static, generally binary features that describe the structure of the Tweet. The user (or `network')  features are related more to the \emph{network} to which the Tweet belongs.
+
+\subsection{Data Collection}
+Twitter walk, total tweets, splitting dataset, etc.
+
+\subsection{`Twitter is a Memepool'}
+Introduction to memetics (Richard Dawkins intro maybe):
+\\
+\begin{itemize}
+\item Gene is a physical entity containing information and instructions. It is a unit of genetic inheritance (i.e. offspring typically have a mashup of the genes of the parens)
+\item The result of the data held by a gene (the genome) means that organisms with certain genes are able to reproduce and survive more than other organisms containing different genes.
+\item Thus the gene is able to replicate under certain gene- and environmental-centric conditions.
+\item A meme is similar to  gene but is non-physical. They are a unit of cultural inheritance (an idea, phrase, behaviour, etc.).
+\item Like genes, memes are able to survive better when their features (\textit{menome}) are suited to the meme's environment. In such environments, the meme is able to be shared and replicated more efficiently and frequently.
+\item A Tweet, again, is similar to both. A Tweet itself has many features (the text of the Tweet, the time of its origin, its length, etc.) and their environment, the Twitter social structure, has features (namely the users that belong to it and the way they are connected) which may facilitate the replication (i.e. Retweet) of the Tweet.
+\item A Tweet existing in different social structures will have different Retweet patterns, which is what we want to show in this chapter.
+\item Thus tweetfeatures = genome, userfeatures=environment
+\end{itemize}
+
+\subsection{Tweet Features}
+table of tweet features
+
+\subsection{User Features}
+table of user features
+
+\section{Retweet Volumes as Nominal Attributes}
+In order to try and improve the accuracy of the model at predicting retweet volume outputs, a nominal output attribute would be better than a real one. Predicting a continuous numeric value could render inaccurate results and calculating the cut-off points at which to mark as the upper- and lower-bounds for the output based on the inputs would raise difficulties.
+\\
+Instead, the retweet outcomes were to be `binned' into several categories which would be determined on the fly based on the outcomes present in the training data.
+
+\subsection{Binning the Retweet Outcomes}
+Describe the different methods (linear, distributed 1, distributed 2), and their advantages/disadvantages, with examples showing the graph of 
+what the bins look like.
+\\
+Focus on the distributed 2 example, and why this is better.
+`Requested' bin number not usually the same number as what is actually returned (due to large numbers of smaller retweet groups).
+\\
+Pseudocode
+
+\subsection{Varying Bin Sizes}
+Number of bins: explain how accuracy worsens as bin number increases.
+\\
+
+\section{Classification}
+Compared several types of classifiers (show table comparing accuracy, etc. of different types)
+\\
+Explain that Bayesian Network is best (quick, accurate)
+
+\subsection{Training Results}
+Playing with Weka to improve the prediction performance (i.e. different number of bins, different features)
+
+
+\subsection{Obtaining the Prediction Outcomes}
+
+\section{Validating the Predictions}
+\subsection{Procedure}
+MK stuff
+\subsubsection{Questions asked}
+What did we ask
+\subsubsection{Acceptance Confidence Criteria}
+How many did we ask, how many classifications for each tweet, how did we split up the tweets into questions
+\subsubsection{Randomised Controlled Trials}
+
+\subsection{Results}
+What were the results?
+
+\section{Analysis}
+
+\section{Comparisons}
+\begin{itemize}
+\item Comparison of two approaches
+\item Which is more accurate?
+\item Which is quicker?
+\item Which is easier?
+\item etc.
+\end{itemize}
+
+\section{Summary}
+\begin{itemize}
+\item Summarise comparisons - which method is overall better?
+\item How does it compare to offline method from previous chapter?
+\item Generally explain how the `winning' method is good and accurate.
+\end{itemize}

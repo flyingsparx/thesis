@@ -1,0 +1,78 @@
+%%%%% STYLES AND STUFF 
+\input{includes/style}
+
+\begin{document}
+
+
+%%%%% FRONT STUFF	
+\frontmatter
+
+\begin{titlepage}
+
+\begin{center}
+\vspace*{3ex}
+\textbf{\Huge The Detection and Inference of  the Interestingness of Information in Online Social Networks}\\[2ex]
+
+\textbf{\LARGE Will Webberley}\\
+\vfill
+\textbf{\LARGE 2013}\\
+\vfill
+\textbf{\LARGE Cardiff University}\\[1ex]
+\textbf{\LARGE School of Computer Science \& Informatics}\\[4ex]
+\end{center}
+
+\end{titlepage}
+
+\chapter*{Abstract}
+Abstract text here etc.
+
+\tableofcontents
+\listoffigures
+\listoftables
+\input{includes/acronyms}
+\input{includes/glossary}
+
+
+%%%%% MAIN STUFF 
+\mainmatter 
+
+\chapter{Introduction}
+\input{1.Introduction/intro}
+
+\chapter{Background}
+\input{2.Background/background}
+
+\chapter{Related Literature}
+\input{3.Literature/literature}
+
+\chapter{Understanding The Behaviour of Retweeting in Twitter}
+\input{4.Chapter1/chapter1}
+
+\chapter{Analysis of Twitter's Social Structure}
+\input{5.Chapter2/chapter2}
+
+\chapter{Inferring Interestingness of Tweets based on Information Flow Through the Network}
+\input{6.Chapter3/chapter3}
+
+\chapter{Critical Assessment and Conclusions}
+\input{7.Conclusions/conclusions}
+
+%\chapter{Future Work}
+%\input{8.Future/future-work}
+%
+%\chapter{Conclusions}
+%\input{9.Conclusions/conclusions}
+
+\chapter*{Appendices}
+Source code, further diagrams, ideas, etc.
+
+
+%%%%% BACK STUFF 
+\backmatter
+
+\def\baselinestretch{1.24}\normalfont
+
+\bibliographystyle{plain}
+\bibliography{includes/library}
+
+\end{document}

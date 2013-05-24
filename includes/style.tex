@@ -1,0 +1,305 @@
+\documentclass[a4paper,oneside,onecolumn,openright,12pt]{book}
+
+
+\makeatletter
+
+%
+\usepackage{caption}
+\usepackage{footmisc}
+\usepackage{paralist}
+\usepackage{amsthm}
+\usepackage{subfig}
+
+% Fonts, encoding, etc.
+\usepackage{type1cm}
+\usepackage[latin1]{inputenc}
+\usepackage[british]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{times}
+\usepackage{hyperref}
+\usepackage[all]{hypcap}
+\usepackage{longtable}
+\usepackage[noend]{algorithmic}
+\usepackage{multirow}
+\usepackage{float}
+
+% Line spacing
+\def\baselinestretch{1.5}
+\parindent0cm
+\parskip1.5ex\@plus.7ex\@minus.1ex\relax
+
+%Acronyms
+ \usepackage{acronym}
+ %Inline lists
+ \usepackage{paralist}
+
+%Glossary
+\usepackage[toc]{glossaries}
+
+% Page dimensions
+\usepackage{vmargin}
+\setpapersize{A4}
+\setmarginsrb{40mm}{20mm}{25mm}{30mm}{14.5pt}{8mm}{0pt}{11mm}
+
+% Footer and header
+\usepackage{afterpage}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhead{}
+\fancyhead[LE,RO]{\thepage}
+\fancyhead[LO,RE]{\slshape \leftmark}
+\fancyfoot{}
+\renewcommand{\chaptermark}[1]{}
+\renewcommand{\sectionmark}[1]%
+             {\markboth{\thesection\ #1}{\thesection\ #1}}
+\renewcommand{\subsectionmark}[1]{}
+\fancypagestyle{plain}{%
+  \fancyhead{}
+  \fancyhead[LE,RO]{\thepage}
+  \fancyfoot{}
+  \renewcommand{\headrulewidth}{.6pt}
+}
+
+% Chapter
+\def\@makechapterhead#1{%
+  \ \\[-35.5pt]\hbox to \textwidth {%
+    \hfill {\vbox{\hbox{\rule[5pt]{140pt}{4pt}}%
+        \hbox to 140pt {\hfill\huge\bfseries\slshape \@chapapp\space\thechapter\/}}}}%
+  \vskip55\p@%
+  {\parindent \z@ \raggedright \normalfont%
+    \interlinepenalty\@M%
+    \Huge \bfseries #1\par\nobreak%
+    \vskip 45\p@%
+  }}
+\def\@chapter[#1]#2{\ifnum \c@secnumdepth >\m@ne
+                       \if@mainmatter
+                         \refstepcounter{chapter}%
+                         \typeout{\@chapapp\space\thechapter.}%
+                         \addcontentsline{toc}{chapter}%
+                                   {\protect\numberline{\thechapter}#1}%
+                       \else
+                         \addcontentsline{toc}{chapter}{#1}%
+                       \fi
+                    \else
+                      \addcontentsline{toc}{chapter}{#1}%
+                    \fi
+                    \chaptermark{#1}%
+                    \addtocontents{lof}{\protect\addvspace{10\p@}}%
+                    \addtocontents{lot}{\protect\addvspace{10\p@}}%
+                    \addtocontents{loa}{\protect\addvspace{10\p@}}%
+                    \if@twocolumn
+                      \@topnewpage[\@makechapterhead{#2}]%
+                    \else
+                      \@makechapterhead{#2}%
+                      \@afterheading
+                    \fi}
+\def\@schapter#1{\addcontentsline{toc}{chapter}{#1}%
+                 \markboth{#1}{#1}%
+                 \addtocontents{lof}{\protect\addvspace{10\p@}}%
+                 \addtocontents{lot}{\protect\addvspace{10\p@}}%
+                 \addtocontents{loa}{\protect\addvspace{10\p@}}%
+                 \if@twocolumn%
+                    \@topnewpage[\@makeschapterhead{#1}]%
+                 \else%
+                    \@makeschapterhead{#1}%
+                    \@afterheading%
+                 \fi}
+\def\@makeschapterhead#1{%
+  \ \\[-35.5pt]\hbox to \textwidth {%
+    \hfill {\vbox{\hbox{\rule[5pt]{140pt}{0pt}\rule[5pt]{0pt}{4pt}}%
+        \hbox to 140pt {\hfill\huge\bfseries\slshape \ \/}}}}%
+  \vskip55\p@%
+  {\parindent \z@ \raggedright \normalfont%
+    \interlinepenalty\@M%
+    \Huge \bfseries  #1\par\nobreak%
+    \vskip 45\p@%
+  }}
+
+% Table of contents
+\def\contentsname{Contents}
+\renewcommand\tableofcontents{%
+    \if@twocolumn%
+      \@restonecoltrue\onecolumn%
+    \else%
+      \@restonecolfalse%
+    \fi%
+    \chapter*{\contentsname}%
+    \@starttoc{toc}%
+    \if@restonecol\twocolumn\fi%
+    }
+
+% Bibliography
+\renewenvironment{thebibliography}[1]
+     {\chapter*{\bibname}%
+      \list{\@biblabel{\@arabic\c@enumiv}}%
+           {\settowidth\labelwidth{\@biblabel{#1}}%
+            \leftmargin\labelwidth
+            \advance\leftmargin\labelsep
+            \@openbib@code
+            \usecounter{enumiv}%
+            \let\p@enumiv\@empty
+            \renewcommand\theenumiv{\@arabic\c@enumiv}}%
+      \sloppy
+      \clubpenalty4000
+      \@clubpenalty \clubpenalty
+      \widowpenalty4000%
+      \sfcode`\.\@m}
+     {\def\@noitemerr
+       {\@latex@warning{Empty `thebibliography' environment}}%
+      \endlist}
+
+% Floats
+\long\def\@makecaption#1#2{%
+  \vskip\abovecaptionskip
+  \sbox\@tempboxa{\textbf{#1: #2}}%
+  \ifdim \wd\@tempboxa >\hsize
+    \textbf{#1: #2.}\par
+  \else
+    \global \@minipagefalse
+    \hb@xt@\hsize{\hfil\box\@tempboxa\hfil}%
+  \fi
+  \vskip\belowcaptionskip}
+\renewcommand{\topfraction}{0.9}
+\renewcommand{\textfraction}{0.1}
+\renewcommand{\floatpagefraction}{0.9}
+
+% Tables
+\usepackage{dcolumn}
+\usepackage{hhline}
+
+% Graphics
+\usepackage[dvips]{graphicx}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{rotating}
+\usepackage{psfrag}
+\usepackage{epic}
+\usepackage{eepic}
+
+% Algorithm environment
+\newcounter{algorithm}[chapter]
+\renewcommand{\thealgorithm}{\thechapter.\@arabic\c@algorithm}
+\def\fps@algorithm{t}
+\def\ftype@algorithm{1}
+\def\ext@algorithm{loa}
+\def\fnum@algorithm{Algorithm~\thealgorithm}
+\newenvironment{algorithm}{\@float{algorithm}}{\end@float}
+\newenvironment{algorithm*}{\@dblfloat{algorithm}}{\end@dblfloat}
+\newenvironment{alevel}%
+   {\begin{list}{}{%
+      \setlength{\topsep}{0pt}%
+      \setlength{\parskip}{0pt}%
+      \setlength{\partopsep}{0pt}%
+      \setlength{\parsep}{0pt}%
+      \setlength{\itemsep}{0pt}}}%
+   {\end{list}}
+\newcommand\listalgorithmsname{List of Algorithms}
+\newcommand\listofalgorithms{%
+    \if@twocolumn
+      \@restonecoltrue\onecolumn
+    \else
+      \@restonecolfalse
+    \fi
+    \chapter*{\listalgorithmsname}%
+      \@mkboth{\listalgorithmsname}{\listalgorithmsname}%
+    \@starttoc{loa}%
+    \if@restonecol\twocolumn\fi
+    }
+\newcommand*\l@algorithm{\@dottedtocline{1}{1.5em}{2.3em}}
+
+% List of figures and tables
+\renewcommand\listoffigures{%
+    \if@twocolumn
+      \@restonecoltrue\onecolumn
+    \else
+      \@restonecolfalse
+    \fi
+    \chapter*{\listfigurename}%
+      \@mkboth{\listfigurename}{\listfigurename}%
+    \@starttoc{lof}%
+    \if@restonecol\twocolumn\fi
+    }
+\renewcommand\listoftables{%
+    \if@twocolumn
+      \@restonecoltrue\onecolumn
+    \else
+      \@restonecolfalse
+    \fi
+    \chapter*{\listtablename}%
+      \@mkboth{\listtablename}{\listtablename}%
+    \@starttoc{lot}%
+    \if@restonecol\twocolumn\fi
+    }
+
+% Math symbols, fonts, etc.
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\renewcommand{\S}{\mathbb{S}}
+\renewcommand{\P}{\mathbb{P}}
+\newcommand{\E}{\mathbb{E}}
+
+\newcommand{\Cf}{\mathfrak{C}}
+\newcommand{\Pf}{\mathfrak{P}}
+
+\DeclareMathOperator{\sign}{sign}
+\DeclareMathOperator{\avg}{avg}
+\DeclareMathOperator{\floor}{floor}
+\DeclareMathOperator{\ceil}{ceil}
+\DeclareMathOperator{\round}{round}
+
+\providecommand{\abs}[1]{\lvert#1\rvert}
+\providecommand{\absd}[1]{\left\lvert#1\right\rvert}
+\providecommand{\card}[1]{\lvert#1\rvert}
+\providecommand{\norm}[1]{\lVert#1\rVert}
+
+% URLs
+\usepackage{url}
+%% Define a new 'leo' style for the package that will use a smaller font.
+\makeatletter
+\def\url@leostyle{%
+  \@ifundefined{selectfont}{\def\UrlFont{\sf}}{\def\UrlFont{\footnotesize\ttfamily}}}
+\makeatother
+%% Now actually use the newly defined style.
+\urlstyle{leo}
+
+% STUFF I ADDED:
+%\usepackage{amsmath}
+%\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{pgfplots}
+\usepackage{pgfplotstable}
+\usepackage{listings}
+\usepackage{color}
+\lstset{ %
+  language=Octave,                % the language of the code
+  basicstyle=\footnotesize\ttfamily,           % the size of the fonts that are used for the code
+  numbers=left,                   % where to put the line-numbers
+  numberstyle=\tiny\color{black},  % the style that is used for the line-numbers
+  stepnumber=2,                   % the step between two line-numbers. If it's 1, each line 
+                                  % will be numbered
+  numbersep=5pt,                  % how far the line-numbers are from the code
+  backgroundcolor=\color{white},      % choose the background color. You must add \usepackage{color}
+  showspaces=false,               % show spaces adding particular underscores
+  showstringspaces=false,         % underline spaces within strings
+  showtabs=false,                 % show tabs within strings adding particular underscores
+  rulecolor=\color{black},        % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. commens (green here))
+  tabsize=3,                      % sets default tabsize to 3 spaces
+  captionpos=b,                   % sets the caption-position to bottom
+  breaklines=true,                % sets automatic line breaking
+  breakatwhitespace=false,        % sets if automatic breaks should only happen at whitespace
+                                  % also try caption instead of title
+  keywordstyle=\color{blue},          % keyword style
+  commentstyle=\color{dkgreen},       % comment style
+  stringstyle=\color{mauve}      % string literal style
+}
+% END OF STUFF I ADDED
+
+\makeatother
