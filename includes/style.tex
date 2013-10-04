@@ -276,6 +276,22 @@
 \usepackage{float}
 \usepackage{pgfplots}
 \usepackage{pgfplotstable}
+\pgfplotsset{
+    % #1: index in the group(0,1,2,...)
+    % #2: number of plots of that group
+    bar group size/.style 2 args={
+        /pgf/bar shift={%
+                % total width = n*w + (n-1)*skip
+                % -> subtract half for centering
+                -0.5*(#2*\pgfplotbarwidth + (#2-1)*\pgfkeysvalueof{/pgfplots/bar group skip})  + 
+                % the '0.5*w' is for centering
+                (.5+#1)*\pgfplotbarwidth + #1*\pgfkeysvalueof{/pgfplots/bar group skip}},%
+    },
+    bar group skip/.initial=2pt,
+    plot 0/.style={blue,fill=blue!30!white,mark=none},%
+    plot 1/.style={red,fill=red!30!white,mark=none},%
+    plot 2/.style={brown!60!black,fill=brown!30!white,mark=none},%
+}
 \usepackage{listings}
 \usepackage{color}
 \lstset{ %
