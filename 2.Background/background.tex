@@ -1,23 +1,50 @@
-\section{Information Propagation through Retweeting}
+\chapter{Background}
 
-Introduction to Twitter, act of Tweeting and retweeting information. Ideas:
-\begin{itemize}
-\item endorsement of info - retweets / likes / etc.
-\item Retweeing act of forwarding on of information to those who follow you
-\end{itemize}
+
+One of the most widely-used features of Twitter is its inbuilt function for facilitating the spread of information within its social structure. This phenomenon is the basis for much of the research in this thesis and has many interesting attributes and behaviours associated with it.
+
 
 \section{Domain Context}
+
+\subsection{Information Propagation through Retweeting}
+The function of propagation in Twitter is known as \textit{retweeting}, and is carried out by the Twitter users themselves. When a user views a Tweet that they believe to be particularly interesting, and also believe it to be interesting to their followers, they can elect to retweet it, and thus pass it further through the social graph to that user's followers also. A Tweet that has been retweeted is known as a \textit{retweet}, and it is clear that a Tweet which is retweeted will be made available to significantly more people than a Tweet that isn't retweeted.
+
+A retweet can be carried out in one of two ways: either using Twitter's retweet button, or manually. \\
+The retweet button is displayed along with each Tweet in a Tweet timeline which, when clicked, immediately creates a new retweet containing the verbatim content of the original Tweet and automatically sends it on to the retweeter's followers.\\
+The manual approach involves physically copying the content of the Tweet to be retweeted and pasting it into a new Tweet, usually with the text `\texttt{RT @<username>:}' pre-pended, where \texttt{RT} stands for \textbf{r}e\textbf{t}weet and \texttt{<username>} is the username of the author of the original Tweet. This method allows for annotating the original content of the Tweet (for example, to provide an opinion on the Tweet), producing a \textit{modified} Tweet, which can sometimes be pre-pended with \texttt{MT} rather than \texttt{RT}.
+
+Each Tweet has a retweet count associated with it, which is the raw representation of the number of times that the Tweet has been retweeted using the retweet button method. Since the manual retweet technique is more community-driven, there is no official way to include these as part of the retweet count of the original Tweet. However, since the manual method is typically only really used with the aim to annotate or modify the Tweet in some way, the resultant `retweet'  is no longer a real representation of the original Tweet anyway, and so should not be counted as such.
+
+It should be noted that Twitter users may choose to make their account `protected'. A person who has a protected account will still have a publicly-visible profile (name, username, bio, etc.), but their Tweets and other information (such as the followers and friends lists) are hidden from users that aren't followers of the person. Potential followers of a protected account must \textit{request} a followship, which can then be accepted or rejected by the protected account holder. \\
+Since Tweets from a protected account are only visible to approved followers, the retweet button is unavailable for them. However, since the manual retweet method does not rely on the button, a protected account's Tweets can still be retweeted in this way.
+
+In a similar way to Facebook supporting the endorsement of information found on its site by inviting users to `like' a piece of content, retweeting is effectively a \textit{vote} or endorsement for a Tweet on Twitter. In both cases, the number of likes and number of retweets is visible to the platforms' respective users, and so this provides some insight into the \textit{popularity} of the information.\\
+
+
+\subsection{Retweets and the Social Graph}
+Some of the work in this thesis derives from the fact that retweets can themselves be retweeted, providing further penetration `depth' away from the source user in addition to the spread `width' made by the initial retweets. This phenomenon allows retweets to `travel' between communities.
+
+As in any social network (offline or online), communities of users are a common feature. These communities are typically small to begin with and are based on a topic of interest or around a more influential user. As more Tweets are produced from within the community, more and more links are made to interconnect the users in the community, producing a growing `swarm' of interest around the initial topic or user. \\
+As further users begin associating themselves with this community, its audience becomes more widespread and the community grows. This concept is discussed in greater length by \cite{java07}, who also experiment with communities and define them to be compact groups of users connected by dense follower links.
+
+In more dense communities, Tweets can be made available to many users immediately after they are published, since many of the links between users are shared. This means that any retweets that occur within communities are likely to have a lot of \textit{redundancy}, in that many of the retweets will be sent to users who have already seen the Tweet. Although Twitter prevents this information duplication by not showing the retweets of Tweets that have already appeared on a user's timeline, it does increase the chance of the Tweet making its way out of the community.
+
+Since some users can provide `bridges' by being active in more than one community, Tweets can be passed between the communities through retweets by the bridging user. If there are many users sharing communities, then there are many more avenues available for propagation to occur down, causing a high level of information throughput. If there are fewer bridges, then there is more of a bottleneck between the communities hindering the information spread.
+
+\cite{java07} also finds that communities  can be formed from different types of people, such as those who tweet lots and have many followers, and those who post little and have few followers. Those with many followers and many friends receive lots of information and have the potential to spread information further than those than fewer inward and outward edges. Studies in the behaviour of different types of users in Twitter is done more thoroughly in \cite{krish08}, which defines `broadcasters' (users with many followers and few friends) and `miscreants' (users with few followers but many friends) and their roles in information propagation.
+
+
+\subsection{Twitter as an Information Retrieval System}
+
 Go into more information regarding information propagation in Twitter and about the mechanics of Twitter. Ideas:
 \begin{itemize}
-\item Retweet volumes
-\item communities and how networks form
-\item `search bubbles'
-\item propagation
-\item social structure (and its effect on propagation)
 \item information quality, relevance, retrieval, filtration
 \item information interestingness
 \item categorise above into subsections (possibilities: the network and communities, information retrieval and relevance, information retrieval and bubbles, and retweeting as a form of propagation)
 \end{itemize}
+
+
+\subsection{Interestingness of Information}
 
 \section{Research Motivation}
 Link to `The Problem' in introduction chapter. Talk about wanting to allow people to be exposed to information that they are \textit{likely} to find interesting based on the interestingness of the tweet, but without them having to search for the information or follow the users responsible for sourcing or forwarding the information. \\ \\
