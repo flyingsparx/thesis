@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013) (format=pdflatex 2013.8.6)  4 OCT 2013 10:26
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013) (format=pdflatex 2013.8.6)  4 OCT 2013 11:46
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1261,7 +1261,7 @@ less on input line 93.
 ] (./main.toc
 
 Package Fancyhdr Warning: \fancyhead's `E' option without twoside option is use
-less on input line 14.
+less on input line 15.
 
 [5
 
@@ -1324,9 +1324,13 @@ less on input line 28.
 ]) [16]
 Chapter 1.
 (./1.Introduction/intro.tex
+Overfull \hbox (3.33542pt too wide) in paragraph at lines 5--6
+[]\T1/ptm/m/n/12 Social net-works like these have been avail-able for around te
+n years now (with MySpace[][][]
+ []
+
 LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <17.28> not available
 (Font)              Font shape `T1/ptm/b/n' tried instead on input line 8.
-
 
 Package Fancyhdr Warning: \fancyhead's `E' option without twoside option is use
 less on input line 10.
@@ -1334,29 +1338,36 @@ less on input line 10.
 [1
 
 
-] [2] [3]) [4]
+] [2]
+Overfull \hbox (11.70944pt too wide) in paragraph at lines 22--23
+[]\T1/ptm/m/n/12 Whilst bi-directional links are com-mon amongst com-munit-ies 
+of sim-ilar in-terests, friends,
+ []
+
+[3] [4]) [5]
 Chapter 2.
-(./2.Background/background.tex)
-Underfull \hbox (badness 10000) in paragraph at lines 15--111
+(./2.Background/background.tex
+
+Package Fancyhdr Warning: \fancyhead's `E' option without twoside option is use
+less on input line 19.
+
+[6
+
+])
+Underfull \hbox (badness 10000) in paragraph at lines 23--111
 
  []
 
-
-Package Fancyhdr Warning: \fancyhead's `E' option without twoside option is use
-less on input line 111.
-
-[5
-
-] [6]
+[7]
 Chapter 3.
 (./3.Literature/literature.tex
 
 Package Fancyhdr Warning: \fancyhead's `E' option without twoside option is use
 less on input line 17.
 
-[7
+[8
 
-] [8]) [9]
+] [9]) [10]
 Chapter 4.
 (./4.Chapter1/chapter1.tex
 Overfull \hbox (6.22536pt too wide) in paragraph at lines 6--7
@@ -1368,9 +1379,9 @@ Overfull \hbox (6.22536pt too wide) in paragraph at lines 6--7
 Package Fancyhdr Warning: \fancyhead's `E' option without twoside option is use
 less on input line 16.
 
-[10
+[11
 
-] [11]
+] [12]
 LaTeX Font Info:    Try loading font information for T1+pcr on input line 30.
  (/usr/local/texlive/2013/texmf-dist/tex/latex/psnfss/t1pcr.fd
 File: t1pcr.fd 2001/06/04 font definitions for T1/pcr.
@@ -1379,30 +1390,30 @@ Underfull \hbox (badness 10000) in paragraph at lines 23--31
 
  []
 
-[12]
+[13]
 
-LaTeX Warning: Citation `krish08' on page 13 undefined on input line 46.
+LaTeX Warning: Citation `krish08' on page 14 undefined on input line 46.
 
 
-LaTeX Warning: Citation `krish08' on page 13 undefined on input line 50.
+LaTeX Warning: Citation `krish08' on page 14 undefined on input line 50.
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 46--52
 
  []
 
-[13] [14] [15] [16]
+[14] [15] [16] [17]
 Underfull \hbox (badness 10000) in paragraph at lines 70--75
 
  []
 
-[17]
+[18]
 Underfull \hbox (badness 10000) in paragraph at lines 78--79
 
  []
 
-[18]
-<4.Chapter1/Media/pathlength-distribution.jpg, id=725, 762.85pt x 569.12625pt>
+[19]
+<4.Chapter1/Media/pathlength-distribution.jpg, id=750, 762.85pt x 569.12625pt>
 File: 4.Chapter1/Media/pathlength-distribution.jpg Graphic file (type jpg)
 
 <use 4.Chapter1/Media/pathlength-distribution.jpg>
@@ -1411,13 +1422,13 @@ nput line 86.
 (pdftex.def)             Requested size: 267.0015pt x 199.19717pt.
 LaTeX Font Info:    Font shape `T1/ptm/bx/it' in size <12> not available
 (Font)              Font shape `T1/ptm/b/it' tried instead on input line 87.
- [19 <./4.Chapter1/Media/pathlength-distribution.jpg>]
+ [20 <./4.Chapter1/Media/pathlength-distribution.jpg>]
 Underfull \hbox (badness 10000) in paragraph at lines 96--97
 
  []
 
-[20]
-<4.Chapter1/Media/retweets-distribution-stats.jpg, id=741, 722.7pt x 491.8375pt
+[21]
+<4.Chapter1/Media/retweets-distribution-stats.jpg, id=766, 722.7pt x 491.8375pt
 >
 File: 4.Chapter1/Media/retweets-distribution-stats.jpg Graphic file (type jpg)
  <use 4.Chapter1/Media/retweets-distribution-stats.jpg>
@@ -1425,7 +1436,7 @@ Package pdftex.def Info: 4.Chapter1/Media/retweets-distribution-stats.jpg used
 on input line 102.
 (pdftex.def)             Requested size: 252.94878pt x 172.14569pt.
 
-<4.Chapter1/Media/retweets-pathlength.jpg, id=742, 762.85pt x 595.22375pt>
+<4.Chapter1/Media/retweets-pathlength.jpg, id=767, 762.85pt x 595.22375pt>
 File: 4.Chapter1/Media/retweets-pathlength.jpg Graphic file (type jpg)
 
 <use 4.Chapter1/Media/retweets-pathlength.jpg>
@@ -1433,7 +1444,7 @@ Package pdftex.def Info: 4.Chapter1/Media/retweets-pathlength.jpg used on input
  line 107.
 (pdftex.def)             Requested size: 267.0015pt x 208.33144pt.
 
-<4.Chapter1/Media/audience-pathlength.jpg, id=745, 762.85pt x 595.22375pt>
+<4.Chapter1/Media/audience-pathlength.jpg, id=770, 762.85pt x 595.22375pt>
 File: 4.Chapter1/Media/audience-pathlength.jpg Graphic file (type jpg)
 
 <use 4.Chapter1/Media/audience-pathlength.jpg>
@@ -1447,9 +1458,9 @@ LaTeX Warning: `h' float specifier changed to `ht'.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-[21] [22 <./4.Chapter1/Media/retweets-distribution-stats.jpg> <./4.Chapter1/Med
-ia/retweets-pathlength.jpg>] [23 <./4.Chapter1/Media/audience-pathlength.jpg>]
-<4.Chapter1/Media/originalfollowers-pathlength-distribution.png, id=764, 392.46
+[22] [23 <./4.Chapter1/Media/retweets-distribution-stats.jpg> <./4.Chapter1/Med
+ia/retweets-pathlength.jpg>] [24 <./4.Chapter1/Media/audience-pathlength.jpg>]
+<4.Chapter1/Media/originalfollowers-pathlength-distribution.png, id=788, 392.46
 625pt x 295.1025pt>
 File: 4.Chapter1/Media/originalfollowers-pathlength-distribution.png Graphic fi
 le (type png)
@@ -1459,7 +1470,7 @@ Package pdftex.def Info: 4.Chapter1/Media/originalfollowers-pathlength-distribu
 tion.png used on input line 132.
 (pdftex.def)             Requested size: 235.48155pt x 177.06285pt.
 
-<4.Chapter1/Media/following-possibility.png, id=768, 401.5pt x 299.1175pt>
+<4.Chapter1/Media/following-possibility.png, id=792, 401.5pt x 299.1175pt>
 File: 4.Chapter1/Media/following-possibility.png Graphic file (type png)
 
 <use 4.Chapter1/Media/following-possibility.png>
@@ -1472,33 +1483,33 @@ Overfull \hbox (5.0511pt too wide) in paragraph at lines 127--147
 -low-ers of the pre-vi-ous retweeter
  []
 
-[24]
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
 [25]
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-[26 <./4.Chapter1/Media/originalfollowers-pathlength-distribution.png>]
-[27 <./4.Chapter1/Media/following-possibility.png>]
-<4.Chapter1/Media/pathlength-timedelay.jpg, id=787, 722.7pt x 491.8375pt>
+[26]
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+[27 <./4.Chapter1/Media/originalfollowers-pathlength-distribution.png>]
+[28 <./4.Chapter1/Media/following-possibility.png>]
+<4.Chapter1/Media/pathlength-timedelay.jpg, id=811, 722.7pt x 491.8375pt>
 File: 4.Chapter1/Media/pathlength-timedelay.jpg Graphic file (type jpg)
 
 <use 4.Chapter1/Media/pathlength-timedelay.jpg>
 Package pdftex.def Info: 4.Chapter1/Media/pathlength-timedelay.jpg used on inpu
 t line 153.
 (pdftex.def)             Requested size: 252.94878pt x 172.14569pt.
- [28 <./4.Chapter1/Media/pathlength-timedelay.jpg>]) [29] [30]
+ [29 <./4.Chapter1/Media/pathlength-timedelay.jpg>]) [30] [31]
 Chapter 5.
 (./5.Chapter2/chapter2.tex
 
 Package Fancyhdr Warning: \fancyhead's `E' option without twoside option is use
 less on input line 22.
 
-[31
+[32
 
-] [32] [33]
+] [33] [34]
 Underfull \hbox (badness 10000) in paragraph at lines 42--51
 
  []
@@ -1508,7 +1519,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 42--51
 
  []
 
-[34] [35] [36]
+[35] [36] [37]
 Underfull \hbox (badness 10000) in paragraph at lines 79--81
 
  []
@@ -1518,17 +1529,17 @@ Underfull \hbox (badness 10000) in paragraph at lines 79--81
 
  []
 
-[37]
+[38]
 NOTE: coordinate (1Y1.0e1],0Y0.0e0]) has been dropped because it is unbounded (
 in y). (see also unbounded coords=jump). 
-[38]
+[39]
 PGFPlots: reading {5.Chapter2/data/random.dat}
 
 NOTE: coordinate (1,0) has been dropped because it is unbounded (in y). (see al
 so unbounded coords=jump). 
 NOTE: coordinate (21,0) has been dropped because it is unbounded (in y). (see a
 lso unbounded coords=jump). 
-[39] [40]
+[40] [41]
 PGFPlots: reading {5.Chapter2/data/comparison-real.dat}
 PGFPlots: reading {5.Chapter2/data/comparison-scale-free.dat}
 
@@ -1541,26 +1552,26 @@ Overfull \hbox (0.22795pt too wide) in paragraph at lines 191--200
 wn to al-low poor propaga-
  []
 
-[41] [42] [43]
+[42] [43] [44]
 Underfull \hbox (badness 10000) in paragraph at lines 221--237
 
  []
 
-[44] [45] [46] [47]
+[45] [46] [47] [48]
 Underfull \hbox (badness 10000) in paragraph at lines 271--276
 
  []
 
-) [48] [49]
+) [49] [50]
 Chapter 6.
 (./6.Chapter3/chapter3.tex
 
 Package Fancyhdr Warning: \fancyhead's `E' option without twoside option is use
 less on input line 16.
 
-[50
+[51
 
-] [51]
+] [52]
 
 Package hyperref Warning: Difference (2) between bookmark levels is greater 
 (hyperref)                than one, level fixed on input line 35.
@@ -1571,7 +1582,7 @@ Overfull \hbox (8.71036pt too wide) in paragraph at lines 36--40
  Justin Bieber could get retweeted
  []
 
-[52] [53] [54] [55] [56]
+[53] [54] [55] [56] [57]
 Underfull \hbox (badness 10000) in paragraph at lines 96--99
 
  []
@@ -1581,26 +1592,26 @@ Underfull \hbox (badness 10000) in paragraph at lines 105--112
 
  []
 
-[57]
+[58]
 Underfull \hbox (badness 10000) in paragraph at lines 118--120
 
  []
 
-[58] [59] [60]
+[59] [60] [61]
 Underfull \hbox (badness 10000) in paragraph at lines 157--160
 
  []
 
-[61]
+[62]
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-[62] [63] [64] [65] [66] [67]
+[63] [64] [65] [66] [67] [68]
 PGFPlots: reading {6.Chapter3/data/cum-dist-score.dat}
- [68]
+ [69]
 LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <10> not available
 (Font)              Font shape `T1/ptm/b/n' tried instead on input line 350.
- [69]
+ [70]
 PGFPlots: reading {6.Chapter3/data/cum-question-disparity.dat}
 
 
@@ -1611,31 +1622,31 @@ Underfull \hbox (badness 10000) in paragraph at lines 387--389
 
  []
 
-[70]) [71]
+[71]) [72]
 Chapter 7.
 (./7.Conclusions/conclusions.tex
 
 Package Fancyhdr Warning: \fancyhead's `E' option without twoside option is use
 less on input line 23.
 
-[72
+[73
 
-]) [73]
+]) [74]
 
 Package Fancyhdr Warning: \fancyhead's `E' option without twoside option is use
 less on input line 138.
 
-[74
+[75
 
 ] (./main.bbl
 
 Package Fancyhdr Warning: \fancyhead's `E' option without twoside option is use
 less on input line 57.
 
-[75
+[76
 
 
-] [76])
+] [77])
 
 Package glossaries Warning: \makeglossaries hasn't been used,
 the glossaries will not be updated.
@@ -1645,33 +1656,24 @@ Package glossaries Warning: No \printglossary or \printglossaries found.
 This document will not have a glossary.
 
 Package atveryend Info: Empty hook `BeforeClearDocument' on input line 145.
-[77]
+[78]
 Package atveryend Info: Empty hook `AfterLastShipout' on input line 145.
  (./main.aux)
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 145.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 145.
+Package rerunfilecheck Info: File `main.out' has not changed.
+(rerunfilecheck)             Checksum: 9F6D2F769BBF8CB7316251169DDC0F18;6474.
 
-
-Package rerunfilecheck Warning: File `main.out' has changed.
-(rerunfilecheck)                Rerun to get outlines right
-(rerunfilecheck)                or use package `bookmark'.
-
-Package rerunfilecheck Info: Checksums for `main.out':
-(rerunfilecheck)             Before: 5A4151B8E7CC4852E1F6736FECDBD49B;6282
-(rerunfilecheck)             After:  A864955AC19997B881035D1E35EF6E97;6445.
 
 LaTeX Warning: There were undefined references.
-
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
 
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 145.
  ) 
 Here is how much of TeX's memory you used:
- 31406 strings out of 493315
- 644933 string characters out of 6137905
- 860732 words of memory out of 5000000
- 33865 multiletter control sequences out of 15000+600000
+ 31415 strings out of 493315
+ 645034 string characters out of 6137905
+ 861732 words of memory out of 5000000
+ 33867 multiletter control sequences out of 15000+600000
  65610 words of font info for 82 fonts, out of 8000000 for 9000
  957 hyphenation exceptions out of 8191
  65i,20n,92p,1556b,2107s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -1695,10 +1697,10 @@ es/utmb8a.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/urw/times/utmbi8a
 .pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr
 /local/texlive/2013/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/local/tex
 live/2013/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on main.pdf (94 pages, 522557 bytes).
+Output written on main.pdf (95 pages, 526100 bytes).
 PDF statistics:
- 1183 PDF objects out of 1200 (max. 8388607)
- 1049 compressed objects within 11 object streams
- 244 named destinations out of 1000 (max. 500000)
- 792 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 1208 PDF objects out of 1440 (max. 8388607)
+ 1073 compressed objects within 11 object streams
+ 251 named destinations out of 1000 (max. 500000)
+ 808 words of extra memory for PDF output out of 10000 (max. 10000000)
 
