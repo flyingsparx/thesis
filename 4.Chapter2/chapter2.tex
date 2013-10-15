@@ -23,10 +23,7 @@ The social structure of Twitter is built up by users electing to follow other us
 \\
 In this chapter, we demonstrate how different network types support different propagation characteristics through the use of a model simulating each network type. Using the model, we make predictions on the retweet outcomes on several network types, and compare these to the characteristics of the propagation in real Twitter networks. We finish by discussing how the \textit{interestingness} of a tweet may be inferred from simulating the network in this way.
 
-\section{Background to This Area}
-\cite{uysal11} discusses an idea similar to that of predicting the interestingness of a tweet, but focuses mainly on predicting the users most likely to find the tweet interesting enough to retweet. Similarly, \cite{hong11} looks at the same issue, but at the other way around by predicting the \textit{type} of tweets that are likely to be retweeted many times. Discussions on the retweet decision in relation to a user's recognition of its features take place in \cite{chorley12} as well as conclusions about the effect of features such as the number of followers of a user or any pre-existing metadata on the interestingness of the tweet.
-\\
-The notion of time decay and how this is associated with a user's retweet decision is discussed in addition to a retweet probability prediction in \cite{zhu11} (and \cite{peng11}), which is the basis of the model we use in this paper.
+The notion of time decay and how this is associated with a user's retweet decision is discussed in addition to a retweet probability prediction in \cite{zhu11} (and \cite{peng11}), which is the basis of the model we use in this chapter.
 
 \section{Overview}
 In the next sections, we introduce and briefly explain the regression model we use for simulations and predictions. We then go on to analyse the differences in the propagation characteristics between three different network types before comparing the results of simulations on these networks with data collected from the Twitter social graph. We finish by introducing a methodology for predicting the interestingness of a particular tweet to a particular user and how this might be improved.
@@ -136,7 +133,7 @@ A random network is defined as a network of users, $ N $, of size $ n $ in which
         ylabel=Frequency,
         grid = major]
     \addplot[only marks,mark=*,blue]
-       file {5.Chapter2/data/random.dat};    
+       file {4.Chapter2/data/random.dat};    
 \end{semilogyaxis}
 \end{tikzpicture}
 \caption{Retweet volume frequency distribution from random network simulation}
@@ -180,9 +177,9 @@ We compared the data produced by the different types of network to this previous
         grid = major,
         legend entries={Real data,Scale-free}]
     \addplot[only marks,mark=*,red]
-       file {5.Chapter2/data/comparison-real.dat};
+       file {4.Chapter2/data/comparison-real.dat};
     \addplot[only marks,mark=*,blue]
-       file {5.Chapter2/data/comparison-scale-free.dat};
+       file {4.Chapter2/data/comparison-scale-free.dat};
 \end{loglogaxis}
 \end{tikzpicture}
 \caption{Comparing the retweet volumes distribution from scale-free graph simulation to data from Twitter's graph}

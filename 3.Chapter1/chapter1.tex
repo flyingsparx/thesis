@@ -22,19 +22,28 @@ The friends of a particular user effectively become \textit{filters} of informat
 It is, of course, possible that more than one user may decide to retweet one of your posts. A follower of a retweeter may decide to retweet the retweet, creating a chain. Naturally, the larger your effective audience (both directly and through retweets), the greater chance, again, you have of being retweeted. \cite{suh10} showed this by demonstrating how the retweet rate increases with the number of followers of the original tweeter. This is also related to the ideas of user influence mentioned in \cite{cha10}; that more followers implies more influence. The retweeting process ultimately results in a tree system, with the root being the original tweeter, and other nodes being retweeters at different levels, similar to the idea of URL cascades discussed in \cite{galuba10}.\\
 The motivation for this study has stemmed largely from the interesting decentralised nature of retweets, spurred on by similar literature such as information cascades in \cite{galuba10}. The notion of retweeting is also very similar to content forwarding in opportunistic networks, particularly ideas discussed in \cite{allen10}, and studying the menchanisms of retweeting from a human-centric perspective may provide insight into protocols for autonomous content dissemination. We hope that understanding retweet properties may help us  in forwarding relevant information to a user from without that user's social neighbourhood.
 
-\section{Retweet Trees}
+\section{Retweet Groups}
+Define retweets of a Tweet, $t$, as $RT(t)_i \: \forall \: 0 <= i <= C(t)$ where $C(t)$ is the retweet count of $t$. Thus size of a retweet group is $C(t)+1$ and has a minimum size of $1$ in the case where $C(t) = 0$.
+
+Define author of $t$ as $A(t)$. Thus audience of a retweet group where $C(t) > 1$ is $followers(A(t)) + \sum\limits_{i=1}^{C(t)} followers(A(RT(t)_i))$, since a retweet is simply a class of Tweet.
+
 Example of a retweet tree. 
 \\
 Source users are roots, final retweeters are leaves (although subject to change as time goes by).
 \\
 Links between nodes indicate retweeting from a user to another user (but not which users follow which).
 \\
+\subsection{Retweet Trees}
+
+\subsection{Path-Length}
 Define path-length and retweet groups.\\
 For this paper, the term \textit{path-length} is to be defined as the number of times a particular tweet is retweeted down a chain. For example, the status;\\ \texttt{RT @user1: RT @user2: This is the body of the tweet} \\has a path length of two. All users involved in this retweet chain have used the old method of retweeting, which is still very commonly used and has effectively provided most of the results for this paper.\\
 
 \section{Information Retrieval}
 People don't use Twitter to obtain any specific information (they don't know what people are necessarily going to say) \\
 If all friends are technology based, then you can expect technological tweets, but generally this isn't the case.
+
+\cite{xu07} discusses user's relevance judgement based on hedonic and epistemic search, particularly linking to the idea of `affective stimulation', occurring when the user becomes affected by some information (e.g. emotionally or for entertainment).
 \subsection{Epistemic Search}
 
 \subsection{Hedonic Search}
@@ -43,15 +52,10 @@ If all friends are technology based, then you can expect technological tweets, b
 
 \subsection{Search `bubble'}
 
-% Pull bits out of the following section and add to the appropriate subsection above:
-\section{Background to This Area}
-\label{related work}
-To date, research has largely focused on the actual structure of Twitter in terms of the friend-follower graph \cite{krish08}, user communities \cite{java07} and also the psychology behind Twitter users \cite{zhao09} \cite{cha10}. A lot of these studies link well with retweeting, as will be explained later, and researching them has helped to explain and facilitate retweet studying at a wider angle.\\
-Arvola et al. \cite{arvola10} introduced a retrieval system for online documents which returns particular passages in documents which are of a pre-defined interest for the user (generally through the use of search terms). In Twitter, a user can specify what they are interested in receiving by following a set of users, with their neighbours effectively becoming the search term. Twitter then enables the user to receive more relevant and interesting information based on these filters. However Twitter doesn't alter the reading order of passages (or tweets) as in the aforementioned retrieval system, the home timeline only shows the tweets coming from people the user has chosen to follow. \cite{xu07} discusses user's relevance judgement based on hedonic and epistemic search, particularly linking to the idea of `affective stimulation', occurring when the user becomes affected by some information (e.g. emotionally or for entertainment). This is somewhat also applicable to following people in Twitter as users don't generally use Twitter to receive any particular form of information, thus they haven't \textit{searched} for any specific topic. Therefore, any information they do receive, and which they find interesting, becomes affective stimulation. If someone follows many users, then he/she is receiving too much information to effectively filter out the interesting information. If following a few users, he/she can't be receiving \textit{all} the information that they might want to.\\
- However, despite the fact that this system is thus quite sound (by largely displaying information the user \textit{chose} to receive), it may not be particularly complete since it is likely that there are many other users and topics the user might still be interested in which is not returned by this Twitter information retrieval system.
-\cite{arvola10} also discusses the notion of expected reading effort and its importance in information retrieval systems. The character-precision recall metric was introduced as a way of demonstrating the tolerance-to-irrelevance ratio. The general mechanism for this is to do with users reading a document passage; the point the user reaches this ratio is when the user stops reading the particular passage and moves to the next whole document (since they assume the rest of the document is also irrelevant to them). Therefore, the more effective the information retrieval system, the lower the chance that this ratio is reached by the user. Associating this with Twitter, we can say that a user viewing tweets from a user they are following may get to the point where he or she reaches this ratio (i.e. is bored or finding the tweets irrelevant) and decides to unfollow the friend. Similar to above, the more effective the user is when selecting people to follow (friends) in the hope of receiving interesting information, the lower the chance that the user will remove these friends.\\
-As discussed in the introduction, a user is more likely to follow other people who post tweets of interest to the user. As more and more people follow a particular user and start tweeting a lot about a particular topic, the users may start to follow each other, producing a growing `swarm' of interest around a certain topic (or a particular user). As more users start associating with this user or topic, its audience becomes more widespread, attracting further users to it. As this continues over time, a community of users can be formed.  This leads onto the notion of Twitter communities discussed and experimented on by \cite{java07}, who define communities to be groups of users with dense follower links between them. Their studies continue into looking at the development of communities over time and also defines how they can be formed from different types of people - such as those who tweet lots and have many followers, and those who post little and have few followers. Studies in the behaviour of different types of users in Twitter is done more thoroughly in \cite{krish08}, where `broadcasters' - users with many followers and few friends - and `miscreants' - users with few followers but many friends - are discussed.\\
-Applying the community idea to retweeting, it seems likely that a user in a community is going to retweet posts from other users in the community (due to the shared interests). This is useful when the user has followers outside of the community, since they are then less likely to be following the source user. However, if the retweeter has many followers inside the community, then they are similarly likely to be following the source tweeter and so would be exposed to the original tweet anyway, since there are more interlinking edges between users in the graph. If many users within the community end up retweeting a post, then other users in the community may end up be exposed to the same tweet retweeted several times. This paper does not study this problem, but more analyses the behaviour of retweeting in general, paying particular attention to any trends or patterns arising.\\
+\section{The Recognition Heuristic} 
+Discussions on the retweet decision in relation to a user's recognition of its features take place in \cite{chorley12} as well as conclusions about the effect of features such as the number of followers of a user or any pre-existing metadata on the interestingness of the Tweet.\\
+
+
 
 
 \section{Twitter Analysis}
@@ -86,7 +90,7 @@ There are three sets of experiments detailed in the following section and all of
 \label{length of retweet chains}
 The longest path-length encountered from the dataset of retweet groups was 9, meaning that the tweet has been forwarded nine times from the original user; making the total number of involved users ten. Despite this, in the dataset, the average path-length was around 1.8, with the vast majority of tweets being retweeted between one and two times, as shown by the distribution in Figure \ref{fig:pathlength-distribution}. The \textit{maximum path-length} of a retweet group refers to the longest path-length present in the group.\\
 \begin{figure}[h]
-\includegraphics[scale=0.35]{4.Chapter1/Media/pathlength-distribution.jpg} 
+\includegraphics[scale=0.35]{3.Chapter1/Media/pathlength-distribution.jpg} 
 \caption{\textit{Log/log distribution of maximum path-lengths from retweet groups.}}
 \label{fig:pathlength-distribution}
 \end{figure}
@@ -102,19 +106,19 @@ The distribution of retweet group sizes can be seen in Figure \ref{fig:retweet-d
 In these retweet groups, and particularly the larger ones, retweets are likely to be down several chains. Combining this information with that of the average path-length of retweets, it becomes more clear how the retweet tree structure is created, with nodes being the retweeting users (the root node being the original tweeter), and edges between nodes being the path of retweets. Different retweet chains would be illustrated by the combinations of journeys down different branches. The longest path-length would be represented by the depth of the longest tree branch, and the total number of retweets would be represented by the number of edges. The trees can be said to represent the retweet groups, though, in practice, many members of the group will be separate from the main tree due to missing citations.\\
 \cite{kwak10} discusses retweet trees in more detail, in particular, the different shapes of the trees representing retweet groups from the Air France incident. Their results, for these trees, also (see section \ref{length of retweet chains}) indicate a large number of groups with maximum path-lengths of one and two.\\
 \begin{figure}[h]
-\includegraphics[scale=0.35]{4.Chapter1/Media/retweets-distribution-stats.jpg} 
+\includegraphics[scale=0.35]{3.Chapter1/Media/retweets-distribution-stats.jpg} 
 \caption{\textit{Maximum likelihood power-law fit for the cumulative distribution of retweet group sizes.}}
 \label{fig:retweet-distribution}
 \end{figure}
 \begin{figure}[h]
-\includegraphics[scale=0.35]{4.Chapter1/Media/retweets-pathlength.jpg} 
+\includegraphics[scale=0.35]{3.Chapter1/Media/retweets-pathlength.jpg} 
 \caption{\textit{Log/log relationship between the maximum path-length and size of a retweet group.}}
 \label{fig:totalretweets-pathlength}
 \end{figure}
 Figure \ref{fig:totalretweets-pathlength} shows how the total number of retweets varies with the longest path-length of the retweet group. The trend mostly correlates with what might be expected; that the maximum path-length of a group increases with the overall size of the group. These illustrations do not show which users are followers of others, but do show how some tweets are retweeted significantly more than others. Users who have many more followers are said to be more \textit{influential}, say Cha M. et al. \cite{cha10}, who also discuss the idea of `indegree', and that those users who have far more followers than friends are likely to be far more influential. Their chance of having tweets retweeted is therefore increased.\\
 The (immediate) audience size of a retweet group refers to the number of users the tweet has been exposed to either directly or through retweets. \textit{Immediate} was used in this sense since users who have made their profile public can have their tweets viewed by users who aren't followers of the former. This audience size can therefore be calculated simply by summing up all the followers of each of the users in the retweet group.\\
 \begin{figure}[h]
-\includegraphics[scale=0.35]{4.Chapter1/Media/audience-pathlength.jpg} 
+\includegraphics[scale=0.35]{3.Chapter1/Media/audience-pathlength.jpg} 
 \caption{\textit{Relationship between a retweet group's audience size and its longest path-length.}}
 \label{fig:pathlength-audience}
 \end{figure}
@@ -132,14 +136,14 @@ The first result shown from the experiment is that the final retweeter follows t
 The interesting part of this, however, is the number of followers of the previous retweeter in different cases. In the 33\% of cases where the final retweeter doesn't follow the previous retweeter, the latter has, on average, around 600 followers. When the final retweeter \textit{does} follow the previous retweeter, however, the previous retweeter's average number of followers is 940. This is quite a substantial difference and certainly highlights the fact that by having more followers you are more likely to have more influence in terms of whether you get retweeted, or not.\\
 This is accentuated further when looking at the original tweeter. The likelihood of a retweeter following the original tweeter in cases in which the path-length is of more than one has already been found to be around 40\%, but the average number of followers of the original tweeter increases by a factor of around four (580 to 2000) when also followed by the final retweeter. Results showed that the original tweeter had a consistently higher number of followers when followed by the final retweeter than when not at all path-lengths. This demonstrates that having an increased number of followers is correlated with the chance of a user being retweeted. In this case, having four times the followers increases the correlation dramatically (40\% to 90\%). The number of followers of a user can therefore be directly related to the ideas of influence discussed in \cite{cha10} and also of `advertising' themselves.\\
 \begin{figure}[h]
-\includegraphics[scale=0.6]{4.Chapter1/Media/originalfollowers-pathlength-distribution.png} 
+\includegraphics[scale=0.6]{3.Chapter1/Media/originalfollowers-pathlength-distribution.png} 
 \caption{\textit{Relationship between number of followers (and respective distribution) of the original tweeter as the path-length increases.}}
 \label{fig:originalfollowers-pathlength}
 \end{figure}
 It was found, however, that the number of followers of the original tweeter diminishes as the path-length of the tweet increases (Figure \ref{fig:originalfollowers-pathlength}), signifying that tweets travel further when the original tweeter has fewer followers. Because the retweet groups were collected in such a way so that groups containing longer path-length retweets also contained many shorter-chain retweets, retweet groups containing path-lengths of 5 (or more) are also likely to contain many retweets (if not more) with path-lengths of one or two (see the distribution in Figure \ref{fig:pathlength-distribution}). It can therefore be argued that there are more users involved in shorter-chain retweets than in ones with longer path-lengths. It is then more likely for these users to have more followers than others in the retweet group. Another explanation could be that users are actually aware of their local network and realise that retweeting may cause a lot of audience overlap (particularly in the case of large communities). A user may have seen a post retweeted a few times on their home timeline and thus decide not to also retweet.\\
 One last interesting point to make regarding the notion of retweet chains is looking at the how the pattern of following previous retweeters develops as the path-length increases. It has already been discussed above how the chance of following the previous retweeter in the chain is about 67\%, but, in cases where the path-length of a tweet is greater than two (i.e. at least two intermediate retweeters between final retweeter and original tweeter), the chance of the final retweeter following the next retweeter along preceding the previous retweeter is around 45\%. This suggests that retweeting is more widespread and not so much just circulated around communities. These preliminary results demonstrate that the chance of the final retweeter following previous retweeters - up to and including the original tweeter - diminishes along the chain or as the tree is ascended (Figure \ref{fig:following-possibility}).\\
 \begin{figure}[h]
-\includegraphics[scale=0.55]{4.Chapter1/Media/following-possibility.png} 
+\includegraphics[scale=0.55]{3.Chapter1/Media/following-possibility.png} 
 \caption{\textit{Proportion of final retweeters following upstream users at varying distances along the chain.}}
 \label{fig:following-possibility}
 \end{figure}
@@ -153,7 +157,7 @@ From this dataset, it was also possible to work out how often retweeters cited t
 The final experiments in this section focus on the time delay between the final retweeter and original tweeter. This is an interesting area since it enables researchers to see how fast messages propagate through the Twittersphere. From this information, and by using the retweeter patterns demonstrated above, it would be possible to work out how far and how quickly information can be passed around.\\
 Figure \ref{fig:timedelay-pathlength} shows the average time delay between the first and final retweet with increasing maximum path-length of the retweet group.\\
 \begin{figure}[h]
-\includegraphics[scale=0.35]{4.Chapter1/Media/pathlength-timedelay.jpg} 
+\includegraphics[scale=0.35]{3.Chapter1/Media/pathlength-timedelay.jpg} 
 \caption{\textit{Average time (in seconds) between first post and final retweet of a retweet group varying with the group's maximum path-length.}}
 \label{fig:timedelay-pathlength}
 \end{figure}
