@@ -23,7 +23,7 @@ It is, of course, possible that more than one user may decide to retweet one of 
 The motivation for this study has stemmed largely from the interesting decentralised nature of retweets, spurred on by similar literature such as information cascades in \cite{galuba10}. The notion of retweeting is also very similar to content forwarding in opportunistic networks, particularly ideas discussed in \cite{allen10}, and studying the menchanisms of retweeting from a human-centric perspective may provide insight into protocols for autonomous content dissemination. We hope that understanding retweet properties may help us  in forwarding relevant information to a user from without that user's social neighbourhood.
 
 \section{Retweet Groups}
-Define retweets of a Tweet, $t$, as $RT(t)_i \: \forall \: 0 <= i <= C(t)$ where $C(t)$ is the retweet count of $t$. Thus size of a retweet group is $C(t)+1$ and has a minimum size of $1$ in the case where $C(t) = 0$.
+Define retweets of a Tweet, $t$, as $RT(t)_i \: \forall \: 1 <= i <= C(t)$ where $C(t)$ is the retweet count of $t$. Thus size of a retweet group is $C(t)+1$ and has a minimum size of $1$ in the case where $C(t) = 0$.
 
 Define author of $t$ as $A(t)$. Thus audience of a retweet group where $C(t) > 1$ is $followers(A(t)) + \sum\limits_{i=1}^{C(t)} followers(A(RT(t)_i))$, since a retweet is simply a class of Tweet.
 
