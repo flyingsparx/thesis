@@ -10,34 +10,73 @@ Stuff to finish up in this section:
 \item (thinking forward: e.g. we have addressed tweet quality in terms of propagation, can a network have a quality too? what further factors can affect the dissemination of information in social networks?
 \end{itemize}
 
-Social networking and communication now make up a significant part of the Internet, with sites such as Facebook and MySpace attracting millions of users worldwide. Blogging websites, such as Tumblr and Wordpress, have also seen a significant influx of users, allowing people to update and share posts and links on their interests and every day lives. However, as the need for quick and short updates increases, microblogging sites, such as Twitter, have become more and more popular.\\
-Microblogging is a form of blogging in which posts are limited to a specific character count (140 in the case of Twitter). This limit means that users tend to post updates more frequently \cite{zhao09}. The furthering development of applications in the mobile domain, particularly for iOS, Android and Symbian systems, mean that users update from wherever they are and whenever they like.\\
-Typically, users will tweet of topics that interest them. This may be related to their work, a hobby, or a mixture of multiple areas. These tweets are generally posted with the idea that they will be useful or interesting for some of their followers as well as an attempt to attract more followers. Zhao et al. \cite{zhao09}, showed that Twitter is also used as a means to contact friends and to get assistance and opinions on topics. Therefore, particular users may belong to different communities of people depending on what kind of posts they want to view.\\
-The strength of Twitter is in its social structure, where users can elect to follow others. Followers of a user receive all of that user's posts in their individual (or `home') timelines. If a user has set their profile to be public, then their posts also appear on the public timeline, which is accessible to anyone; even those without a Twitter account. As a result, people are likely to follow users who update with interesting posts; whether the follower is a big fan of the friend (a `friend' is said to be a \textit{followee} of a user) and simply wants to know everything going on in their life, or if the follower is simply interested in the topical area of most of the friend's posts. If someone sees a post that they feel would be interesting to their followers, they can `retweet' the post, which then relays it as a tweet.\\
-The friends of a particular user effectively become \textit{filters} of information for that user. The user can choose to follow another user, and therefore implicitly indicates the kind of information they want to receive. If you, a Twitter user, want to gain more attention by means of followers, then by posting interesting posts (or, at least, posts that others want to read), you will 
+It has been discussed that the popularity of information in Twitter can be related to the propagation characteristics of that information through Twitter's social structure. That is to say, that the more times a Tweet is retweeted by users, the more people have found the information contained within it to be interesting enough to be worth sharing.\\
+It has also been shown that this retweet count metric alone cannot be an implication of the actual interestingness level of a Tweet. This is related to the notion of user influence, which directs that some tweets are naturally immediately seen by more people and thus have a higher chance of achieving a retweet as they are. Indeed, since follower count is one of the \cite{suh10} demonstrated that a user's Tweets' retweet rates increase as the user's follower count increases.
+
+The strength of Twitter lies is in its social structure, where users can elect to follow and unfollow others as they choose. Followers of a user receive all of that user's posts in their individual (or `home') timelines. If a user has set their profile to be public, then their posts also used to appear on the public timeline, which is now deprecated but was accessible to anyone; even those without a Twitter account. As a result, people are likely to follow users who update with interesting posts; whether the follower is a big fan of the user and simply wants to know everything going on in their life, or if the follower is simply interested in the topical area of most of the friend's posts. 
+
+Just as Twitter users will post Tweet about topics that are of interest them - possibly related to a user's work, a hobby, or a mixture of multiple areas - and these Tweets are generally posted with the idea that they will be useful or interesting for some of their followers as well as an attempt to attract more followers, retweets are generated with the same motives in mind. This means that if a Tweet is retweeted, it is not only allowed to disseminate further through the social structure, but also that a higher Tweet quality is implied.
+
+Thus, this describes how a user's friends, who carry out retweets, effectively become filters of interesting information for that user and other followers of those friends, and the \textit{audience} of the original Tweet is significantly increased. Since retweets are always attributed to the original author then you, a Twitter user, may gain more attention by means of followers by posting \textit{interesting} Tweets, which will 
 \begin{enumerate}
-\item increase the chances that users reading your posts will choose to follow you, and
-\item increase the chances that users will decide to retweet your post, thus broadcasting your tweet to a larger audience. People viewing the retweet then may decide to follow you - the original tweeter. 
+\item increase the chances that users reading your Tweets will choose to follow you, and
+\item increase the chances that users will decide to retweet your Tweet, thus broadcasting it to a larger audience. People viewing this \textit{retweet} then may decide to follow you. 
 \end{enumerate}
-It is, of course, possible that more than one user may decide to retweet one of your posts. A follower of a retweeter may decide to retweet the retweet, creating a chain. Naturally, the larger your effective audience (both directly and through retweets), the greater chance, again, you have of being retweeted. \cite{suh10} showed this by demonstrating how the retweet rate increases with the number of followers of the original tweeter. This is also related to the ideas of user influence mentioned in \cite{cha10}; that more followers implies more influence. The retweeting process ultimately results in a tree system, with the root being the original tweeter, and other nodes being retweeters at different levels, similar to the idea of URL cascades discussed in \cite{galuba10}.\\
-The motivation for this study has stemmed largely from the interesting decentralised nature of retweets, spurred on by similar literature such as information cascades in \cite{galuba10}. The notion of retweeting is also very similar to content forwarding in opportunistic networks, particularly ideas discussed in \cite{allen10}, and studying the menchanisms of retweeting from a human-centric perspective may provide insight into protocols for autonomous content dissemination. We hope that understanding retweet properties may help us  in forwarding relevant information to a user from without that user's social neighbourhood.
 
-\section{Retweet Groups}
-Define retweets of a Tweet, $t$, as $RT(t)_i \: \forall \: 1 <= i <= C(t)$ where $C(t)$ is the retweet count of $t$. Thus size of a retweet group is $C(t)+1$ and has a minimum size of $1$ in the case where $C(t) = 0$.
+Since a Tweet can be retweeted multiple times, and, as mentioned, a retweet itself can also be retweeted, the much larger the effective audience (both directly and through retweets) of a Tweet's original author has the potential to become if they choose to post interesting information. In this chapter, an understanding of the behaviours and properties of retweets is provided, along with discussions into how these are relevant in determining useful metrics for determining which retweeted information is interesting.
 
-Define author of $t$ as $A(t)$. Thus audience of a retweet group where $C(t) > 1$ is $followers(A(t)) + \sum\limits_{i=1}^{C(t)} followers(A(RT(t)_i))$, since a retweet is simply a class of Tweet.
 
-Example of a retweet tree. 
-\\
-Source users are roots, final retweeters are leaves (although subject to change as time goes by).
-\\
-Links between nodes indicate retweeting from a user to another user (but not which users follow which).
-\\
+\section{Tweet and Retweet Properties}
+
+\subsection{Retweet Groups}
+A Tweet has various attributes associated with it, which make up the features that describe that particular Tweet. Each Tweet has a set of properties relating to its content, its author, and other metadata, such as creation time.\\
+As such, a particular Tweet, $t$, can have its relevant properties declared and be defined as follows;
+\[
+	t = (\mathrm{text}, \mathrm{count}_R, \mathrm{author}_O, \mathrm{author}_R, \mathrm{orig})
+\]
+
+Respectively, this represents the Tweet's text, its retweet count, and the \textit{original} author of the Tweet. The final two values depend on whether $t$ is a retweet or not, as since a retweet remains a class of Tweet, then the same properties can be assigned to retweets as to Tweets. In the case of retweets, then the values $\mathrm{orig}$ and $\mathrm{author}_R$ will be non-null.
+
+Since a Tweet can be retweeted more than once, the set of Tweets that are in the set of \textit{all} Tweets, $T$, and are retweets of $t$ is defined as;
+\[
+	RT(t) = \left\{ s \in T : s.\textrm{orig} = t \right\}
+\]
+
+Clearly, the retweet count of $t$, $ t.\mathrm{count}_R = \left\vert{RT(t)}\right\vert $.
+
+An original Tweet, $t$, along with all of the retweets of $t$, $RT(t)$, are known as the \textit{retweet group} of $t$, which is defined as $G(t)$ and is useful when discussing the audience reach of a particular Tweet. Therefore, since $t$ is also a member of this set, the size of $t$'s retweet group is; 
+\[
+	\left\vert{G(t)}\right\vert = t.\mathrm{count}_R + 1 
+\] 
+If $ r_1,...,r_n $ are the members of $RT(t)$ then the raw audience size of the group can be calculated thus (assuming $t.\textrm{count}_R \geq 1$);
+\[
+	\textrm{audience}(G(t)) = \textrm{followers}(t.\textrm{author}_O) + \sum\limits_{i=1}^{t.\mathrm{count}_R} \textrm{followers}(r_i.\textrm{author}_O)
+\]
+
+However, properties of Twitter dictate that this raw audience size is not an accurate calculation in most cases, as is discussed later in this chapter.
+
+
 \subsection{Retweet Trees}
+As a Tweet gains in popularity and attracts more and more retweets to be created from it, and since retweets themselves can also be retweeted, then this ultimately results in the generation of a retweet \textit{tree}. This tree is formed from the \textit{users} who have retweeted the Tweet (or a retweet of the Tweet), and represents the original Tweeter and the various pathways taken by the Tweet as it is retweeted through the social graph.\\
+The tree is not a representation of the actual social ties between the tree's nodes, as users are able to retweet Tweets and retweets sent from others that they do not follow. However, as is mentioned later in this chapter, most retweeting does generally occur between directly-linked users.
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.5]{3.Chapter1/Media/tree.png} 
+\caption{\textit{A hu retweet pathway tree.}}
+\label{fig:retweet_tree}
+\end{figure}
+
+Although these retweet pathways can technically be acyclic through the use of the manual retweet method, the case of a user retweeting a Tweet more than once is very rare and a user retweeting a retweet that they are already part of the upstream chain of is even less likely to occur. The retweet button method simply does not support users retweeting a Tweet more than once.\\
+As such, retweet trees are used in preference over retweet \textit{graphs} as they illustrate the temporal nature in terms of the order in which the retweets occur.
+
+The retweeting process ultimately results in a tree system, with the root being the original tweeter, and other nodes being retweeters at different levels, similar to the idea of URL cascades discussed in \cite{galuba10}.\\
+
 
 \subsection{Path-Length}
 Define path-length and retweet groups.\\
 For this paper, the term \textit{path-length} is to be defined as the number of times a particular tweet is retweeted down a chain. For example, the status;\\ \texttt{RT @user1: RT @user2: This is the body of the tweet} \\has a path length of two. All users involved in this retweet chain have used the old method of retweeting, which is still very commonly used and has effectively provided most of the results for this paper.\\
+
 
 \section{Information Retrieval}
 People don't use Twitter to obtain any specific information (they don't know what people are necessarily going to say) \\
