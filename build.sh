@@ -3,7 +3,7 @@
 # Script to build thesis. Supports bibtex-ing and word counting and opens typeset
 # PDF at the end.
 
-printf "\nStarting build...\n\n"
+printf "\nStarting thesis build...\n\n"
 
 case "$1" in
     -b)
@@ -11,11 +11,11 @@ case "$1" in
         pdflatex -shell-escape -interaction=nonstopmode -file-line-error main.tex | grep ".*:[0-9]*:.*"        
         bibtex main.aux | grep "Error"
         echo "BibTeX done. Running first typeset..."
-        pdflatex -shell-escape -interaction=nonstopmode -file-line-error main.tex | grep ".*:[0-9]*:.*"
-    esac
+        pdflatex -shell-escape -interaction=nonstopmode -file-line-error main.tex > /dev/null
+esac
 
 echo "Typesetting..."
-pdflatex -shell-escape -interaction=nonstopmode -file-line-error main.tex | grep ".*:[0-9]*:.*"
+pdflatex -shell-escape -interaction=nonstopmode -file-line-error main.tex > /dev/null
 open main.pdf
 printf "Done. Counting words...\n\n"
 texcount -merge main.tex 2>&1 | grep 'Words\|Number'
@@ -25,4 +25,4 @@ rm main.{bbl,blg,dvi,glo,ist,lof,log,lot,out,ps,toc} > /dev/null 2>&1
 rm texput.log > /dev/null 2>&1
 
 
-printf "\n\nBuild completed\n\n"
+printf "\n\nThesis build completed.\n\n"
