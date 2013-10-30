@@ -8,14 +8,14 @@ printf "\nStarting thesis build...\n\n"
 case "$1" in
     -b)
         echo "Running with BibTeX..."  
-        pdflatex -shell-escape -interaction=nonstopmode -file-line-error main.tex | grep ".*:[0-9]*:.*"        
+        pdflatex -shell-escape -interaction=nonstopmode -file-line-error main.tex > /dev/null
         bibtex main.aux | grep "Error"
         echo "BibTeX done. Running first typeset..."
         pdflatex -shell-escape -interaction=nonstopmode -file-line-error main.tex > /dev/null
 esac
 
 echo "Typesetting..."
-pdflatex -shell-escape -interaction=nonstopmode -file-line-error main.tex > /dev/null
+pdflatex -shell-escape -interaction=nonstopmode -file-line-error main.tex | grep ".*:[0-9]*:.*"        
 open main.pdf
 printf "Done. Counting words...\n\n"
 texcount -merge main.tex 2>&1 | grep 'Words\|Number'
