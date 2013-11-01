@@ -282,30 +282,48 @@ There are, therefore, various possible explanations for this property, including
 
 Additionally, and more interestingly, it is possible that users possess some awareness of their local networks and the users within them. A user, who is part of a large community with lots of obvious follower overlaps occurring between the members, may decide \textit{not} to retweet a particular Tweet if he/she feels that many of their own followers may have already seen the Tweet due to them also having a high chance of following the original author.
 
-A final analysis on the social ties between users in retweet chains is carried out on the followship pattern of authors throughout the chain. Let $h$ be the number of hops (or edges in the retweet tree) between two users in a retweet chain. It was illustrated in earlier sections that, when $h = 1$, the likelihood of the later retweeter following the upstream user is around 67\%. 
+A final analysis on the social ties between users in retweet chains is carried out on the followship pattern of authors throughout the chain. Let $h$ be the number of hops (or edges in the retweet tree) between two users in a retweet chain. It was illustrated in earlier sections that, when $h = 1$, the likelihood of the later retweeting author following the upstream author is around 67\%.\\
+However, as $h$ is increased, then the followship likelihood mostly consistently decreases (see Figure \ref{fig:following-possibility}, as might be expected. This illustrates how longer retweet chains do indeed increase both the likelihood of the Tweet reaching further through the social structure and the chance of achieving a smaller proportionate overhead.
 
-One last interesting point to make regarding the notion of retweet chains is looking at the how the pattern of following previous retweeters develops as the path-length increases. It has already been discussed above how the chance of following the previous retweeter in the chain is about 67\%, but, in cases where the path-length of a tweet is greater than two (i.e. at least two intermediate retweeters between final retweeter and original tweeter), the chance of the final retweeter following the next retweeter along preceding the previous retweeter is around 45\%. This suggests that retweeting is more widespread and not so much just circulated around communities. These preliminary results demonstrate that the chance of the final retweeter following previous retweeters - up to and including the original tweeter - diminishes along the chain or as the tree is ascended (Figure \ref{fig:following-possibility}).\\
+Further to this, of the 67\% of retweeters who \textit{do} follow an upstream author at $h = 1$, only 19\% follow also the upstream author at $h = 2$. In these cases, the latter has an observed average of around 3,000 followers.\\
+In the 81\% of cases when the user at $h = 2$ \textit{isn't} also followed, then the upstream author has a much lower average follower count of about 520.
+
 \begin{figure}[h]
+\centering
 \includegraphics[scale=0.55]{3.Chapter1/Media/following-possibility.png} 
 \caption{\textit{Proportion of final retweeters following upstream users at varying distances along the chain.}}
 \label{fig:following-possibility}
 \end{figure}
-Because of this, it's sensible to assume that the tweets in the dataset are forwarded through less-connected users, and perhaps forwarded from community to community by those users belonging to several groups. Otherwise, if the retweets were circulated more around closely-knit communities, the likelihood of the final retweeter following the previous tweeters would be both greater and more evenly spread - i.e. the chance of following the previous retweeter would be roughly equal to the chance of following the other tweeters in the chain.\\
-In addition, of the 67\% of final retweeters who \textit{are} following the previous retweeter, about 19\% of them also follow the next previous retweeter (i.e. the retweeter at path-length - 2). In this case, the next previous retweeter has, on average, 3000 followers. In the 81\% of these users \textit{not} following the next previous retweeter, then the latter has an average of 525 followers. This is an accentuated result of the one previously, but this time boasts an increase of a factor of 6.\\
-Of the 33\% of users who \textit{don't} follow the previous retweeter, about 30\% follow the next previous retweeter. Both of these sets of statistics also go towards the idea of the diminishing chance of following the users as the tree is ascended.\\
-From this dataset, it was also possible to work out how often retweeters cited the original tweeter of a post. In retweets, users are typically cited by, as we have seen, having their name along with an `RT' at the start of the post. This data was collected by seeing if the original poster's username was mentioned \textit{anywhere} in each retweet. The chance of this occurring was found to be around 68\% and did not vary with any pattern with path-length.
+
+It is, therefore, sensible to assume from these analyses that Tweets are forwarded between groups of less-connected users, highlighting the notions of social network awareness and of community-hopping. If retweets were usually circulated around more closely-knit communities of users, then the followship likelihoods would be generally greater, more uniform, and consistent throughout the retweet chain. Users would have as much of a chance of following their immediate upstream neighbour author in the retweet chain as they would a further upstream author.
+
+As mentioned near the start of this chapter, the author of the original Tweet should be cited by the \texttt{RT @<username>} sequence observed \textit{closest} to the retweet body, where \texttt{<username>} is the username of the author user. Rather than specifically looking for the author's Tweet appearing in this location, Tweets were examined to check for the existence of the author's username being mentioned \textit{anywhere} in the Tweet content, and was found to exist in about 68\% of Tweets.\\
+This frequency did not vary with any consistent correlation upon changes to the maximum path-length or retweet group size, and so it is assumed that users do feel the need to credit the original author more so than not. 
+
  
-\subsection{Retweet Time Delay}
-\label{retweet time delay}
-The final experiments in this section focus on the time delay between the final retweeter and original tweeter. This is an interesting area since it enables researchers to see how fast messages propagate through the Twittersphere. From this information, and by using the retweeter patterns demonstrated above, it would be possible to work out how far and how quickly information can be passed around.\\
-Figure \ref{fig:timedelay-pathlength} shows the average time delay between the first and final retweet with increasing maximum path-length of the retweet group.\\
+\subsection{The Temporal Properties of Retweets}
+The final set of analyses in this chapter relate to time's influence on retweet propagation. This facilitates insights into how quickly information can spread and, when combined with the knowledge of the social structure and audience, how this can relate to the rate of information dissemination and consumption.
+
 \begin{figure}[h]
+\centering
 \includegraphics[scale=0.35]{3.Chapter1/Media/pathlength-timedelay.jpg} 
-\caption{\textit{Average time (in seconds) between first post and final retweet of a retweet group varying with the group's maximum path-length.}}
+\caption{\textit{Average time (in seconds) between first post and final retweet of a retweet group varying with the group's maximum path-length}}
 \label{fig:timedelay-pathlength}
 \end{figure}
-The results indicate that, mostly, as the group's maximum path-length increases, then so does the elapsed time between the original post and the final retweet. This is probably as was expected, since this shows that it takes longer for a retweet to travel further. The data is not consistent, however, especially results for a path-length of five and above. The first four results suggest a uniform incline roughly proportional to $ v=\frac{s}{t} $, where the distance, \textit{s}, is the hypothetical distance given by the path-lengths, showing that the \textit{speed} of propagation remains mostly constant.\\
-There is not enough of a trend in the data to make any deductions regarding propagation speed, however. There are two main conflicting arguments regarding this result: the first is, as mentioned, that the further a tweet travels the longer time it travels for. The second is to do with tweet popularity: the more popular a tweet is, the more quickly it will be retweeted. In the latter case, it is possible that longer trees grow fully before shorter ones, implying exponential growth. Generally, though, it seems that the maximum path-length of a retweet group does not massively affect the tweet's propagation speed.
+
+A general observation is that the elapsement of time between the original Tweet and the final retweet of retweet groups of varying maximum path-lengths increases with path-length, indicating that if there are more hops for a Tweet to travel down between users then it takes longer to do so. However, this correlation is only really applicable for shorter retweet chains and, particularly in cases where the maximum path-length is five and above, this pattern is not consistent.\\
+The groups with shorter maximum path-lengths more uniformly increase in temporal elapsement with increases in maximum path-length in a linear fashion roughly proportional to $ v=\frac{s}{t} $, where the distance, \textit{s}, is the hypothetical distance given by the number of hops between users, thus indicating that the speed, $v$, of propagation remains relatively constant. 
+
+Despite this, there are conflicting arguments for patterns observed in retweet propagation speed, which rely on various different factors.\\
+As mentioned, the time taken for a Tweet to reach a specific path-length could be a function of the path-length itself, where as the path-length increases, then so does the time taken for the Tweet to be retweeted to the end of the chain.\\
+Inversely, Tweets that are especially popular, possibly as a result of being particularly topical (such as in the disaster cases mentioned in the Introduction), may be retweeted more quickly by users so that the information is spread more quickly. In these cases, retweet groups with longer retweet chains may complete their trees more quickly than those groups with much shallower retweet trees.\\
+Similarly, user influence could play a role in dissemination speed; if a Tweet is retweeted by a user with many followers, then there is an increased likelihood of propagation through this user. Whilst this could, in addition the previous argument, cause longer retweet trees to be completed more quickly than groups with shorter trees, it could also facilitate `faster branches', in which particular long branches grow more quickly than shorter ones in the same retweet tree if the other branches consist of less-influential users.
+
+There is not enough evidence provided in this analysis to make any inferences towards a ganeric pattern of retweet group growth speed, and it is believed that this growth is giverned by many more factors than the Tweet itself or the social structure alone.\\
+Other research into 
+
+
+kwak10 - how many retweets after hour, etc.
 
 \section{Summary}
 The experimental results have certainly highlighted the ideas of communities and that of message cascading similar to that demonstrated in \cite{java07} and \cite{galuba10} respectively.\\
@@ -314,7 +332,8 @@ The previous experiments showed how the number of followers of a user directly i
 
 This paper has demonstrated relatively simple results in an attempt to realise some of the behavioural patterns of retweets, both linking to the psychologically in terms of the users, but also the physical properties of retweets. The results are able to represent a basis for potential further work and research into the various aspects of Twitter, moreover, perhaps, topical categorisation and the dynamicity of the friend-follower graphs.
 
-
+- social structure: big deal - investigate further...
+- but with aim of focusing on how this might be used for interestingness inferences
 
 %\begin{mydefinition}
 % The \textbf{broadcast front}, denoted by $B_v(t)$, of token $\tau_v$ at timestep $t$ is the set of nodes that received $\tau_v$ in timestep $t$ but did not have it in timestep $t-1$.
