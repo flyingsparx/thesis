@@ -1,15 +1,6 @@
 \chapter{Understanding The Behaviour of Retweeting in Twitter}
 
 
-Stuff to finish up in this section:
-\begin{itemize}
-\item Explain motivation for research in this particular area
-\item Use this motivation to explain the purpose for this research as a basis for the work in the next few chapters
-\item Explain how this chapter is the basis for research into Twitter's social structure in the next chapter
-\item Normalise terms (retweet-group size / retweet volume) here and in further chapters throughout thesis
-\item (thinking forward: e.g. we have addressed tweet quality in terms of propagation, can a network have a quality too? what further factors can affect the dissemination of information in social networks?
-\end{itemize}
-
 It has been discussed that the popularity of information in Twitter can be related to the propagation characteristics of that information through Twitter's social structure. That is to say, that the more times a Tweet is retweeted by users, the more people have found the information contained within it to be interesting enough to be worth sharing.\\
 It has also been shown that this retweet count metric alone cannot be an implication of the actual interestingness level of a Tweet. This is related to the notion of user influence, which directs that some tweets are naturally immediately seen by more people and thus have a higher chance of achieving a retweet as they are. Indeed, since follower count is one of the \cite{suh10} demonstrated that a user's Tweets' retweet rates increase as the user's follower count increases.
 
@@ -134,7 +125,7 @@ To assist in providing a further grounding in this area of research, a series of
 
 
 \subsection{Data Collection Methodology}
-The analyses involve the examination of Tweets extracted from Twitter. Twitter's REST API v1 was used between 26\textsuperscript{th} and 24\textsuperscript{th} to collect around 26,000 Tweets, which represent a total of around 4,400 retweet groups. The complete set is made up of three subsets, the use of each individually is described later.\\
+The analyses involve the examination of Tweets extracted from Twitter. Twitter's REST API v1 was used between 26\textsuperscript{th} January and 24\textsuperscript{th} May to collect around 26,000 Tweets, which represent a total of around 4,400 retweet groups. The complete set is made up of three subsets, the use of each individually is described later.\\
 The relatively limited size of the dataset is acknowledged, yet it should be emphasised that these analyses are simply exploratory and are not used to answer or solve any specific problem.
 
 The data collection involved a mixture of using Twitter's timelines and its search capabilities. Version 1 of the REST API supported retrieval of Tweets, 20 at a time, from the Twitter \textit{public} timeline. Historically, this timeline contained the 20 most recent Tweets published by all the authors that have non-protected Twitter accounts and used to be visible on their website's homepage\footnote{http://twitter.com} to non-logged-in users.
@@ -319,21 +310,30 @@ As mentioned, the time taken for a Tweet to reach a specific path-length could b
 Inversely, Tweets that are especially popular, possibly as a result of being particularly topical (such as in the disaster cases mentioned in the Introduction), may be retweeted more quickly by users so that the information is spread more quickly. In these cases, retweet groups with longer retweet chains may complete their trees more quickly than those groups with much shallower retweet trees.\\
 Similarly, user influence could play a role in dissemination speed; if a Tweet is retweeted by a user with many followers, then there is an increased likelihood of propagation through this user. Whilst this could, in addition the previous argument, cause longer retweet trees to be completed more quickly than groups with shorter trees, it could also facilitate `faster branches', in which particular long branches grow more quickly than shorter ones in the same retweet tree if the other branches consist of less-influential users.
 
-There is not enough evidence provided in this analysis to make any inferences towards a ganeric pattern of retweet group growth speed, and it is believed that this growth is giverned by many more factors than the Tweet itself or the social structure alone.\\
-Other research into 
+There is not enough evidence provided in this analysis to make any inferences towards a ganeric pattern of retweet group growth speed, and it is believed that this growth is governed by many more factors than the Tweet itself or the social structure alone. As such, there is no predefined rule for predicting the spread of dissemination in this way, since the retweet path is an unknown feature.
 
+The temporality of retweets has been the focus of some researchers, including the authors of \cite{kwak10}, who also used retweet trees as an illustration of the propagation pattern produced by Tweets. They found that, generally, half of all retweet action on a Tweet occurs \textit{within an hour} of the Tweet being posted, and that by the end of the first day, 75\% of all retweets of the Tweet will have happened.\\
+The authors also conducted an analysis on the elapsed time of a Tweet's travel between hops as it is retweeted. Although they observe a flatter time elapsement initially, indicating that Tweets travelling over the first few hops are retweeted almost concurrently, they also found there to be a general incline in time elapsement over the shorter path-lengths. After this point, as seen and discussed in the analysis earlier, the elapsement becomes more `noisy'. 
 
-kwak10 - how many retweets after hour, etc.
+An interesting notion that is not directly addressed in this thesis is that the time a particular Tweet is authored may have some effect on its propagation speed. Just as `prime-time' television achieves higher audience ratings as it is at a time of the day when many people are at home and relaxing, Twitter may also have a time window in which its users are more active. For example, if a user posts a Tweet at a time when many of his/her followers are asleep, then the immediate audience size of the Tweet can be significantly reduced.\\
+If there are fewer initial users viewing the Tweet, then the likelihood of retweet, as a function of this, is also reduced. Although this could have an effect on the perceived popularity of the Tweet, since, by definition, there are fewer active users on Twitter at this time, then the number of Tweets sent during this period will be much smaller. We therefore do not take this factor into account during our experimentation in later chapters.
+
 
 \section{Summary}
-The experimental results have certainly highlighted the ideas of communities and that of message cascading similar to that demonstrated in \cite{java07} and \cite{galuba10} respectively.\\
-As has been seen, in section \ref{retweet time delay}, the retweet tree seems to grow in a variety of ways. One argument is mostly expected; that as the `distance' the tweet travels increases, then so does the time taken for it to reach its end. The other argument is linked to the idea of tweet advertising, discussed in previous sections, and namely the notion of tweet popularity.\\
-The previous experiments showed how the number of followers of a user directly influences their chance of being retweeted. It can therefore be seen that advertising can also be linked to the level of influence a user has. The results help illustrate the multi-dimensional properties of the retweet tree, and how these factors relate to its growth and its associated friend-follower graph.
+In this chapter, a set of initial exploratory analyses have been undertaken into the behaviours of retweeting in Twitter, the properties of retweet groups, the relationships between the propagation graph and the social graph, and briefly into the affects of time on Tweet dissemination.
 
-This paper has demonstrated relatively simple results in an attempt to realise some of the behavioural patterns of retweets, both linking to the psychologically in terms of the users, but also the physical properties of retweets. The results are able to represent a basis for potential further work and research into the various aspects of Twitter, moreover, perhaps, topical categorisation and the dynamicity of the friend-follower graphs.
+The analyses were found to support and complement the findings of other research in the area, including the notions of message cascading \cite{galuba10} and the ties of this to the interconnection of users on the social graph through communities \cite{java07}.\\
+Trees representing the retweet groups were found to grow in a variety of ways, from trees illustrating long retweet chains, indicating a high level of inter-community dissemination, to shorter and wider trees, in which propagation can still be widespread but not as likely to reach other communities.
 
-- social structure: big deal - investigate further...
-- but with aim of focusing on how this might be used for interestingness inferences
+User influence, in terms of an author's follower count, was observed as being an important factor in facilitating information, implying that popular users also produce popular information, since these users are more likely to achieve more retweets.
+
+These inferences have helped to describe the multi-dimensional principles of retweet groups in terms of the features governing their spread over the social graph, and the quickness with which many users can be exposed to a Tweet through the act of retweeting. Although it is important to have an understanding of user psychology, and the thought processes behind the retweet decision, of most interest in this chapter is the analysis of the social structure.
+
+
+\section{Taking the Investigative Research Further}
+Twitter's social structure has been found to have a large effect on Tweet propagation, since it combines the features observed around user influence (in the naïve form of a user's follower count) with that of communities and sub-graphs of dense and sparse user interconnections.
+
+In the following chapter, interests are focused on the topiological structure of user followships by investigating further into the flow of information between users as they are arranged in different ways in order to develop a method to infer information interestingness taking into account these information flow properties and user influence. It is clear that different Tweets can have a different level of \textit{quality} in that Tweets that are retweeted have a greater chance of being interesting, but does the way in which the social structure of users is formed also have a quality in terms of facilitating retweeting?
 
 %\begin{mydefinition}
 % The \textbf{broadcast front}, denoted by $B_v(t)$, of token $\tau_v$ at timestep $t$ is the set of nodes that received $\tau_v$ in timestep $t$ but did not have it in timestep $t-1$.
