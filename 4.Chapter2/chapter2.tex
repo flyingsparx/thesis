@@ -13,87 +13,155 @@ Stuff to add to this section:
 \item Link 'retweet volume' to 'retweet group size'
 \end{itemize}
 
-Twitter is often seen as one of the biggest sources of new and live information on the Internet, with millions of people producing and absorbing information daily. Users receive tweets onto their timelines from the users that they follow. Thus, a user has some control over the \textit{type} of information they receive by choosing which other users to follow. A particular user, therefore, may not be aware of information that exists outside of their local network, since he or she is not directly exposed to the information produced by non-followees.
-\\
-Retweeting allows users to forward information they receive onto their own followers. As a result, followers of these users, who might not normally be exposed to this information, now have a chance to access it. A user who decides to retweet a tweet can be said to consider that tweet to be \textit{interesting} (at least, to their followers), since that user has taken the time to read the tweet, decided whether or not to share it, and then to actually retweet it \cite{uysal11}.
-\\
-Several factors can affect a user's decision to retweet, such as whether the tweet contains an (interesting) URL, whether the tweet mentions another user, whether a user even has a chance to see the tweet, the influence of the author, and so on. These factors account for a user's individual retweet \textit{decision} on a particular tweet, and the combination of several users' retweet decisions dictate how far the tweet will propagate. However, it is our belief that the social network structure also has an affect on how far tweets can travel.
-\\
-The social structure of Twitter is built up by users electing to follow other users. When a user follows a user, a directional link is forged between them, and any tweets generated, or forwarded, by the followed user are passed down the link. It's clear to see that, as more links are made between users, many more avenues are generated for message propagation throughout the social structure. Users with a high in- and out-degree can become an information highway, but users with a low out-degree are a bottleneck of information. 
-\\
-In this chapter, we demonstrate how different network types support different propagation characteristics through the use of a model simulating each network type. Using the model, we make predictions on the retweet outcomes on several network types, and compare these to the characteristics of the propagation in real Twitter networks. We finish by discussing how the \textit{interestingness} of a tweet may be inferred from simulating the network in this way.
 
-The notion of time decay and how this is associated with a user's retweet decision is discussed in addition to a retweet probability prediction in \cite{zhu11} (and \cite{peng11}), which is the basis of the model we use in this chapter.
+In the previous chapter, a series of studies were conducted into Twitter with respect to message propagation through retweeting. In particular, research was done to provide an understanding of the patterns produced through retweets and how their properties relate to the Twitter users that the Tweets pass through.
 
-\section{Overview}
-In the next sections, we introduce and briefly explain the regression model we use for simulations and predictions. We then go on to analyse the differences in the propagation characteristics between three different network types before comparing the results of simulations on these networks with data collected from the Twitter social graph. We finish by introducing a methodology for predicting the interestingness of a particular tweet to a particular user and how this might be improved.
-\\
-Ideally, there are two things we'd like to see from the first set of experiments; firstly, that changing the network type and properties does, indeed, affect the propagation behaviour, and, secondly, that at least some of the results from the experimentation correspond to Twitter's own retweet behaviour so that a fair comparison and justifications of our results can be made.
-\\
-With regard to our prediction work, we'd like to be able to make relatively decent predictions on which tweets are of interest, and which are not, based on the simulation research in the next section.
+Of particular interest, however, is the social graph underlying Twitter, which describes how the users are interconnected and dictates the information flow between them. It has been discussed that users with a higher follower count are more likely to have their Tweets retweeted and that some users can have their Tweets forwarded through many hops indeed, so that information may be passed between different communities of users.
 
-\section{Model} 
-As mentioned above, \cite{zhu11} introduced and discussed their prediction model, which was shown to perform well when predicting the retweet decision of a user. Their model trains a logistic regression using a set of user-, tweet- and context- features in order to classify an experimental tweet and output a retweet probability based on a set of features.
+In addition to the effects of user influence,  several other factors also govern an individual retweet decision of a given user for a particular Tweet. These include properties of the Tweet, such as whether, or not, the Tweet contains a URL, whether it mentions a particular user, whether the user even has an opportunity to view the Tweet, and so on.\\
+These factors account for the individual user's retweet decision and the almagamation of every user's retweet decision on the Tweet describes the Tweet's overall retweetability and, which determines how far the Tweet can propagate.
 
-\subsection{Machine Learning}
-Machine learning techniques are useful for making predictions based on certain input criteria based on the perceived history of previous outputs from the same inputs. 
+However, it is believed that the topology of the network, below the level of user influence, can play an important role in facilitating (or inhibiting) Tweet propagation by opening and closing available retweet pathways between users and groups of users.\\
+Whilst retweet decisions based on Tweet features alone (such as the actual content of the Tweet or a URL the Tweet points to) may imply a level of interest in the Tweet, the influence of users has a very large impact on how many retweets a certain Tweet receives. Thus, abstracting the concepts away from user influence may help in discovering methods for inferring which information is interesting.
 
-\subsubsection{General Overview}
-For example, consider the three attributes, A, B and C, each of which is of a boolean data type. A machine learning technique is `shown' that in every case where A is True and B is False, then C is true; and that in each case where A is False and B is True, then C becomes False. The history of these inputs suggests that A is strongly associated with C (the strength of this relationship will increase if the input/output history is larger), such that if the technique now tries to predict C based on the fact that A = True, then it will likely suggest that C is also True with high confidence.
-\\ \\
-A technique that has been shown many of these input/output combinations (known as `instances') is said to be a trained model, where the model type is that of the learning technique used. This model can then make predictions based on the same inputs it has been trained on, and will therefore not work for attribute inputs that it hasn't been trained with.
-\\
-Generally, in large enough datasets, the training data will not exclusively contain instances where A is the inverse of B, and so the model will be able to make predictions in cases where A = B (though if these cases are less prevalent then the confidence of these prediction outputs will be weaker). When training the model, instances must contain the input attributes as well as the value of the output attribute. When testing against the model after training, the model is supplied the input attributes and predicts the value of the output attribute. Generally, the model will also indicate how confident it feels that the prediction is correct, and thus an idea can be obtained of the value of each of the input attributes. Some model types (particularly regressions) output instead the \emph{probability} with which the attributes align to the trained regression.
-\\ \\
-In this example the focus has been on boolean data types, but most machine learning techniques are not limited to these. Indeed, most applications require the learning of real numbers (integers, floats, etc.) and more highly-dimensioned nominal attributes, where there are several categories that the value of one of the input attributes can lie in. Many machine learning techniques exist and some are more accurate than others when it comes to different data types and several support the notion of `weighting' attributes, in which a strength weight is assigned to each attribute to signify the confidence with which the model should rely on that attribute for producing the prediction.
-\\
-For example, for purely nominal values, then logistic regressions can be accurate in predicting outcomes, whereas for a mixture of real and nominal attributes a Bayesian attempt might be more suitable. 
+Twitter's social structure has previously been described as being built from users creating edges between themselves through the act of following. A followship defines the direction of travel of information from the follower to the friend, and this illustrates how users with many followers immediately have their Tweets made available to lots of users before any retweeting even takes place.\\
+As more edges are constructed between users, then the global initial spread of Tweets is increased, and with the addition of retweets, this has an even bigger effect. Although other infleuncing factors have been mentioned earlier, such as the notion of a user's network awareness and of user influence, the organisation of users on the graph and the differences in observed propagation pattern is an interesting avenue for research towards uncovering interestingness.
 
-\subsubsection{Logistic Regression} 
-The work in this chapter utilises a logistic regression for outputting retweet predictions based on the feature input criteria discussed later.
-\\
-As mentioned, the logistic regression predicts the statistical likelihood that the input features align with what the model has been trained with. The work in this chapter relies on the use of a retweet probability of a given user acting on a given Tweet at a certain time. Thus, it is trained in such a way so that the binary input attributes produce a binary output retweet outcome attribute: 1 for retweet, 0 for no retweet.
-\\
-When testing, the binary features of the test set are used to output the probability that these features will result in a retweet.
+In this chapter, various user network types are used to simulate retweet behaviour between users on Twitter. The behaviours are studied in order to research the propagation patterns observed in different network structure types. Non-realistic and realistic networks are used to highlight the low-level propagation in these networks and the similarities between more realistic simulated networks and Twitter's own social graph.\\
+This research is then used to generate the methodology for estimating Tweet interestingness based on an \textit{expected} Tweet popularity, as is discussed further later in the chapter.
 
-\subsection{Algorithm}
-Include image indicating the flow of events that take place for the model
-\\
-Pseudocode for the algorithm
-\\
-In essence, the model requires a network of users and one tweet to start the simulation. It starts by initialising a user set, \textit{U}, to contain one source user from the network, $U_s$. This source user then transmits a tweet which is then received by its followers. $U_s$ is then removed from $U$. For each follower, its tweet and user features are classified to produce a retweet probability. If this is greater than a random number, $R$, then the user retweets the tweet to its followers and the process repeats. Any user that retweets the tweet is removed from $U$ and added to the retweet decision set $RT$. The followers of the retweeter are added to $U$ for the next iteration, in which each user in $U$ has received the tweet onto their timeline. The retweet volume of this tweet in this network is then the cardinality of the set $RT$.
 
-\subsubsection{Twitter Timelines}
-A tweet in a user's timeline will slip further down in the timeline as time goes by. This happens whether the tweet is interesting or not and whether or not the user has even seen the tweet.  Users having a quick browse through Twitter may not have time to scroll down to find these interesting tweets (and will not know they exist) and thus tweets left in the timeline have their retweet chance decay over time.
-\\
-We emulate this phenomenon in our simulations by removing the tweet from a user's timeline (by removing the user from the set $U$) if the user has not retweeted the tweet within a timestep threshold, which can be varied to alter the volatility of the retweet.
+\section{Observing Differences in Propagation Patterns Between Different Network Structures}
+In this section, simulations are carried out in three different network topologies - a path (or `linear') network, a random network, and a scale-free network. In the experiments, individual user \textit{decisions} are used as the bases for demonstrating Tweeting and retweeting.  
 
-\subsection{Features}
-We use this model as part of a simulator in order to obtain an approximate retweet volume of each tweet when the retweet probabilities of each user receiving the tweet are combined. \cite{zhu11} used a set of around 50 features, though they mention how some features have more weight than others. In order to simplify the simulation significantly and to make data collection more tractable, we decided to use only the following four major features;
+The simulation algorithm and ideas behind the model used for generating the simulated users' retweet decisions are adapted from the work carried out in \cite{zhu11} and \cite{peng11}, which introduces methodologies for illustrating Tweet spread through a given network of users.\\
+From the analyses of the simulation experiments, of interest is whether, and how, changing the network structure does affect retweet propagation patterns, and whether a simulation can mimic Twitter's own bhevaiour in terms of retweet spread.
+
+Measuring retweet behaviour is carried out through studying the distribution of retweet group sizes that result from running the experiments, as is described in later sections.
+
+
+\subsection{Overview of the Simulation Algorithm}
+The algorithm covers the simulation of Tweet propagation through a given set of connected users by emulating retweet decisions of each user who receives the Tweet. The retweet decision is made based on a logistic regression, as is described later.
+
+\cite{zhu11} developed a simulation algorithm which carried this out, which was found to work accurately. This algorithm was modified to fit the purposes of the experiments in this section.\\
+In essence, the simulation initially requires a graph of connected users, $U$, and a Tweet, $t$, to be retweeted between them. It begins by initialising a set of users, $S$, to contain the followers of a particular $u_s \in U$, which represents the user $t.\textrm{author}_O$. As such, users in $S$ are the current set of users to have $t$ on their home timeline.\\
+The procedure then iterates over timesteps, at each stage checking the retweet probability of each $u \in S$. If $u$'s retweet probability is suffuciently great for $t$, then $u$ retweets $t$ by being removed from $S$ and then added to $RT(t)$, which represents the set of users who have retweeted $t$. The followers of $u$ are then added to $S$.\\
+A threshold value, $TH$, is used to emulate the idea of Tweet `decay'. The reasoning behind this is that as time goes by, more and more Tweets arrive onto the home timeline, pushing the previous Tweets further down, whether they are interesting or not. Tweets may be ignored and not retweeted if the user has not viewed their home timeline for a while or if the user decides the Tweet is not of a sufficient quality to retweet it. If a Tweet is pushed down to the extent that is out of view, or out of the current page, then the chance of that user retweeting that Tweet is reduced. Thus, if a user is in $S$ for more iterations than specified by $TH$, then the user is removed from $S$, meaning they cannot retweet the Tweet.\\
+Users who have retweeted $t$, or are unable to do so (either by having previously retweeted it or by exceeding $TH$) are prevented from being (re-)added to $S$.
+
+The algorithm terminates either when the timesteps exceed the maximum allowed, $T$, or when $S$ becomes empty. This results in the retweet group, $G(t)$, which comprises the final set, $RT(t)$, along with the initial $u_s$. As in the previous chapter, $t.\textrm{count}_R = |RT(t)|$.
+
+Therfore, the additional necessary components to run the simulation are the functionality to build the user graph, a constructed Tweet, and functionality for generating a retweet probability for each user who receives the Tweet.
+
+\newfloat{algorithm}{H}{lop}
+\begin{algorithm}
+\caption{Simulation of retweet decisions in a given network of users}
+\begin{algorithmic}[1]
+\Procedure{simulate}{graph of users $U$, tweet $t$}
+    \State $RT\gets$ empty set \Comment{To hold users who retweet $t$}
+    \State $T\gets$ number of timesteps allowed
+    \State $TH\gets$ maximum timesteps \Comment{Emulate $t$ `slipping' down timeline}
+    \State $us\gets$ source User selected from $U$
+    \State $S\gets$ initialise to followers of $us$
+    \Statex % new line
+    \ForAll{$ti$ in range $(0,T)$}
+        \ForAll{$u \in S$}
+            \State $P\gets$ retweet probability of $u$ on $t$ in range $(0,1)$
+            \State $r\gets$ random number in range $(0,1)$
+            \If{$P > r$}
+                \State Remove $u$ from $S$
+                \State Add $u$ to $RT$
+                \State Add followers of $u$ to $S$
+            \Else
+                \State increment $u.\textrm{TIME\_HELD}$
+                \If{$u.\textrm{TIME\_HELD} > TH$}
+                    \State remove $u$ from $S$ \Comment{$u$ has held $t$ for too long in timeline}
+                \EndIf
+            \EndIf
+        \EndFor
+        \If{$|S| = 0$}
+            \State return $RT$ \Comment{No more users can retweet $t$}
+        \EndIf
+    \EndFor
+    \State return $RT$
+\EndProcedure
+\end{algorithmic}
+%\caption{Algorithm to simulate retweet decisions in a given network of users.}
+\label{algo1}
+\end{algorithm}
+
+
+\subsection{Generating a User's Retweet Probability} 
+As prevoiusly mentioned, \cite{zhu11} used a predictive model for retweet decisions based on a logistic regression, which was demonstrated to be capable of accurately predicting a user's retweet chance on a given Tweet at a given time. The regression was trained on a set of user, tweet and context features in order to classify a likelihood on the binary decision: retweet or no retweet, such that if $P = 1$ then the retweet will definitely occur.
+
+
+\subsubsection{Machine Learning}
+Machine learning is the term given to the family of techniques that allow a program to make predictions for the outcome of unseen instances based on an observed and known history of occurrences. There are many types of machine learning classifiers that are suitable for different purposes, such as for predicting an expected outcome from a set of nominal categories, for predicting a value from a continuous range, or for predicting the \textit{probability} of a binary outcome.
+
+Most machine learning techniques involve the training of a predictive model, which contains the information on known outcomes for a set of features. The model is then used to estimate an unknown outcome, usually with a probability on the \textit{confidence} of the classification, for new sets of instances.
+
+For example, consider three attribute variables, $A$, $B$, and $C$, each of which can be equal to one of two nominal values; \textsc{True} or \textsc{False}. A particular machine learning algorithm trains a model based on its knowledge that;
 \begin{itemize}
-\item \emph{follows} - Whether or not the user exposed to the tweet is a follower of the author;
-\item \emph{followed} - Whether or not the user exposed to the tweet is followed by the author;
-\item \emph{mentioned} - Whether or not the user exposed to the tweet is mentioned in the tweet;
-\item \emph{URL} - Whether or not the tweet contains a URL;
+    \item $A\gets$ \textsc{True}, $B\gets$ \textsc{False} $\Longrightarrow$ $C\gets$ \textsc{True}
+    \item $A\gets$ \textsc{False}, $B\gets$ \textsc{False} $\Longrightarrow$ $C\gets$ \textsc{False}
 \end{itemize}
-Where \emph{author} is defined as the user who originally tweeted the tweet.
-\\ \\ 
+Although training of predictive models nearly always involves using more than two instances, the history of these example instances indicate that $C$ is more strongly associated with $A$ than with $B$. As more instances are added showing similar behaviours, then the association becomes stronger, to the extent that the technique will predict $C\gets$ \textsc{True} in instances where $A\gets$ \textsc{True} (and vice versa) with higher confidence.
+
+In this case, $A$, $B$, and $C$ are known as the `features', and a set of such features form the `instance'. Once a trained model has been constructed, the machine learning algorithm will only be able to make predictions using instance features it has knowledge of. For example, if the example technique was now given an instance containing a feature $D$, then the example technique will not know how changes in $D$ will affect $C$'s outcome.
+
+If there is not a strong correlation between the features in a dataset, then the confidence on classification of a particular feature will be weaker. Although this example has focussed on boolean (nominal) data types, many machine learning classifiers are able to work with features that are higher dimensional nominal values, contunuous reals, and so on, and will apply weights to the different features based on their level of influence to other features in the instance.
 
 
-\section{Training the Model}
-\subsection{Data Collection}
+\subsubsection{The Logistic Regression}
+Logistic regression analysis can be used as a machine learning technique for working with binary outcomes based on a set of predictor variables (or features) \cite{hosmer13}, which makes it an appropriate approach for predicting the binary retweet decision. As mentioned previously, logistic regressions have been frequently used in retweet analysis \cite{castillo11} \cite{zhu11} \cite{peng11} \cite{naveed11} \cite{hong11}.
+
+An implementation of the logistic regression algorithm was written in the Python programming language, which formed the basis of calculating the value for $P$ mentioned in the algorithm overview earlier based on a set of feautures of the Tweet and author user.
+
+
+\subsection{Summary of Training Features}
+\cite{zhu11} used the approach in order to accurately model retweet decisions in Twitter. A set of around 50 different features were used to train the logistic regression, with the retweet outcome (\textsc{True} or \textsc{False}) being the predicted classification in each case. These features included tweet-related features (such as content analysis, inclusion of URLs, etc.), and network and user features (followships, mentions, etc.).
+
+Since the network structures themselves, and the propagation \textit{patterns}, are what are of interest in this section, the simulation is significantly simplified by using far fewer features, yet which are features that have been shown to have a strong influence on the retweet decision. As long as a consistent set of feature groups and values are used, the properties of the retweet groups observed should demonstrate the varying behaviours across the different user structures.
+
+As such, the following four features are used in conjunction with each Tweet, $t$, and where $u$ is the user currently making the retweet decision;
+
+\begin{table}[h]\footnotesize
+\begin{center}
+\begin{tabular}{ l | c | l }
+	Feature & Feature data type & Description\\
+	\hline
+	\hline 
+	\textsc{follows}    & \{\textsc{True, False}\} & \textsc{True} if $u \in t.\textrm{author}_O.E_i$\\
+    \textsc{followed}   & \{\textsc{True, False}\} & \textsc{True} if $u \in t.\textrm{author}_O.E_o$\\
+    \textsc{mentioned}  & \{\textsc{True, False}\} & \textsc{True} if $u$ is mentioned in $t$'s content\\
+    \textsc{url}        & \{\textsc{True, False}\} & \textsc{True} if \texttt{http://} or \texttt{https://} in $t$'s content\\
+    \hline 
+    \textsc{retweet}    & \{\textsc{True, False}\} & \textsc{True} if $u \in RT(t)$\\ 
+    \hline
+\end{tabular}
+\end{center}
+\caption{Training features for the logistic regression.}
+\label{table:logisticregressionfeatures}
+\end{table}
+
+
+\subsection{Training the Model}
+
+
+
+\subsubsection{Data Collection}
 To collect the training data, we crawled Twitter, using the REST API, from March-June 2012 to collect a set of around 12,000 tweets and retweets from the Twitter public timeline. In addition, we made further calls to collect the information required for the features (namely the \textit{following} and \textit{followed} features). 
 
-\subsection{Feature Extraction and Regression Training}
+\subsubsection{Feature Extraction and Regression Training}
 FILL THIS IN
 \\
 The above features were extracted in each case and the regression was trained.
 
 
-\section{Network Analyses}
+\subsection{Network Analyses}
 In this section, we look at three different network structures and discuss the differences in the propagation patterns produced by each. Note that each graph we assess is \textit{directed}. The same set of tweets are used for each simulation on each of the networks.
 
-\subsection{Path Network}
+\subsubsection{Path Network}
 A path network is the most simple of the three, and is also the least life-like when compared to Twitter's own social graph. In this network, the output retweet volume is, by definition, equal to the penetration (i.e. \emph{depth} of propagation) of each tweet.
 \\
 In this case, a directional path network consists of a network of users, $ N $, of size $ n $, in which each user $ N_i $ is followed by user $ N_{i+1} $ for $ 1 \le i < n-1 $. As a result, all users in the network, except the user $ N_n $, have precisely one follower.
@@ -121,7 +189,7 @@ The likelihood of a user getting the chance to retweet, and also deciding to ret
 \\
 As a result, if the retweet decision chance of each user is more or less equal, the chance of user $ N_2  $ retweeting the tweet is of an order of magnitude less than that of user $ N_1 $ deciding to retweet. The graph shows half life-style behaviour; owing to the fact that each retweet is exponentially less likely to occur than the previous retweet. Note that the graph is plotted on a log-linear scale.
 
-\subsection{Random Network}
+\subsubsection{Random Network}
 Random networks are more similar to Twitter's own social structure than path networks, but are a much more basic and uniform version and do not consider more influential users or the development of Twitter communities.
 \\
 A random network is defined as a network of users, $ N $, of size $ n $ in which a user $ N_x $ has probability $ p $ of following user $ N_y $. Thus; as the probability $ p $ is increased, the likelihood of a user following other users in $ N $ increases, causing the overall network edge density to increase. Generally, the average number of followers and followees of a user is proportional to $ p\times n $. Thus the parameters for constructing such a graph are the network size, $n$, and the attachment probability, $p$. The simulation results for the random network indicates a higher distribution of mid-range retweet volumes.
@@ -140,7 +208,8 @@ A random network is defined as a network of users, $ N $, of size $ n $ in which
 \label{fig:random}
 }
 \end{figure}
-\subsection{Scale-Free Network}
+
+\subsubsection{Scale-Free Network}
 Include more mathematical analysis of scale-free networks (in general) - i.e., in what way are they logarithmic?
 \\
 A scale-free network is a network of users, $ N $, of size $ n $ and is generated in such a way so that the resultant distribution of degree follows a power-law. \emph{In}-degree signifies the number of inward edges to a node (i.e. the number of followers of a user), whereas \emph{out}-degree is the number of outward edges (i.e. the number of users that user follows).
@@ -164,6 +233,7 @@ Figure \ref{fig:real-scalefree} shows the frequency distribution of retweet volu
 %\label{fig:scale-free}
 %}
 %\end{figure}
+
 \subsection{Comparison to Real Twitter Data}
 In our previous work, \cite{webberley11}, we captured and analysed data which contained results on the distribution of retweet group sizes. In that paper, a retweet group was defined to be a set of tweets containing one tweet and then all the retweets of that tweet. Thus the retweet volume looked at in this section is effectively the cardinality of the retweet group (minus one). Since the results in the above experiments also look at the frequency distribution of retweet volumes, then we should be able to draw some comparisons.
 \\
@@ -197,6 +267,7 @@ The random network facilitated many more retweets due to the fact that users had
 Despite random networks supporting large retweet throughput (i.e. high \emph{recall} of information), the disadvantage is that the interest \emph{precision}  is much lower. This is because this type of network relies on users following a large number of other users, thus meaning that they would receive more `noise' (i.e. uninteresting tweets) than if they were more limited and selective. Although tweets that are retweeted are usually of a higher \emph{quality}, not all retweeted tweets will be interesting to all users.
 \\
 Finally, the scale-free network, whilst not having the highest throughput of information, does have trends most similar to the data on retweet distributions collected from Twitter's social graph. This is due to its ability to emulate more influential users and areas of dense communities (as discussed in \cite{java07}). These networks have the potential to allow for large numbers of retweets, especially if they are sourced from one of these more dense areas, but typically die off more quickly as the tweets are retweeted through less influential users.
+
 
 \section{Interesting Additional Findings}
 
@@ -261,6 +332,8 @@ Through using the model and simulating each user's tweets through their individu
 The precision in predicting the \textit{interestingness} of each tweet was around 30\%. While this value is low, it does mean that in 30\% of cases, a tweet that we predicted to be interesting was verified to be interesting by at least three MTWs all selecting one tweet from a set of five. In addition, when simulating the questions by randomly choosing the most `interesting' tweet of the five in each case, the performance was unable to near our precision even after several thousand iterations.
 
 \subsection{Improving This}
+idea is there - need better idea for getting expected retweet value! problem is two-fold, but related - need too much data, and can only evaluate users with sparser local networks.
+\\
 Need offline methodology.
 \\
 One route for this would be to try and infer a user's local network from a set of their immediate parameters, drawing on our earlier work suggesting that the Twitter network has the properties of a scale-free small-world graph. Through studying graph patterns, it is possible to make sensible inferences on the edges and nodes of a user's local network based on their follower count. From this, a graph edge density can be calculated, $ d = \frac{|E|}{|N|(|N|-1)} $, for use in generating a scale-free network.

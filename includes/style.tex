@@ -20,9 +20,11 @@
 \usepackage{hyperref}
 \usepackage[all]{hypcap}
 \usepackage{longtable}
-\usepackage[noend]{algorithmic}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
 \usepackage{multirow}
 \usepackage{float}
+
 
 % Line spacing
 \def\baselinestretch{1.5}
@@ -177,35 +179,35 @@
 \usepackage{eepic}
 
 % Algorithm environment
-\newcounter{algorithm}[chapter]
-\renewcommand{\thealgorithm}{\thechapter.\@arabic\c@algorithm}
-\def\fps@algorithm{t}
-\def\ftype@algorithm{1}
-\def\ext@algorithm{loa}
-\def\fnum@algorithm{Algorithm~\thealgorithm}
-\newenvironment{algorithm}{\@float{algorithm}}{\end@float}
-\newenvironment{algorithm*}{\@dblfloat{algorithm}}{\end@dblfloat}
-\newenvironment{alevel}%
-   {\begin{list}{}{%
-      \setlength{\topsep}{0pt}%
-      \setlength{\parskip}{0pt}%
-      \setlength{\partopsep}{0pt}%
-      \setlength{\parsep}{0pt}%
-      \setlength{\itemsep}{0pt}}}%
-   {\end{list}}
-\newcommand\listalgorithmsname{List of Algorithms}
-\newcommand\listofalgorithms{%
-    \if@twocolumn
-      \@restonecoltrue\onecolumn
-    \else
-      \@restonecolfalse
-    \fi
-    \chapter*{\listalgorithmsname}%
-      \@mkboth{\listalgorithmsname}{\listalgorithmsname}%
-    \@starttoc{loa}%
-    \if@restonecol\twocolumn\fi
-    }
-\newcommand*\l@algorithm{\@dottedtocline{1}{1.5em}{2.3em}}
+%\newcounter{algorithm}[chapter]
+%\renewcommand{\thealgorithm}{\thechapter.\@arabic\c@algorithm}
+%\def\fps@algorithm{t}
+%\def\ftype@algorithm{1}
+%\def\ext@algorithm{loa}
+%\def\fnum@algorithm{Algorithm~\thealgorithm}
+%\newenvironment{algorithm}{\@float{algorithm}}{\end@float}
+%\newenvironment{algorithm*}{\@dblfloat{algorithm}}{\end@dblfloat}
+%\newenvironment{alevel}%
+%   {\begin{list}{}{%
+%      \setlength{\topsep}{0pt}%
+%      \setlength{\parskip}{0pt}%
+%      \setlength{\partopsep}{0pt}%
+%      \setlength{\parsep}{0pt}%
+%      \setlength{\itemsep}{0pt}}}%
+%   {\end{list}}
+%\newcommand\listalgorithmsname{List of Algorithms}
+%\newcommand\listofalgorithms{%
+%    \if@twocolumn
+%      \@restonecoltrue\onecolumn
+%    \else
+%      \@restonecolfalse
+%    \fi
+%    \chapter*{\listalgorithmsname}%
+%      \@mkboth{\listalgorithmsname}{\listalgorithmsname}%
+%    \@starttoc{loa}%
+%    \if@restonecol\twocolumn\fi
+%    }
+%\newcommand*\l@algorithm{\@dottedtocline{1}{1.5em}{2.3em}}
 
 % List of figures and tables
 \renewcommand\listoffigures{%
@@ -320,6 +322,14 @@
   commentstyle=\color{dkgreen},       % comment style
   stringstyle=\color{mauve}      % string literal style
 }
+
+\newfloat{Code}{H}{myc}
+
+%\lstnewenvironment{code}[1][]%
+%  {\minipage{\linewidth} 
+%   \lstset{basicstyle=\ttfamily\footnotesize,frame=single,#1}}
+%  {\endminipage}
+
 % END OF STUFF I ADDED
 
 \makeatother
