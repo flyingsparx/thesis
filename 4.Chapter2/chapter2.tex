@@ -123,12 +123,12 @@ An implementation of the logistic regression algorithm was written in the Python
 
 Since the network structures themselves, and the propagation \textit{patterns}, are what are of interest in this section, the simulation is significantly simplified by using far fewer features, yet which are features that have been shown to have a strong influence on the retweet decision. As long as a consistent set of feature groups and values are used, the properties of the retweet groups observed should demonstrate the varying behaviours across the different user structures.
 
-As such, the following four features are used in conjunction with each Tweet, $t$, and where $u$ is the user currently making the retweet decision;
+As such, each instance comprised the following four features associated with each Tweet, $t$, and where $u$ is the user currently making the retweet decision, \textsc{retweet};
 
 \begin{table}[h]\footnotesize
 \begin{center}
 \begin{tabular}{ l | c | l }
-	Feature & Feature data type & Description\\
+	Feature & Data type & Description\\
 	\hline
 	\hline 
 	\textsc{follows}    & \{\textsc{True, False}\} & \textsc{True} if $u \in t.\textrm{author}_O.E_i$\\
@@ -144,50 +144,76 @@ As such, the following four features are used in conjunction with each Tweet, $t
 \label{table:logisticregressionfeatures}
 \end{table}
 
+The \textsc{url} feature has, in the literature, often been found as a large impacting feature on retweets in Twitter, especially in \cite{alonso10}, who use it as their basis for determining which Tweets are interesting.
+
 
 \subsection{Training the Model}
+In order to train the logistic regression model, data was required from Twitter so that the instance sets of features could be built. 
+
+Data collection for these experiments again utilised Twitter's REST API, which was queried between March and June 2012 to collect a set of around 12,000 Tweets and retweets. Since this time was before the mandatory switch-over to v1.1 of the REST API, the public timeline could again be used to collect the data without the necessity of crawling through the social graph.\\
+In this case, it was particularly necessary that non-retweets were also collected in order to provide the negative case when training the regression model, so that there were instances where the \textsc{retweet} feature could be \textsc{False}.
+
+In cases where the collected Tweet was a retweet, further calls were made to the API to determine the relationships between the retweet's author and the original Tweet's author in order to satisfy the required \textsc{follows} and \textsc{followed} features.
+Where the collected Tweet was not an instance of retweet, there is no original author to examine the relationships between. In these cases, further Tweets were retrieved for the user in order to find their retweet rate in terms of the ratio of retweets to Tweets on their user timeline and an analysis of the relationship between these and the original authors. This was used in conjunction with the user's follower and friend count to determine a probability of the `faux' followships.
+
+After storage, the regression model was trained using features extracted from the raw data, which the simulation algorithm could then use to generate the required retweet probability, $P$.
 
 
+\subsection{Running the Simulations}
+Once the model had been trained, the simulations could be run. In each simulation experiment, a network of users was generated, as described in the next section, and a Tweet object was created.\\
+This Tweet object contained information on whether or not it contained a URL and if it mentioned one of the users in the generated network. 
 
-\subsubsection{Data Collection}
-To collect the training data, we crawled Twitter, using the REST API, from March-June 2012 to collect a set of around 12,000 tweets and retweets from the Twitter public timeline. In addition, we made further calls to collect the information required for the features (namely the \textit{following} and \textit{followed} features). 
-
-\subsubsection{Feature Extraction and Regression Training}
-FILL THIS IN
-\\
-The above features were extracted in each case and the regression was trained.
+Various parameters - such as the $TH$, the size of the user network, $U$ to be generated, $t$'s particular parameter for the simulation, and any weightings on the decision probability prediction generator - could be altered to affect the strength or correlation of the patterns produced by the different network structure types.
 
 
 \subsection{Network Analyses}
-In this section, we look at three different network structures and discuss the differences in the propagation patterns produced by each. Note that each graph we assess is \textit{directed}. The same set of tweets are used for each simulation on each of the networks.
+In this section, three network structures are assessed in terms of the differences in the patterns of propagation each expresses. Each generated graph is a \textit{directed} graph in order to illustrate the followships between the user nodes, and to support the use of the \textsc{follows} and \textsc{followed} features required in the decision probability calculation.
+
+In each case, the same set of generated Tweets were used, but different structures required the various parameters to be set slightly differently.
+
 
 \subsubsection{Path Network}
-A path network is the most simple of the three, and is also the least life-like when compared to Twitter's own social graph. In this network, the output retweet volume is, by definition, equal to the penetration (i.e. \emph{depth} of propagation) of each tweet.
-\\
-In this case, a directional path network consists of a network of users, $ N $, of size $ n $, in which each user $ N_i $ is followed by user $ N_{i+1} $ for $ 1 \le i < n-1 $. As a result, all users in the network, except the user $ N_n $, have precisely one follower.
-\\
-Since each internal user only has one follower, the likelihood of a retweet occurring at each timestep is somewhat reduced, it is expected that the retweet volume will tail off more soon than in other network types. Propagation is also hindered by the fact that each retweet can reach an audience with a maximum size of 1 at each stage, thus relying on that single user making the retweet.
+The first assessed structure was to illustrate the pattern on a non-realistic social network structure; a path network.
+
+Path networks are one of the simplest type of graph, and a linear directional path network consists of the graph of users, $U$, of size $n$, in which each user $U_i \forall 0 \leq i < n$ is followed by user $U_{i+1}$. As a result, each $u \in U$ has precisely one follower and one friend, except the users $U_n$ and $U_1$ respectively.
+
 \begin{figure}[h]
-\centering{
+\centering
+\includegraphics[scale=0.8]{4.Chapter2/Media/path_network.png} 
+\caption{Example of a path network.}
+\label{fig:path_network}
+\end{figure}
+
+In this graph, the size of the retweet group is, by definition, equal to the depth of penetration, as there is only one path (or retweet chain) available for propagation to occur down. As such, in each case, the retweet tree representing a resultant retweet group formed in this type of network will have the same structure as the graph itself, yet with a size dependent on the collective retweet decisions of the users.
+
+Since each internal user has only one follower, the likelihood of a retweet decision being positive at each timestep is somewhat progressively reduced, and thus is much more likely to tail off sooner than in graphs with more propagation avenues. This is also due to the fact that each retweet can only reach an audience of size 1 at each time step, and thus the survival of the retweet cannot rely on a summation of many users' retweet decisions. 
+
+\begin{figure}[h]
+\centering
 \begin{tikzpicture}
  \begin{semilogyaxis}[
-        xlabel=Retweet Volume,
-        ylabel=Frequency,
+        xlabel=$|G(t)|$,
+        ylabel=Frequency of occurrence,
+        width=7cm,
         grid = major]
-    \addplot[only marks,mark=*,blue] plot coordinates {
+    \addplot[only marks,mark=+,blue] plot coordinates {
         (1,540)  (2,118)  (3,53) (4,27) (5,13) (6,5) (7,4) (8,2) (9,1) (10,0)
     };
 \end{semilogyaxis}
 \end{tikzpicture}
-\caption{Retweet volume frequency distribution from path network simulation}
+\caption{Frequency distribution of retweet group sizes in path network simulations}
 \label{fig:linear}
-}
 \end{figure}
-Figure \ref{fig:linear} shows the frequency distribution for a path network when simulated with the logistic regression over a series of tweets. The graph shows a very large proportion of single retweets, which reduces logarithmically with larger volumes.
-\\
-The likelihood of a user getting the chance to retweet, and also deciding to retweet, becomes the product of a probability function the further the tweet travels, where user $ N_i $ requires all users $ N_0 $ to $ N_{i-1} $ to pass on the message before it even gets a chance to make the retweet decision.
-\\
+
+The likelihood of a particular user achieving the opportunity to receive the Tweet, in order to then retweet it, becomes the product of the probability function the further it travels through the graph, in which user $U_i$ requires each user from $U_{i-1}$ to first make a positive retweet decision. For example, if each user has probability $p$ of retweeting the Tweet, then each user's chance of retweeting the Tweet is $\frac{1}{p^i}$, where $i$ is the position of the user in the graph.
+
+Therefore, as might be expected, the frequency distribution of retweet group sizes demonstrates a logarithmic pattern with many small retweet groups followed by a series of exponentially smaller groups.
+
+
+
 As a result, if the retweet decision chance of each user is more or less equal, the chance of user $ N_2  $ retweeting the tweet is of an order of magnitude less than that of user $ N_1 $ deciding to retweet. The graph shows half life-style behaviour; owing to the fact that each retweet is exponentially less likely to occur than the previous retweet. Note that the graph is plotted on a log-linear scale.
+
+- This network illustrates well how some users who might find the tweet interesting (and then retweet the Tweet) do not even get to see it in order to make the decision
 
 \subsubsection{Random Network}
 Random networks are more similar to Twitter's own social structure than path networks, but are a much more basic and uniform version and do not consider more influential users or the development of Twitter communities.
