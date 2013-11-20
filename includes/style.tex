@@ -275,8 +275,7 @@
 \newtheorem[S,leftmargin=18pt,thickness=0.9pt,bodystyle=\noindent]{mydefinition}{Definition}[chapter]
 
 % STUFF I ADDED:
-%\usepackage{amsmath}
-%\usepackage{amsfonts}
+
 \usepackage{amssymb}
 \usepackage{graphicx}
 \usepackage{float}
@@ -323,12 +322,38 @@
   stringstyle=\color{mauve}      % string literal style
 }
 
-\newfloat{Code}{H}{myc}
 
-%\lstnewenvironment{code}[1][]%
-%  {\minipage{\linewidth} 
-%   \lstset{basicstyle=\ttfamily\footnotesize,frame=single,#1}}
-%  {\endminipage}
+% FUNCTIONS:
+
+% retweet group
+\newcommand{\rg}[1]{RG(#1)}
+
+% retweets 
+\newcommand{\rt}[1]{RT(#1)}
+
+% retweet count
+\newcommand{\rc}[1]{#1.\textrm{count}_R}
+
+% follower count
+\newcommand{\foc}[1]{\textrm{deg}^+(#1)}
+
+% friend count
+\newcommand{\frc}[1]{\textrm{deg}^-(#1)}
+
+% author
+\newcommand{\aut}[2]{#1.\textrm{author}_#2}
+
+% set of followers
+\newcommand{\fos}[1]{N^+(#1)}
+
+% set of friends
+\newcommand{\frs}[1]{N^-(#1)}
+
+% immediate audience
+\newcommand{\ima}[1]{\textrm{audience}(#1)}
+
+% distinct audience
+\newcommand{\dia}[1]{\textrm{distinct audienct}(#1)}
 
 % END OF STUFF I ADDED
 

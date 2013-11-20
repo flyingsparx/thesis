@@ -44,12 +44,12 @@ Measuring retweet behaviour is carried out through studying the distribution of 
 The algorithm covers the simulation of Tweet propagation through a given set of connected users by emulating retweet decisions of each user who receives the Tweet. The retweet decision is made based on a logistic regression, as is described later.
 
 \cite{zhu11} developed a simulation algorithm which carried this out, which was found to work accurately. This algorithm was modified to fit the purposes of the experiments in this section.\\
-In essence, the simulation initially requires a graph of connected users, $U$, and a Tweet, $t$, to be retweeted between them. It begins by initialising a set of users, $S$, to contain the followers of a particular $u_s \in U$, which represents the user $t.\textrm{author}_O$. As such, users in $S$ are the current set of users to have $t$ on their home timeline.\\
-The procedure then iterates over timesteps, at each stage checking the retweet probability of each $u \in S$. If $u$'s retweet probability is suffuciently great for $t$, then $u$ retweets $t$ by being removed from $S$ and then added to $RT(t)$, which represents the set of users who have retweeted $t$. The followers of $u$ are then added to $S$.\\
+In essence, the simulation initially requires a graph of connected users, $U$, and a Tweet, $t$, to be retweeted between them. It begins by initialising a set of users, $S$, to contain the followers of a particular $u_s \in U$, which represents the user $\aut{t}{O}$. As such, users in $S$ are the current set of users to have $t$ on their home timeline.\\
+The procedure then iterates over timesteps, at each stage checking the retweet probability of each $u \in S$. If $u$'s retweet probability is suffuciently great for $t$, then $u$ retweets $t$ by being removed from $S$ and then added to $\rt{t}$, which represents the set of users who have retweeted $t$. The followers of $u$ are then added to $S$.\\
 A threshold value, $TH$, is used to emulate the idea of Tweet `decay'. The reasoning behind this is that as time goes by, more and more Tweets arrive onto the home timeline, pushing the previous Tweets further down, whether they are interesting or not. Tweets may be ignored and not retweeted if the user has not viewed their home timeline for a while or if the user decides the Tweet is not of a sufficient quality to retweet it. If a Tweet is pushed down to the extent that is out of view, or out of the current page, then the chance of that user retweeting that Tweet is reduced. Thus, if a user is in $S$ for more iterations than specified by $TH$, then the user is removed from $S$, meaning they cannot retweet the Tweet.\\
 Users who have retweeted $t$, or are unable to do so (either by having previously retweeted it or by exceeding $TH$) are prevented from being (re-)added to $S$.
 
-The algorithm terminates either when the timesteps exceed the maximum allowed, $T$, or when $S$ becomes empty. This results in the retweet group, $G(t)$, which comprises the final set, $RT(t)$, along with the initial $u_s$. As in the previous chapter, $t.\textrm{count}_R = |RT(t)|$.
+The algorithm terminates either when the timesteps exceed the maximum allowed, $T$, or when $S$ becomes empty. This results in the retweet group, $\rg{t}$, which comprises the final set, $\rt{t}$, along with the initial $u_s$. As in the previous chapter, $\rc{t} = |\rt{t}|$.
 
 Therfore, the additional necessary components to run the simulation are the functionality to build the user graph, a constructed Tweet, and functionality for generating a retweet probability for each user who receives the Tweet.
 
@@ -131,12 +131,12 @@ As such, each instance comprised the following four features associated with eac
 	Feature & Data type & Description\\
 	\hline
 	\hline 
-	\textsc{follows}    & \{\textsc{True, False}\} & \textsc{True} if $u \in t.\textrm{author}_O.E_i$\\
-    \textsc{followed}   & \{\textsc{True, False}\} & \textsc{True} if $u \in t.\textrm{author}_O.E_o$\\
+	\textsc{follows}    & \{\textsc{True, False}\} & \textsc{True} if $u \in \fos{aut{t}{O}}$\\
+    \textsc{followed}   & \{\textsc{True, False}\} & \textsc{True} if $u \in \frs{aut{t}{O}}$\\
     \textsc{mentioned}  & \{\textsc{True, False}\} & \textsc{True} if $u$ is mentioned in $t$'s content\\
     \textsc{url}        & \{\textsc{True, False}\} & \textsc{True} if \texttt{http://} or \texttt{https://} in $t$'s content\\
     \hline 
-    \textsc{retweet}    & \{\textsc{True, False}\} & \textsc{True} if $u \in RT(t)$\\ 
+    \textsc{retweet}    & \{\textsc{True, False}\} & \textsc{True} if $u \in \rt{t}$\\ 
     \hline
 \end{tabular}
 \end{center}
@@ -169,13 +169,14 @@ Various parameters - such as the $TH$, the size of the user network, $U$ to be g
 \subsection{Network Analyses}
 In this section, three network structures are assessed in terms of the differences in the patterns of propagation each expresses. Each generated graph is a \textit{directed} graph in order to illustrate the followships between the user nodes, and to support the use of the \textsc{follows} and \textsc{followed} features required in the decision probability calculation.
 
-In each case, the same set of generated Tweets were used, but different structures required the various parameters to be set slightly differently.
+In each case, the same set of generated Tweets were used, but different structures required the various parameters to be set slightly differently. As such, each network structure will present with different proportionate retweet group size distributions; of interest to this work is the difference in \textit{pattern} of the distribution.
 
 
 \subsubsection{Path Network}
 The first assessed structure was to illustrate the pattern on a non-realistic social network structure; a path network.
 
-Path networks are one of the simplest type of graph, and a linear directional path network consists of the graph of users, $U$, of size $n$, in which each user $U_i \forall 0 \leq i < n$ is followed by user $U_{i+1}$. As a result, each $u \in U$ has precisely one follower and one friend, except the users $U_n$ and $U_1$ respectively.
+Path networks are one of the simplest type of graph, and a linear directional path network consists of the graph of users, $U$, of size $n$, in which each user $U_i \forall 0 \leq i < n$ is followed by user $U_{i+1}$. As a result, each $u \in U$ has precisely one follower and one friend, except the users $U_n$ and $U_1$ respectively.\\
+$n$ is the only parameter necessary in the construction of this user graph.
 
 \begin{figure}[h]
 \centering
@@ -192,7 +193,7 @@ Since each internal user has only one follower, the likelihood of a retweet deci
 \centering
 \begin{tikzpicture}
  \begin{semilogyaxis}[
-        xlabel=$|G(t)|$,
+        xlabel=$|\rg{t}|$,
         ylabel=Frequency of occurrence,
         width=7cm,
         grid = major]
@@ -207,71 +208,61 @@ Since each internal user has only one follower, the likelihood of a retweet deci
 
 The likelihood of a particular user achieving the opportunity to receive the Tweet, in order to then retweet it, becomes the product of the probability function the further it travels through the graph, in which user $U_i$ requires each user from $U_{i-1}$ to first make a positive retweet decision. For example, if each user has probability $p$ of retweeting the Tweet, then each user's chance of retweeting the Tweet is $\frac{1}{p^i}$, where $i$ is the position of the user in the graph.
 
-Therefore, as might be expected, the frequency distribution of retweet group sizes demonstrates a logarithmic pattern with many small retweet groups followed by a series of exponentially smaller groups.
+Therefore, as might be expected, the frequency distribution of retweet group sizes shows a half-life type behaviour demonstrating a logarithmic pattern with many small retweet groups followed by a series of exponentially smaller groups.\\
+This user structure illustrates well how some users that might find the Tweet interesting, and who may decide to retweet it, do not even get the chance to view it in order to make the decision. Although this is accentuated in this structure, the same principle applies to any non-complete social graph, and demonstrates how the way users are connected can have a large impact on the retweetability of a particular Tweet.
 
-
-
-As a result, if the retweet decision chance of each user is more or less equal, the chance of user $ N_2  $ retweeting the tweet is of an order of magnitude less than that of user $ N_1 $ deciding to retweet. The graph shows half life-style behaviour; owing to the fact that each retweet is exponentially less likely to occur than the previous retweet. Note that the graph is plotted on a log-linear scale.
-
-- This network illustrates well how some users who might find the tweet interesting (and then retweet the Tweet) do not even get to see it in order to make the decision
 
 \subsubsection{Random Network}
-Random networks are more similar to Twitter's own social structure than path networks, but are a much more basic and uniform version and do not consider more influential users or the development of Twitter communities.
-\\
-A random network is defined as a network of users, $ N $, of size $ n $ in which a user $ N_x $ has probability $ p $ of following user $ N_y $. Thus; as the probability $ p $ is increased, the likelihood of a user following other users in $ N $ increases, causing the overall network edge density to increase. Generally, the average number of followers and followees of a user is proportional to $ p\times n $. Thus the parameters for constructing such a graph are the network size, $n$, and the attachment probability, $p$. The simulation results for the random network indicates a higher distribution of mid-range retweet volumes.
+
 \begin{figure}[h]
-\centering{
+\centering
+\includegraphics[scale=0.8]{4.Chapter2/Media/random_network.png} 
+\caption{Example of a random network where $n = 5$ and $p \sim 0.5$.}
+\label{fig:path_network}
+\end{figure}
+
+
+The random network was the next user structure to be analysed. Although it is certainly more similar to a real-life social graph than a path network, it is much more basic and uniform and does not consider user communities and clusters or different levels of influence in users in terms of their follower and friend counts.
+
+A random social network is defined as the case in which the graph of user nodes, $U$, and where $n = |U|$, consists of each user, $u$, having probability $p$ of following each other $u_i \in U \forall 0 \leq i \leq n$ and where $u_i \neq u$. Thus, as $p$ is increased, then the likelihood of $u$ following a $u_i$ increases, causing the overall network edge density to increase. In general, therefore, the average number of followers and friends of a user is proportional to $p.n$.\\
+The only parameters needed for constructing such a graph are $n$ and $p$.
+
+\begin{figure}[h]
+\centering
 \begin{tikzpicture}
  \begin{semilogyaxis}[
-        xlabel=Retweet Volume,
-        ylabel=Frequency,
+        xlabel=$|\rg{t}|$,
+        ylabel=Frequency of occurrence,
+        width=7cm,
         grid = major]
-    \addplot[only marks,mark=*,blue]
+    \addplot[only marks,mark=+,blue]
        file {4.Chapter2/data/random.dat};    
 \end{semilogyaxis}
 \end{tikzpicture}
-\caption{Retweet volume frequency distribution from random network simulation}
+\caption{Frequency distribution of retweet group sizes in random network simulations}
 \label{fig:random}
-}
 \end{figure}
 
-\subsubsection{Scale-Free Network}
-Include more mathematical analysis of scale-free networks (in general) - i.e., in what way are they logarithmic?
-\\
-A scale-free network is a network of users, $ N $, of size $ n $ and is generated in such a way so that the resultant distribution of degree follows a power-law. \emph{In}-degree signifies the number of inward edges to a node (i.e. the number of followers of a user), whereas \emph{out}-degree is the number of outward edges (i.e. the number of users that user follows).
-\\
-Scale-free networks have been the subject of a fair amount of research, and are explained more thoroughly in \cite{hein06}. In our implementation we use NetworkX\footnote{http://networkx.lanl.gov}, a Python networking package, to generate directed scale-free networks through a preferential-attachment algorithm based on the network size and edge density as parameters.
-\\
-Figure \ref{fig:real-scalefree} shows the frequency distribution of retweet volumes. Since the data is plotted on logarithmic scales, we see a logarithmic trend very similar to our results in \cite{webberley11}.
-%\begin{figure}[h]
-%\centering{
-%\begin{tikzpicture}
-% \begin{loglogaxis}[
-%        xlabel=Retweet Volume,
-%        ylabel=Frequency,
-%        grid = major]
-%    \addplot[only marks,mark=*,blue]
-%       file {data/scale-free.dat};
-%    
-%\end{loglogaxis}
-%\end{tikzpicture}
-%\caption{Retweet volume frequency distribution generated in scale-free networks}
-%\label{fig:scale-free}
-%}
-%\end{figure}
+The frequency distribution demonstrates a very large proportion of mid-range values for $\rg{t}$, indicating that Tweets tend to have a consistent spread amongst the network, as might be expected. There are few smaller groups since there are no users that have disproportionately smaller spheres of influence, and each user has many incoming edges and a proportionately similar number of outgoing edges. As such, there are more mid-range retweet group sizes than smaller ones.\\
+However, as in any distribution so far examined, the distribution of retweet group sizes must eventually tail off due to the natural eventual reduction in retweet decisions being successfully made as retweet chains increase in length.
 
-\subsection{Comparison to Real Twitter Data}
-In our previous work, \cite{webberley11}, we captured and analysed data which contained results on the distribution of retweet group sizes. In that paper, a retweet group was defined to be a set of tweets containing one tweet and then all the retweets of that tweet. Thus the retweet volume looked at in this section is effectively the cardinality of the retweet group (minus one). Since the results in the above experiments also look at the frequency distribution of retweet volumes, then we should be able to draw some comparisons.
-\\
-We compared the data produced by the different types of network to this previous data, and found that the scale-free network produced a distribution similar to that from the real Twitter data.
+
+\subsubsection{Scale-Free Network}
+The final network structure examined in this section is the scale-free network. Also known as `small world', scale-free graphs are generally throught to be representative of the general structure of online social networks \cite{mislove07} and, indeed, they are used to describe the interconnections of real-world properties, such as friendship groups and food webs \cite{guido07} \cite{hein06}.\\
+Essentially, scale-free networks dictate that there are a small number of nodes with a high degree and many nodes with a low degree and are usually generated through some form of preferential attachment algorithm. Thus, this type of network supports the notions of user communities and influential users in terms of those demonstrating a disproportionately large follower count. The other user structures studied do not have the scope for emulating this property of interconnection between the user nodes.
+
+Scale-free networks are constructed such that the distribution of the degree of the graph's nodes follow a power-law-type distribution in that the distribution of this degree is lograthimic. \\
+For these analyses, NetworkX\footnote{http://networkx.lanl.gov}, a Python graph and networking package, was used to generate directed scale-free graphs of users, which essentially accepts a network size, $n$, and edge density $d$ as the graph construction parameters. 
+
 \begin{figure}[h]
-\centering{
+\centering
 \begin{tikzpicture}
  \begin{loglogaxis}[
-        xlabel=Retweet Volume,
-        ylabel=Frequency,
+        xlabel=$|\rg{t}|$,
+        ylabel=Frequency of occurrence,
         grid = major,
-        legend entries={Real data,Scale-free}]
+        width = 7cm,
+        legend entries={Twitter data, Generated scale-free data}]
     \addplot[only marks,mark=*,red]
        file {4.Chapter2/data/comparison-real.dat};
     \addplot[only marks,mark=*,blue]
@@ -280,38 +271,48 @@ We compared the data produced by the different types of network to this previous
 \end{tikzpicture}
 \caption{Comparing the retweet volumes distribution from scale-free graph simulation to data from Twitter's graph}
 \label{fig:real-scalefree}
-}
 \end{figure}
 
-\subsection{Structure Comparison}
-Each network structure has been demonstrated to show different propagation characteristics. This has shown that, in addition to a user's own retweet decision, the actual spread of a tweet depends somewhat on how the author's local network is constructed. With lots of edges in the graph, there are many more paths down which propagation can occur, increasing the number of times a retweet decision is made, and therefore an increase in the overall number of retweets occurring. The retweet decision facilitated by the model, therefore, combined with a user network give an overall \textit{retweetability} of a tweet that will vary depending on the network it's being propagated in, the source user, and the intermediary retweeters.
-\\
-The path network, as designed to be the extreme case, has shown to allow poor propagation. Importantly, whilst the network parameters and retweet decision had to be globally increased to obtain any sensible data from this simulation, the trend still shows how propagation down a single chain isn't hugely effective.
-\\
-The random network facilitated many more retweets due to the fact that users had a very similar in- and out-degree in all cases across the network. This means that each user is able to receive a lot of information, and is also able to pass on (whether an author or a retweeter) information to lots of users simultaneously in the graph. 
-\\ 
-Despite random networks supporting large retweet throughput (i.e. high \emph{recall} of information), the disadvantage is that the interest \emph{precision}  is much lower. This is because this type of network relies on users following a large number of other users, thus meaning that they would receive more `noise' (i.e. uninteresting tweets) than if they were more limited and selective. Although tweets that are retweeted are usually of a higher \emph{quality}, not all retweeted tweets will be interesting to all users.
-\\
-Finally, the scale-free network, whilst not having the highest throughput of information, does have trends most similar to the data on retweet distributions collected from Twitter's social graph. This is due to its ability to emulate more influential users and areas of dense communities (as discussed in \cite{java07}). These networks have the potential to allow for large numbers of retweets, especially if they are sourced from one of these more dense areas, but typically die off more quickly as the tweets are retweeted through less influential users.
+From simulations of the algorithm through these scale-free networks, a logarithmic trend is observed similar to that demonstrated from the `real' Twitter data analysed in the previous chapter and published in \cite{webberley11}, and the similarities in the distribution pattern is illustrated by Figure \ref{fig:real-scalefree}.
 
 
-\section{Interesting Additional Findings}
+\subsection{General Comparison of Propagation Characteristics across Different Graph Structures}
+In this section, three different network structures have been compared, and whilst the path network is very unrealistic in terms of a representation of a social network, the differences in propagation behaviour presented by each do show how the interconnection of users on the graph can have a large effect on the spread of a Tweet. A small set of features to govern retweet features were used in order to accentuate the difference made by the user structures themseleves.
 
-\subsection{Graph Density}
-Define edge density (with equation
+This has demonstrated that, in addition to the processes behind a user's individual retweet decision, the eventual spread of a Tweet also depends somewhat on how the original author's local network is arranged. Thus, the retweet decision of each involved user along with the available information pathways provided by the underlying social structure both contribute to the overall retweetability of a Tweet. 
 
-\subsection{Results}
-Show links between follower audience -> local network -> density.
+If there are many edges in the network, such as in the case of the random network, then there are many more routes for peopagation to occur down to and from each user, due to the relatively large in- and out-degree of each user node on the graph. This increases the number of users who end up receiving the Tweet and then have the chance to make a retweet decision. This resulted in there being a larger distribution of larger retweet group sizes than smaller ones, before naturally diminishing again. Despite this high throughput of retweets, which provides a high level of information \textit{recall} for the users, the random graph structure is likely to demonstrate a low \textit{precision} in terms of the interestingness of the received Tweets.\\
+This is due to the large number of users having the opportunity to retweet the Tweet, increasing the chance that the `noisy' information will be filtered through.
 
-\subsection{Uses}
-From this data, it is demonstrable that various parameters can be generally successfully inferred from very basic user information.
+The path network demonstrated very poor propagation, and required that its simulation parameters were altered to facilitate retweet behaviour significantly more than in the other graph structures in order to produce any observable pattern. The results showed that propagation down a single allowed chain cannot be an effective way to spread Tweets, as it required each user in the chain to retweet it so that the successive users can have a chance to view it.
 
-\section{Predictions From the User Graph}
-The final part of this paper focuses on the ongoing development of a method to predict the interestingness of a tweet based on the work in the previous sections. The prediction method, at a high level, compares the predicted retweet outcome of a given tweet to the number of times that tweet has actually been retweeted. If, for example, a tweet is simulated with the help of the model and produces a prediction of two retweets, but the tweet has actually been etweeted four times, then we can infer that this tweet is more interesting (at least, to a subset of users). 
-\\
-The tweet and user features we looked at earlier in this paper are very static, binary features, which do not take into account the actual content of the text of the tweet. Therefore, if a tweet is retweeted more than was predicted, then there is something in the tweet, such as a link to a particularly interesting article or a breaking news story, that makes it more interesting than the average tweet, with the same binary features, that was used to train the model.
-\\
+Whilst the scale-free network does not have the same general propagation throughput as the random network, it does demonstrate retweet patterns similar to those observed in data from Twitter's own social graph. This complements the findings of \cite{mislove07} and \cite{hein06} in terms of online social networks emulating real-life social networks having scale-free properties.\\
+This type of structure supports areas of the graph with denser communities, as is shown to exist by \cite{java07}, and have the potential for facilitating very large numbers of retweets if influencial users are involved, but illustrate how Tweets `travelling' through less dense areas (and less-influencial) users will not be as demonstrably popular.
+
+
+
+\section{Using the Social Graph as a Method for Inferring Interestingness}
+The graph analyses in the previous section have demonstrated a method for generating a $\rg{t}$ for a given Tweet, $t$. Since $\rc{t} = |\rg{t}| - 1$, then the simulation algorithm used can be used to estimate a retweet count for a given Tweet. Although it has been discussed that although an individual's retweet decision does generally imply that user's interest in the Tweet, the overall retweet count of a Tweet is capable of denoting that Tweet's popularity. However, this value could be used in tandem with the expected estimated retweet count of a Tweet in order to determine if the Tweet is, in fact, interesting.
+
+This notion is based on the idea that if a Tweet is more popular than expected, then there is something about that Tweet that makes it more \textit{interesting} than similar Tweets that are less popular, such as some breaking news or a link to a controversial article.\\
+For example, consider the case of two Tweets, written by the same author, and both containing the same instances of feature values, such as the inclusion of a URL or a mention. If one of these Tweets achieves significantly more retweets than the other, then there must be some non-trivial feature of the more popular Tweet that makes it stand out to the audience, and thus allows it to be perceived as more \textit{interesting}. This is because the features taken into account are very static, and do not take into account any depth of the actual content of the Tweet.\\
+Similarly, if most Tweets of a user achieve between one and two retweets, then the expected retweet count for this user's future Tweets is likely to be similar. If, however, the author posts a Tweet which achieves an observed total of 10 retweets, then this is more than what was expected. If a Tweet achieves one or zero retweets, then this is as expected or less than expected, and is therefore not interesting.
+
+As such, a method is proposed based on the following two points;
+\begin{itemize}
+    \item observed $\rc{t} >$ expected $\rc{t} \Longrightarrow t$ is interesting
+    \item observed $\rc{t} \leq$ expected $\rc{t} \Longrightarrow t$ is non-interesting
+\end{itemize}
+
+Although it was found, in the previous chapter and in other relevant literature, that pseudo-generated scale-free networks can be representative of Twitter's own social structure, a user's actual own local social network would more accurately portray the links between the users surrounding the original author of a Tweet. By constructing a network based on a user's own local network, then the method would effectively be simulating the Tweets' propagation through the edges representing the followships of the actual users in Twitter's social graph.
+
+ 
+
 In order to improve the fairness of the experiment, we wanted to ensure that the environment of the tweets (i.e. the user network they are propagated through) is the same as its real-life Twitter counterpart. We could then choose a user, which would become the source user, $U_s$, in the set $U$, and simulate that user's own tweets within their particular local network as described by the model above. This would then produce a retweet volume for this user's tweets, to which we could compare the number of times that tweet has \emph{really} been retweeted.
+
+- take a user's local network and build it
+- take a Tweet from this user and simulate it through the constructed graph
+- compare resultant retweet count against the count the Tweet actually achieved
 
 
 \subsection{Data Collection}

@@ -28,37 +28,41 @@ However, not all of these properties are necessary for use in this research and,
 
 Respectively, this represents the Tweet's text, its retweet count, and the \textit{original} author of the Tweet. The final two values depend on whether $t$ is a retweet or not and represent the author of the retweet and a reference to the original Tweet respectively and are nullified when $t$ is not a retweet. Since a retweet is simply an extension of a class of Tweet, then the same properties can be assigned to retweets as to Tweets, except that in the case of retweets the values $\mathrm{orig}$ and $\mathrm{author}_R$ will be non-null.
 
-A Twitter user, $u$, is represented by a Twitter account, and also has a set of properties. In relevance to this thesis, a user can be defined as;
+A Twitter user, $u$, is represented by a Twitter account, and also has a set of properties. In relevance to the work in this thesis, these largely relate to the user's position in the social graph.\\
+In particular, the set of followers and the set of friends of user $u \in G$ are denoted as $\fos{u}$ and $\frs{u}$ respectively, where;\\
 \[
-    u = (E_i, E_o)
+    N^+ = \left\{u_i \quad \forall \quad 0 \leq i \leq |G| \quad : \quad \exists \quad \overrightarrow{u_i u} \right\}
+\]
+\[
+    N^- = \left\{u_i \quad \forall \quad 0 \leq i \leq |G| \quad : \quad \exists \quad \overleftarrow{u_i u} \right\}
 \]
 
-This represents a user's set of inward edges (followers) and the set of outward edges (friends).
-
-The Tweet attributes $\mathrm{author}_O$ and $\mathrm{author}_R$ are types of user. For example, since users represent vertices on the social graph, the author of a Tweet, $t$, has a follower count of $\textrm{deg}^+(t.\textrm{author}_O)$ and a friend count of $\textrm{deg}^-(t.\textrm{author}_O)$.
+The Tweet attributes $\aut{}{O}$ and $\aut{}{R}$ are types of user. For example, since users represent vertices on the social graph, the author of a Tweet, $t$, has a follower count of $\foc{\aut{t}{O}}$ and a friend count of $\frc{\aut{t}{O}}$.
 
 Since a Tweet can be retweeted more than once, the set of Tweets that are in the set of \textit{all} Tweets, $T$, and are retweets of $t$ is defined as;
 \[
-	RT(t) = \left\{ r \in T : r.\textrm{orig} = t \right\}
+    \rt{t} = \left\{ r \in T : r.\textrm{orig} = t \right\}
 \]
 
-Clearly, the retweet count of $t$ is $ t.\mathrm{count}_R = \left\vert{RT(t)}\right\vert $.
+Clearly, the retweet count of $t$ is $ \rc{t} = \left\vert{\rt{t}}\right\vert $.
 
 
 \begin{mydefinition}
-A \textbf{retweet group}, denoted by $G(t)$, describes the original Tweet, $t$, along with the set of the retweets of $t$, $RT(t)$. The term can be used to refer to the individual Tweet and retweets themselves or to the author users of those Tweets.
+A \textbf{retweet group}, denoted by $\rg{t}$, describes the original Tweet, $t$, along with the set of the retweets of $t$, $\rt{t}$. The term can be used to refer to the individual Tweet and retweets themselves or to the author users of those Tweets.
 \end{mydefinition}
 
 
 Retweet groups are useful for classifying a Tweet and the users who have retweeted it, and is appropriate when discussing the audience reach of a particular Tweet. Therefore, since $t$ is also a member of this set, the size of $t$'s retweet group is; 
 \[
-	\left\vert{G(t)}\right\vert = t.\mathrm{count}_R + 1 
+	\left\vert{
+\rg{t}}\right\vert = \rc{t} + 1 
 \] 
 Which can have a minimum size of two - the original author and at least one retweeter.
  
-If $ r_1,...,r_n $ are the members of $RT(t)$ then the raw audience size of the group can be calculated thus (assuming $t.\textrm{count}_R \geq 1$);
+If $ r_1,...,r_n $ are the members of $\rt{t}$ then the raw audience size of the group can be calculated thus (assuming $\rc{t} \geq 1$);
 \[
-	\textrm{audience}(G(t)) = \textrm{deg}^+(t.\textrm{author}_O) + \sum\limits_{i=1}^{t.\mathrm{count}_R} \textrm{deg}^+(r_i.\textrm{author}_O)
+	\textrm{audience}(
+\rg{t}) = \foc{\aut{t}{O}} + \sum\limits_{i=1}^{\rc{t}} \textrm{deg}^+(r_i.\textrm{author}_O)
 \]
 
 However, properties of Twitter's social structure dictate that this raw audience size is not an accurate calculation in most cases, as is discussed later in this chapter.
@@ -69,7 +73,7 @@ As a Tweet gains in popularity and attracts more and more retweets to be created
 The tree is not a representation of the actual social ties between the tree's nodes, as users are able to retweet Tweets and retweets sent from others that they do not follow. However, as is mentioned later in this chapter, most retweeting does generally occur between directly-linked users.\\
 \cite{kwak10} also uses retweet trees to assist in illustrating information dissemination in Twitter, particularly in observing the Twitter reactions to the 2009 Air France airline crash.
 
-The root of the tree representing every $G(t) \forall t \in T$ is $t.\textrm{author}_O$ and, if $t$ has been retweeted, each of the other nodes are $$r_1.\textrm{author}_R, ... , r_n.\textrm{author}_R \: \forall \: 1 \leq n \leq t.\mathrm{count}_R $$\\
+The root of the tree representing every $\rg{t} \forall t \in T$ is $\aut{t}{O}$ and, if $t$ has been retweeted, each of the other nodes are $$r_1.\textrm{author}_R, ... , r_n.\textrm{author}_R \: \forall \: 1 \leq n \leq \rc{t} $$\\
 A similar illustrative device is used by \cite{galuba10} in describing URL cascades in Twitter.
 
 \begin{figure}[h]
@@ -87,7 +91,7 @@ As such, retweet trees are used in preference over retweet \textit{graphs} as th
 In addition to retweet groups having a size property, a retweet groups's branch's \textit{path-length} refers to the length of a particular retweet chain. 
 
 \begin{mydefinition}
-The \textbf{path-length} of a single retweet chain in a retweet group is defined as the number of times a Tweet, $t$, is retweeted down the chain from $t.\textrm{author}_O$ to $r.\textrm{author}_R$, where $r \in RT(t)$ and where $r$ is the leaf node of the branch of the retweet tree representing this chain.\\
+The \textbf{path-length} of a single retweet chain in a retweet group is defined as the number of times a Tweet, $t$, is retweeted down the chain from $\aut{t}{O}$ to $\aut{r}{R}$, where $r \in \rt{t}$ and where $r$ is the leaf node of the branch of the retweet tree representing this chain.\\
 The \textbf{maximum path-length} of a retweet group is the largest path-length observed in the retweet group.
 \end{mydefinition}
 
@@ -181,7 +185,7 @@ The longest observed maximum path-length was nine, which is a huge depth of pene
 \centering
     \begin{tikzpicture}
      \begin{loglogaxis}[
-            xlabel=Maximum path-length of $G(t)$,
+            xlabel=Maximum path-length of $\rg{t}$,
             ylabel=Frequency of occurrence,
             grid = major,
             width=8cm,
@@ -194,7 +198,7 @@ The longest observed maximum path-length was nine, which is a huge depth of pene
             % Data from pathlength-distribution.csv
     \end{loglogaxis}
     \end{tikzpicture}
-    \caption{Log/log distribution of maximum path-lengths observed in $G(t) \forall t \in T`$, where $T`$ is the set of Tweets analysed}
+    \caption{Log/log distribution of maximum path-lengths observed in $\rg{t} \forall t \in T`$, where $T`$ is the set of Tweets analysed}
     \label{fig:pathlength-distribution}
 \end{figure}
 
@@ -213,8 +217,8 @@ As such, this 90\% follow probability between the retweeter and source user in 1
     \begin{tikzpicture}
     \begin{axis}[
         symbolic x coords={1,2,3,4,5,6},
-            ylabel=Likelihood of citation of $t.\textrm{author}_O$,
-            xlabel=Maximum path-length of $G(t)$,
+            ylabel=Likelihood of citation of $\aut{t}{O}$,
+            xlabel=Maximum path-length of $\rg{t}$,
             ymin=0,
             ymax=100,
             ybar,
@@ -234,7 +238,7 @@ Since users from outside the source user's community are less likely to follow t
 
 
 \subsection{Size of Retweet Groups}
-The distribution of $|G(t)|$ across all of the original Tweets $t \in T$ collected from Twitter was found to follow a power-law type distribution, with a relatively large $p$-value of around $0.87$. Figure \ref{fig:retweet-distribution} represents the complementary distribution function demonstrating the changing probability of a randomly generated $X$ being greater than or equal to $x$, the `current' value of $|G(t)|$, at each stage.\\
+The distribution of $|\rg{t}|$ across all of the original Tweets $t \in T$ collected from Twitter was found to follow a power-law type distribution, with a relatively large $p$-value of around $0.87$. Figure \ref{fig:retweet-distribution} represents the complementary distribution function demonstrating the changing probability of a randomly generated $X$ being greater than or equal to $x$, the `current' value of $|\rg{t}|$, at each stage.\\
 The techniques used in this analysis are adapted from the methods and code provided by \cite{clauset07}.
 
 \begin{figure}[h]
@@ -284,16 +288,16 @@ The techniques used in this analysis are adapted from the methods and code provi
     \label{fig:retweet-distribution}
 \end{figure}
 
-The mean group size from this dataset was found to be just below six, and the largest size was 284. The smallest $|G(t)|$ were the cases in which $t.\textrm{count}_R = 1$, and which were significantly the most common occurrences.
+The mean group size from this dataset was found to be just below six, and the largest size was 284. The smallest $|\rg{t}|$ were the cases in which $\rc{t} = 1$, and which were significantly the most common occurrences.
 
-Of interest also is the relationship between a group's size and its maximum path-length. Generally, the maximum path-length of a group, $G(t)$, increases with $|G(t)|$, indicating a mostly uniform growth in the retweet trees representing these groups - as might be expected. Thus this illustrates that as the retweet count of $t$ increases, then the longer the retweet chains in $G(t)$ are likely become. This would increase its penetrative dissemination away from the source and further facilitate its spread between communities, increasing its potential \textit{audience size}.
+Of interest also is the relationship between a group's size and its maximum path-length. Generally, the maximum path-length of a group, $\rg{t}$, increases with $|\rg{t}|$, indicating a mostly uniform growth in the retweet trees representing these groups - as might be expected. Thus this illustrates that as the retweet count of $t$ increases, then the longer the retweet chains in $\rg{t}$ are likely become. This would increase its penetrative dissemination away from the source and further facilitate its spread between communities, increasing its potential \textit{audience size}.
 
 \begin{figure}[h]
 \centering
     \begin{tikzpicture}
     \begin{loglogaxis}[
-            ylabel=Mean $|G(t)|$,
-            xlabel=Maximum path-length of $G(t)$,
+            ylabel=Mean $|\rg{t}|$,
+            xlabel=Maximum path-length of $\rg{t}$,
             grid=major,
             xmin=1,
             width=8cm]
@@ -307,20 +311,20 @@ Of interest also is the relationship between a group's size and its maximum path
 \end{figure}
 
 \subsection{A Tweet's Audience - How Many Users Can be Reached?}
-$G(t)$'s (immediate) audience size refers to the number of Twitter users that have received $t$, either in its original form or as a retweet, $r$, such that $r.\textrm{orig} = t$, onto their home timelines. The term `immediate' is used to signify the distinction between those users who passively receive the Tweet, due to following the original author or a retweeter, and those who see the Tweet whilst actively browsing through other user timelines or the public timeline.
+$\rg{t}$'s (immediate) audience size refers to the number of Twitter users that have received $t$, either in its original form or as a retweet, $r$, such that $r.\textrm{orig} = t$, onto their home timelines. The term `immediate' is used to signify the distinction between those users who passively receive the Tweet, due to following the original author or a retweeter, and those who see the Tweet whilst actively browsing through other user timelines or the public timeline.
 
-Users in the latter group are therefore not direct followers of $t.\textrm{author}_O$ or $r.\textrm{author}_R \forall r \in RT(t)$ and thus cannot be tracked as members of $t$'s audience, which, as discussed earlier, can have its size calculated through the summation of the followers of the original author and each retweeter of $t$.
+Users in the latter group are therefore not direct followers of $\aut{t}{O}$ or $\aut{r}{R} \forall r \in \rt{t}$ and thus cannot be tracked as members of $t$'s audience, which, as discussed earlier, can have its size calculated through the summation of the followers of the original author and each retweeter of $t$.
 
-However, this audience calculation is na{\"i}ve in that, particularly in the case of more tightly-knit communities, users who are authors of $t$ or $r \in RT(t)$ are likely to share a subset of each of their followers. The more dense the communities, the more followers are likely to be shared between the authors in $G(t)$ and, as such, the aforementioned audience size calculation is likely to be an overestimate in nearly all cases.\\
+However, this audience calculation is na{\"i}ve in that, particularly in the case of more tightly-knit communities, users who are authors of $t$ or $r \in \rt{t}$ are likely to share a subset of each of their followers. The more dense the communities, the more followers are likely to be shared between the authors in $\rg{t}$ and, as such, the aforementioned audience size calculation is likely to be an overestimate in nearly all cases.\\
 The following analyses of retweet group audience sizes relies on a dataset which began collecting at a later date than the general set used in this chapter, and thus the data represented in the rest of this section contains 2860 of the total 4400 groups originally collected. The longest maximum path-length of retweet groups observed in this subset was eight.
 
-The \textit{overhead} of a group, $G(t)$, which attempts to address this problem, is related to the redundency in the audience and thus represents the number of cases in which a user receives a retweet that they have already previously received the original Tweet or retweet thereof - i.e. the number of times users receive a Tweet they've already seen. The overhead also takes into account users who might receive versions of the same Tweet many times.
+The \textit{overhead} of a group, $\rg{t}$, which attempts to address this problem, is related to the redundency in the audience and thus represents the number of cases in which a user receives a retweet that they have already previously received the original Tweet or retweet thereof - i.e. the number of times users receive a Tweet they've already seen. The overhead also takes into account users who might receive versions of the same Tweet many times.
 
 This overhead was found to exist in 71\% of all observed retweet groups, further reinforcing that retweets often occur within communities containing users sharing links with other users. The \textit{proportionate} overhead is the ratio of the overhead to the \textit{distinct} audience size, which is the \textit{absolute} number of users who have recieved the Tweet (or a retweet of) at least once to their home timeline. It should be noted that the audience size does not signify the number of users who have \textit{read} the Tweet - rather the number of users who have the \textit{opportunity} to read it.
 
 Effectively, therefore the distinct audience size of a Tweet can be found by modifying the earlier calculation:
 \[
-	\textrm{distinct audience}(G(t)) = \textrm{deg}^+(t.\textrm{author}_O) + \sum\limits_{i=1}^{t.\mathrm{count}_R} \textrm{deg}^+(r_i.\textrm{author}_O) - \textrm{overhead}(G(t))
+	\textrm{distinct audience}(\rg{t}) = \foc{\aut{t}{O}} + \sum\limits_{i=1}^{\rc{t}} \textrm{deg}^+(r_i.\textrm{author}_O) - \textrm{overhead}(\rg{t})
 \]
 Where the overhead of the group is simply the magnitude of shared followers of all authors in the group.
 
@@ -329,8 +333,8 @@ Where the overhead of the group is simply the magnitude of shared followers of a
     \centering
     \begin{tikzpicture}[scale=0.8]
     \begin{axis}[
-            ylabel=Mean distinct audience size of $G(t)$,
-            xlabel=Maximum path-length of $G(t)$,
+            ylabel=Mean distinct audience size of $\rg{t}$,
+            xlabel=Maximum path-length of $\rg{t}$,
             grid=major,
             xmin=1]
        \addplot[mark=+,only marks,blue] plot coordinates{
@@ -338,7 +342,7 @@ Where the overhead of the group is simply the magnitude of shared followers of a
         };    % audienceDISTINCT_pathlength.csv
     \end{axis}
     \end{tikzpicture}
-    \caption{Varying $G(t)$'s \textit{distinct} audience size with its longest path-length}
+    \caption{Varying $\rg{t}$'s \textit{distinct} audience size with its longest path-length}
     \label{fig:pathlength-audience}
 \end{subfigure}
 \quad
@@ -346,8 +350,8 @@ Where the overhead of the group is simply the magnitude of shared followers of a
     \centering
     \begin{tikzpicture}[scale=0.8]
     \begin{semilogyaxis}[
-            ylabel=Mean immediate  audience size of $G(t)$,
-            xlabel=Maximum path-length of $G(t)$,
+            ylabel=Mean immediate  audience size of $\rg{t}$,
+            xlabel=Maximum path-length of $\rg{t}$,
             grid=major,
             xmin=1]
        \addplot[mark=+,only marks,blue] plot coordinates{
@@ -355,13 +359,13 @@ Where the overhead of the group is simply the magnitude of shared followers of a
         };    % audienceDISTINCT_pathlength.csv
     \end{semilogyaxis}
     \end{tikzpicture}
-    \caption{Varying $G(t)$'s \textit{immediate} audience size with its longest path-length}
+    \caption{Varying $\rg{t}$'s \textit{immediate} audience size with its longest path-length}
     \label{fig:pathlength-immediateaudience}
 \end{subfigure}
-\caption{Comparison of the relationships between $G(t)$'s distinct and immediate audience size and its maximum path-length $\forall t \in T`$, where $T`$ is the set of analysed Tweets}
+\caption{Comparison of the relationships between $\rg{t}$'s distinct and immediate audience size and its maximum path-length $\forall t \in T`$, where $T`$ is the set of analysed Tweets}
 \end{figure}
 
-Figure \ref{fig:pathlength-audience} illustrates, initially, that which might be expected; that the distinct audience size of a Tweet, $t$, is mostly proportional to the maximum path length of $G(t)$. However, as the maximum path-length of retweet groups exceeds 5, then a \textit{decline} in the distinct audience size is observed. This particular behaviour has an unclear cause, but it is felt that this could be to do with a saturation in the proportionate overhead's ratio at this stage - in particular, that retweet groups attracting many retweets are circulated more within communities than outside and between communuties.\\
+Figure \ref{fig:pathlength-audience} illustrates, initially, that which might be expected; that the distinct audience size of a Tweet, $t$, is mostly proportional to the maximum path length of $\rg{t}$. However, as the maximum path-length of retweet groups exceeds 5, then a \textit{decline} in the distinct audience size is observed. This particular behaviour has an unclear cause, but it is felt that this could be to do with a saturation in the proportionate overhead's ratio at this stage - in particular, that retweet groups attracting many retweets are circulated more within communities than outside and between communuties.\\
 At this stage, the overhead becomes so large, causing this reduction in audience size. This is significant in that the distribution of the non-distict over the increasing path-lengths demonstrates, mostly, a continuous positive correlation.
 
 Three of the largest five overheads in the set occur in retweet groups which have a maximum path-length of one. The \textit{largest} overhead was of a size over six times greater than the group's distinct audience size itself, indicating a massive overlap between the followers of the author of the original Tweet and the authors of its retweets. Whilst the audience overhead was only found to be greater than the distinct audience size in around 3\% of observed retweet groups, it is still clear that the potential for overlap in the followers of retweet group members can be very large in more closely-knit communities - i.e. those groups whose representative trees are wide and shallow.\\
@@ -372,8 +376,8 @@ Groups having trees with longer path-lengths typically have a proportinately low
     \centering
     \begin{tikzpicture}[scale=0.8]
     \begin{axis}[
-            ylabel=Mean overhead of $G(t)$,
-            xlabel=Maximum path-length of $G(t)$,
+            ylabel=Mean overhead of $\rg{t}$,
+            xlabel=Maximum path-length of $\rg{t}$,
             grid=major,
             xmin=1
             ]
@@ -402,8 +406,8 @@ Groups having trees with longer path-lengths typically have a proportinately low
     \centering
     \begin{tikzpicture}[scale=0.8]
     \begin{axis}[
-            ylabel=Largest overhead of $G(t)$,
-            xlabel=Maximum path-length of $G(t)$,
+            ylabel=Largest overhead of $\rg{t}$,
+            xlabel=Maximum path-length of $\rg{t}$,
             grid=major,
             xmin=1
            ]
@@ -420,8 +424,8 @@ Groups having trees with longer path-lengths typically have a proportinately low
     \centering
     \begin{tikzpicture}[scale=0.8]
     \begin{axis}[
-            ylabel=Mean proportionate overhead of $G(t)$,
-            xlabel=Maximum path-length of $G(t)$,
+            ylabel=Mean proportionate overhead of $\rg{t}$,
+            xlabel=Maximum path-length of $\rg{t}$,
             grid=major,
             xmin=1
             ]
@@ -450,8 +454,8 @@ Groups having trees with longer path-lengths typically have a proportinately low
     \centering
     \begin{tikzpicture}[scale=0.8]
     \begin{axis}[
-            ylabel=Largest proportionate overhead of $G(t)$,
-            xlabel=Maximum path-length of $G(t)$,
+            ylabel=Largest proportionate overhead of $\rg{t}$,
+            xlabel=Maximum path-length of $\rg{t}$,
             grid=major,
             xmin=1
            ]
@@ -463,7 +467,7 @@ Groups having trees with longer path-lengths typically have a proportinately low
     \caption{Varying \textit{largest} observed overhead \textit{proportion} with maximum path-length}
     \label{fig:pathlength-largestproportionateoverhead}
 \end{subfigure}
-\caption{Relationships between $G(t)$'s audience overhead properties and its maximum path-length $\forall t \in T`$, where $T`$ is the set of analysed Tweets}
+\caption{Relationships between $\rg{t}$'s audience overhead properties and its maximum path-length $\forall t \in T`$, where $T`$ is the set of analysed Tweets}
 \end{figure}
 
 The power of the retweet phenomeon in terms of how it affects the potential audience reach of a particular Tweet is discussed in further detail by the authors of \cite{kwak10}, in which they find that a retweeted Tweet of sufficient interest can reach a very large number of users even if the original author has only a few followers. The same paper more specifically mentions that the audience size of a retweeted Tweet reaches, on average, at least 1,000 users, no matter the number of followers of the original author.\\
@@ -484,19 +488,19 @@ The final retweeter is defined as the author of the chronologically final retwee
 %\end{figure}
 
 It is interesting that this value should be about 20\% lower than in single-length maximum path-length groups, and it suggests that users have a greater chance of `stumbling over' retweets found on non-friends' timelines whilst browsing through other users. Since it has been shown that with an increase in maximum path-length an increase in the audience size is also observed, then this demonstrates the increased chance of discovery of the Tweet through users searching through others' profiles.\\
-In cases where the maximum path-length of $G(t)$ is equal to one, then the audience size is far smaller and thus there is a lower chance of users who aren't followers of $t.\textrm{author}_O$ or $r.\textrm{author}_R \forall r \in RT(t)$ finding the Tweet.
+In cases where the maximum path-length of $\rg{t}$ is equal to one, then the audience size is far smaller and thus there is a lower chance of users who aren't followers of $\aut{t}{O}$ or $\aut{r}{R} \forall r \in \rt{t}$ finding the Tweet.
 
 In addition, there is some evidence of user influence playing a role in the analyses of these data. In particular, in the 67\% of retweet groups in which the final retweeter \textit{does} follow the author of the retweet (or original Tweet) directly `upstream', the latter user has, on average, around 950 followers. Inversely, in the remaining 33\% of groups (in which the author of the final retweet does \textit{not} follow the preceding author), the preceding author has an average of 600 followers, thus implying a significant difference in the retweet potential with varying author influence levels.
 
-This is further accentuated when one studies the follower connections of $t.\textrm{author}_O$. Whilst it was found earlier that the likelihood of a $r.\textrm{author}_R$ following $t.\textrm{author}_O$ when the maximum path-length of $G(t)$ is greater than one is around 40\%, the average follower count of $t.\textrm{author}_O$ has a four-fold increase (from about 550 to 2,000) when he/she is also followed by the final retweeter. In fact, in groups of all maximum path-lengths, $t.\textrm{author}_O$ had a consistently higher follower count when followed also by the final retweeter of $G(t)$ than when not followed.\\
+This is further accentuated when one studies the follower connections of $\aut{t}{O}$. Whilst it was found earlier that the likelihood of a $\aut{r}{R}$ following $\aut{t}{O}$ when the maximum path-length of $\rg{t}$ is greater than one is around 40\%, the average follower count of $\aut{t}{O}$ has a four-fold increase (from about 550 to 2,000) when he/she is also followed by the final retweeter. In fact, in groups of all maximum path-lengths, $\aut{t}{O}$ had a consistently higher follower count when followed also by the final retweeter of $\rg{t}$ than when not followed.\\
 This particular behaviour also helps illustrate that a user is more likely to be retweeted when having more followers - in this case, having four times the follower count increases the correlation dramatically (40\% to 90\%). The follower count can, therefore, be directly related in this way to the discussions of user influence in \cite{cha10}, and also of users using retweeted Tweets to passively `advertise' themselves.
 
 \begin{figure}[h]
 \centering
     \begin{tikzpicture}
     \begin{axis}[
-            ylabel=Mean $\textrm{deg}^+(t.\rextrm{author}_O$),
-            xlabel=Maximum path-length of $G(t)$,
+            ylabel=Mean $\textrm{deg}^+(t.\textrm{author}_O$),
+            xlabel=Maximum path-length of $\rg{t}$,
             grid=major,
             xmin=1,
             width=8cm]
@@ -505,7 +509,7 @@ This particular behaviour also helps illustrate that a user is more likely to be
         };    
     \end{axis}
     \end{tikzpicture}
-    \caption{Analysis of variance in $\textrm{deg}^+(t.\textrm{author}_O)$ as $G(t)$'s maximum path-length increases}
+    \caption{Analysis of variance in $\foc{\aut{t}{O}}$ as $\rg{t}$'s maximum path-length increases}
 \label{fig:originalfollowers-pathlength}
 \end{figure}
 
@@ -517,7 +521,7 @@ This particular behaviour also helps illustrate that a user is more likely to be
 %\label{fig:originalfollowers-pathlength}
 %\end{figure}
 
-Strangely, it was found that $t.\textrm{author}_O$'s follower count actually diminishes with increasing maximum path-length of $G(t)$, indicating further penetrative depth of propagation when the original author has \textit{fewer} followers. The collected retweet groups that contained longer retweet chains often also contained retweet chains that were much shorter. For example, a group containing chains with path-lengths of five, or more, are also likely to contain many more chains with path-lengths of one and two (as is implied in the distribution in Figure \ref{fig:pathlength-distribution}).\\
+Strangely, it was found that $\aut{t}{O}$'s follower count actually diminishes with increasing maximum path-length of $\rg{t}$, indicating further penetrative depth of propagation when the original author has \textit{fewer} followers. The collected retweet groups that contained longer retweet chains often also contained retweet chains that were much shorter. For example, a group containing chains with path-lengths of five, or more, are also likely to contain many more chains with path-lengths of one and two (as is implied in the distribution in Figure \ref{fig:pathlength-distribution}).\\
 There are, therefore, various possible explanations for this property, including the argument that users with many followers are generally likely to be part of a large community of users, from which retweets are not transmitted. Users that are part of several communities, and are therefore less involved with any given one, may find that their Tweets have the potential to be retweeted a further distance.
 
 Additionally, and more interestingly, it is possible that users possess some awareness of their local networks and the users within them. A user, who is part of a large community with lots of obvious follower overlaps occurring between the members, may decide \textit{not} to retweet a particular Tweet if he/she feels that many of their own followers may have already seen the Tweet due to them also having a high chance of following the original author.
@@ -532,7 +536,7 @@ In the 81\% of cases when the user at $h = 2$ \textit{isn't} also followed, then
 \centering
     \begin{tikzpicture}
     \begin{axis}[
-            ylabel=Chance of $r.\textrm{author}_R \in t.\rextrm{author}_O.E_i$,
+            ylabel=Chance of $\aut{r}{R} \in t.\textrm{author}_O.E_i$,
             xlabel=$h$,
             grid=major,
             xmin=1,
@@ -542,7 +546,7 @@ In the 81\% of cases when the user at $h = 2$ \textit{isn't} also followed, then
         };    
     \end{axis}
     \end{tikzpicture}
-    \caption{Relationship between the followship chance of $r.\textrm{author}_R$ (where $r \in RT(t)$) to $t.\textrm{author}_O$ and the increase in `distance' between $r$ and $t$ given by $h$}
+    \caption{Relationship between the followship chance of $\aut{r}{R}$ (where $r \in \rt{t}$) to $\aut{t}{O}$ and the increase in `distance' between $r$ and $t$ given by $h$}
 \label{fig:following-possibility}
 \end{figure}
 
@@ -568,7 +572,7 @@ The final set of analyses in this chapter relate to time's influence on retweet 
     \begin{tikzpicture}
     \begin{axis}[
             ylabel=Time elapsement (secs.),
-            xlabel=Maximum path-length of $G(t)$,
+            xlabel=Maximum path-length of $\rg{t}$,
             grid=major,
             xmin=1,
             width=8cm]
@@ -577,7 +581,8 @@ The final set of analyses in this chapter relate to time's influence on retweet 
         };    
     \end{axis}
     \end{tikzpicture}
-    \caption{Comparison between the average time elapsement from $t$ to the final $r \in RT(t)$ and the maximum path-length of $G(t) \forall t \in T`$, where $T`$ is the set of analysed Tweets}
+    \caption{Comparison between the average time elapsement from $t$ to the final $r \in 
+\rt{t}$ and the maximum path-length of $\rg{t} \forall t \in T`$, where $T`$ is the set of analysed Tweets}
 \label{fig:timedelay-pathlength}
 \end{figure}
 
