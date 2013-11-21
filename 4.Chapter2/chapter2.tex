@@ -306,36 +306,39 @@ As such, a method is proposed based on the following two points;
 
 Although it was found, in the previous chapter and in other relevant literature, that pseudo-generated scale-free networks can be representative of Twitter's own social structure, a user's actual own local social network would more accurately portray the links between the users surrounding the original author of a Tweet. By constructing a network based on a user's own local network, then the method would effectively be simulating the Tweets' propagation through the edges representing the followships of the actual users in Twitter's social graph.
 
- 
+Thus, in the simulation algorithm, the user in question is $u_s$, and the intiial value of $S = \fos{u}$. At each timestep, each user in $S$ would have the opportunity to retweet the Tweet, and therefore, by running the simulation, an estimation on the \textit{expected} value for $\rg{t}$ can be obtained, where $\aut{t}{O} = u_s$.\\
+In particular, this method follows these steps;
+\begin{enumerate}
+    \item Select a user
+    \item Collect that user's local follower network 
+    \item Collect a set of that user's recent Tweets
+    \item Construct a network based on the users and edges in the collected network
+    \item Simulate the collected Tweets through the constructed network using the simulation algorithm
+\end{enumerate}
 
-In order to improve the fairness of the experiment, we wanted to ensure that the environment of the tweets (i.e. the user network they are propagated through) is the same as its real-life Twitter counterpart. We could then choose a user, which would become the source user, $U_s$, in the set $U$, and simulate that user's own tweets within their particular local network as described by the model above. This would then produce a retweet volume for this user's tweets, to which we could compare the number of times that tweet has \emph{really} been retweeted.
-
-- take a user's local network and build it
-- take a Tweet from this user and simulate it through the constructed graph
-- compare resultant retweet count against the count the Tweet actually achieved
+This procedure would provide an estimated retweet group size for each Tweet, which could then be compared to the actual observed retweet count of the Tweet on Twitter.
 
 
 \subsection{Data Collection}
-Due to the exponential scaling properties of Twitter's social graph, it was infeasible to collect any more than two hops away from each user as a representation of that user's local network under the rate limitations of Twitter's REST API. 
-\\
-In particular, a single Twitter account running an instance of an application was allowed, at the time of these experiments, a maximum of 350 REST API calls per hour. One call would be required, for example, to obtain up to 5000 of the followers of a particular user (i.e. one follower hop from the user). An additional call would then be required to collect each of that user's follower's followers (in order to obtain the \emph{second} hop from the source user). \\
-Thus, a user who has 700 followers would require 700 API calls to collect that follower network, in addition to the one required to collect that source user in the first place, and would therefore take over two hours of collection. To collect the \emph{third} hop from the source user would drastically multiply the number of required requests (even if there is significant overlap between the followers) and the time needed. 
-\\
-If each of the 700 followers of the source user had, on average, 200 followers, then this would require the gathering of $ 700 $ x $200 = 140,000 $ users, equating to more than 402 hours of data collection. Bearing in mind that this would only collect the network features for \emph{one} user, it is clear to see how this is an impractical approach.
-\\ \\
-Luckily, in \cite{webberley11}, we found that the vast majority of retweets occur \textit{within} two hops of the source user (i.e. a path length of less than three), so we considered that the distance from the source user in each case would be sufficient.
-\\
-In June 2012, the Twitter REST API was used to conduct a random walk through the social graph. For each user, we collected the most recent 300 tweets (including each tweet's metadata - particularly their retweet count) and their local follower network within two hops. We didn't collect the friend network, as we were only interested in tweets propagating outwards from the source user.
-\\
-After processing that user, the walker chose a user at random from the present user's set of followers and made this the new current user from which to collect data for. If the present user, at any stage, does not have any followers, a list of previously accepted users is maintained and a follower is chosen from one of those instead.
-\\
-The walker continued until the rate limit was met, at which time the current state was written to disk, and the walker waited until the rate limit was reset before continuing.
-\\
-Generally, this resulted in, for each user, a set of up to 300 tweets (totalling to around 10,000 tweets in total) and the network in which these tweets were propagated within. There was no need to collect any further data to train the regression, since we were able to re-use the trained model we used earlier.
+Due to the scaling properties of breadth-first traversal of Twitter's social graph, it became infeasible to collect a user's local network containing users more than two edge `hops' away from the source user under the rate limitations of Twitter's REST API.\\
+As mentioned, v1 of the REST API allowed 350 calls to the API each hour for each authenticated Twitter account. One call, for example, was required to obtain a list of up to 5,000 IDs representing the follower users of a particular user - the users one hop from the source user. An additional call would then be required to collect each of these user's own followers in order to provide the 2-hop representation of the local network from the source user.
+
+For a user with a follower count of 700, a total of 701 API calls would be required to collect the user's local network within two hops - the one to retrieve the source user's immediate followers, and then one further call for each of the 700 followers. This would take over two hours of collection as it is, and to collect the third hop would require another exponential number of API calls.\\
+If each of the 700 followers of the source user has, on average, 200 followers, then this would require  a further $700 \times 200 = 140,000$ API calls, which, in total, equates to over 402 hours of data collection time. Although some follower overlap is likely to be present among the users two hops away, when one considers that this is simply the time taken to collect the local network for one user, then it becomes clear that this must still be an impractical approach.
+
+In the previous chapter it was found that the vast majority of retweets do actually occur \textit{within} two hops of the source user, in that retweet groups produced have a maximum path-length of less than three. In addition, as mentioned, online social networks are `closer' than real-life social networks, and was found to have a value of around four degrees of separation in Facebook. These points help to justify the decision made to class a user's local network as those users and edges existing within two hops from the source user.
+
+In June 2012, the Twitter REST API was used in order to conduct a random walk through Twitter's social graph. Starting at selecting an initial user, an edge expressing the followship of a random follower was chosen in order to select the next user. This continued for each of the selected users in turn and, for each user selected, the most recent 300 Tweets and surrounding information was collected along with that user's local follower network within two hops. The friend network (i.e. the outward edges from each user) was ignored, as only the directional outward flow of information from the source user was useful in this experiment.\\
+If, at any stage, the currently selected user did not have any followers, the collection algorithm backtraced to the previous user and another follower was selected instead. The crawler continued until the rate limit for the current request window was met, at which time the current data state was stored, and then waited until the rate-limit was reset before continuing.
+
+The data collection resulted in a set of 33 Twitter users, each with a full local network collected and a set of up to 300 Tweets. In total, around 10,000 Tweets were collected in order to carry out the simulations. It was decided that the previously trained regression model would be re-used as part of the retweet decision engine in this experiment also, and so no further training data was required for collection.
 
 
 
 \subsection{Validating Results}
+
+
+
 Needed to validate results using human input. Machines themselves are generally unable to express human interests, so results need to be properly evaluated.
 
 \subsubsection{Crowdsourcing}
