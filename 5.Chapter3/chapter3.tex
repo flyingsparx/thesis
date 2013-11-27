@@ -43,6 +43,14 @@ Of course, this brings about the notion of information relevance, and the fact t
 
 
 \section{Interestingness Scores}
+
+
+Based off reasoning that:
+- two tweets
+    - expect: 3000 observed: 3010
+    - expect 5 observed: 15
+- second tweet is more significantly interesting
+
 As discussed, our proposed process for deciding upon a Tweet's interest level involves conducting comparisons between the number of times a Tweet has been retweeted and the \textit{predicted} retweet volume of the Tweet. The premise behind this is that there is something beyond the static features of a Tweet (e.g. whether, or not, the Tweet contains a URL, the length of its content, the influence of its author, etc.) that causes a specific Tweet to be more interesting than another with precisely the same feature set.\\
 The retweet count of a specific Tweet is returned, at the time of writing, as part of a standard call to v1.1 of the Twitter REST API, and includes the total number of times that the original Tweet was retweeted using the button retweet method.\\
 Essentially, our method follows these basic steps:
