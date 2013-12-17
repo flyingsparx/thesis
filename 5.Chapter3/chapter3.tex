@@ -448,7 +448,7 @@ Of immediate notice was the comparitive difference between the two different sco
 \end{figure}
 
 Of the subset $T'$, the scoring mechanism found 140 of the Tweets to have a value of $\gscore{t} > 1$, and thus inferred as interesting. Of these, 65\% were agreed on as interesting by the MTWs. The performance of the $\uscore{t}$ was worse in providing a 55\% agreement, resulting in a general of 60\% agreement on the mean of the two scoring schemes.\\
-It is also demonstrable that the proportionate frequency of Tweets with higher values of $\gscore{t}$ is greater in the subset $T'$ than in $T$. This implies that, on average, the MTWs were selecting and agreeing on Tweets being interesting that had a higher score than those that were \textit{not} selected. Further to this, there is a greater proportion of Tweets with $\gscore{t} < 1$ in $T$ than in $T'$, and a greater proportion of higher values for $\gscore{t}$ in $T'$ than in $T$.
+It is also demonstrable that the proportionate frequency of Tweets with higher values of $\gscore{t}$ is greater in the subset $T'$ than in $T$. This implies that, on average, the MTWs were selecting and agreeing on Tweets being interesting that had a higher score than those that were \textit{not} selected. Further to this, there is a greater proportion of Tweets with lower scores ($0 \leq \gscore{t} < 1$) in $T$ than in $T'$, and a greater proportion of higher values for $\gscore{t}$ in $T'$ than in $T$.
 
 This means that, in general, the humans were marking a greater number of Tweets as interesting that were inferred as interesting by the scores than ones that \textit{weren't} inferred as interesting. Although this demonstrates a clear advantage on the binary inference of interestingness over the methodologies in the previous chapter, this analysis does not consider how well the scheme is able to \textit{rank} Tweets in order of interestingness.
 
@@ -467,8 +467,7 @@ In order to assess the ability of the scores to effectively rank Tweets in order
         legend entries={where $\gscore{t^q_1} \geq 0$, where $\gscore{t^q_1} \geq 1$, where $\gscore{t^q_1} \geq 2$, where $\gscore{t^q_1} \geq 6$, random performance},
 		legend style={at={(2,0.5)}},
 		xmin=0, xmax=5,
-		ymin=0, ymax=100	,
-		width=8cm
+		ymin=0, ymax=100
 		]
 	\addplot[mark=+,black] plot coordinates {
         (0,0) (1,50.8) (2,85.3) (3,94.3) (4,98) (5,100)
@@ -501,49 +500,50 @@ and where;
 \[
     \gscore{t^q_1} \geq \gscore{t^q_2} \geq ... \geq \gscore{t^q_5}
 \]
-In questions where $\sum\limits_{i=1}^5 \gscore{t^q_i} = 0$, the question was discarded from the analysis.
+In cases where $\sum\limits_{i=1}^5 \gscore{t^q_i} = 0$, then that $q$ was removed from $Q$ and discarded for the analysis.
 
+Calculations were then made on the number of times the MTWs selected a Tweet as interesting that appeared in the top $n$ of the ranked list Tweets for each $q \in Q$. For example, in the case of $n=2$ with a set of ten questions, if the MTWs selected one of the top two of Tweets in five of ten cases, then the chance of this occurring is 0.5. Figure \ref{fig:score-dist} illustrates the relationship between increasing values of $n$ and this calculation on likelihood of selection. Although the `random' performance represents the relative likelihoods of a random selection being made when only one Tweet is selected from each question, the vast majority of questions were actually answered with only one Tweet selected. Further analysis to cover the consideration of this particular point is conducted later on in this chapter.\\
+Further to this, the minimum allowed value of $\gscore{t^q_1}$, which represents the highest score of all $t \in q$, was varied with the aim of demonstrating that the detection of more interesting Tweets can be more accurate when the relative score \textit{range} of a particular question is more disparate.
 
+When considering cases where the most interesting Tweet in a particular question is, indeed, inferred as interesting ($\gscore{t} \geq 1$), then the MTWs selected one of the \textit{top two} Tweets in around 66\% of cases, and they selected one of the \textit{top three} ranked Tweets in 87\% of the questions. This demonstrates the method's ability of being able to effective rank Tweets in agreement with humans in identifying information from the noise around it.
 
-For conducting these question-based analyses, each question's five Tweets were ranked in order of ascending mean interestingness score such that $TS_{Avg}(t^q_1) \geq TS_{Avg}(t^q_2) \geq ... \geq TS_{Avg}(t^q_5)$. We then calculated the number of times the MTWs chose a Tweet that appeared in the top $n$ of the ranked list of Tweets, as shown in Figure \ref{fig:score-dist}.\\
-In this figure, we vary the minimum allowed value of $TS_{Avg}(t^q_1)$ (the highest Tweet score in question $q$) to show how detecting more interesting Tweets was more accurate when the range of scores in each question is more disparate. We show, for cases in which $TS_{Avg}(q_1) \geq 1$, that the likelihood of the MTWs choosing one of our two most highly ranked Tweets of the question using the interestingness predictions is around 66\% and the chance that they choose one of the top three ranked Tweets is 87\%.
 
 \subsubsection{Probability of Selection}
+A further analysis in this section is with regard to the \textit{probability} of a particular inferred-as-interesting Tweet being selected as interesting by the MTWs. It is demonstrable that that, in general, the chance of a particular MTW deciding that a Tweet, $t$, is interesting becomes greater as the value of $\gscore{t}$ increases.
 
 \begin{figure}[h]
-\centering{
+\centering
 \begin{tikzpicture}
 \pgfplotsset{every axis plot/.style={line width=2pt}}
  \begin{axis}[
         xlabel=$ x $,
-        ylabel=$P(\text{t chosen} : TS_G(t) > x)$ ,
+        ylabel=$P(\text{t chosen} : \gscore{t} > x)$ ,
         grid = major,
-        height=5.2cm, width=8cm,
         xmin=0, xmax=4
        ]
 	\addplot+[smooth, mark=none]  table {5.Chapter3/data/cum-dist-score.dat};
 \end{axis}
 \end{tikzpicture}
-}
-\caption{The probability that Tweet $t$ is chosen given that $TS_G(t)$ is greater than a given value, $x$.}
+\caption{Cumulative frequency representing the probability that Tweet $t$ is chosen provided that $\gscore{t}$ is greater than a given value, $x$}
 \label{fig:score-cum-dist}
 \end{figure}
 
-Finally, we show that the probability of MTWs deciding a Tweet $t$ is interesting becomes higher as the value of $TS_G(t)$ increases. \\
-In Figure \ref{fig:score-cum-dist}, although we exclude cases of Tweets with $TS_G(t) > 4$ to reduce noise (due to fewer samples), a significant increase in probability is observed, particularly in the interval 0-1 representing the range of Tweets that are uninteresting (fewer observed retweets than predicted) to `as expected' (observed retweet volume is equal to predicted). It is also illustrated that, from this initial work, Tweets with a predicted interestingness score of 3 or more are not significantly different from one another in terms of their `real', human-judged, interestingness. However, more work will be carried out towards this in the future so that more accurate research can be done on Tweets with scores of greater then 3 in this context.
+Although the cases of Tweets where $\gscore{t} > 4$ are excluded, for the purposes of noise reduction from fewer samples, Figure \ref{fig:score-cum-dist} shows an observable increase in probability of selection as the score increases. This pattern is particularly applicable in the score interval of 0-1, which represents the range of Tweets that the scoring scheme has inferred as uninteresting to those that achieved a correctly-predicted popularity, and are thus `as expected' in terms of interestingness.\\
+The analysis is also clear that Tweets with an inferred interestingness score of three or more are not significantly different from one another in terms of the level of interestingness assigned from the `real' human judgment.
 
-
-\subsection{Further Analyses}
-The interestingness scores have been validated in terms of there being recognition that they can signify interesting Tweets. This section will now continue onto some deeper analyses of the results in order to show \textit{how} it is able to work.
 
 \subsubsection{Discerning Interesting Information from Noise}
-In this subsection, the human-selected interestingness selection will be assessed. Of particular interest is the likelihood of humans agreeing on an interesting piece of information and the properties of the Tweet scores in questions when agreements \textit{are} made. \\
-For this, analyses were made into the \textit{disparity} of scores for Tweets. That is, the range of scores of Tweets in a particular question and the effect this has on human decision in deducing interesting information.
+The metrics behind the human selection in determining interesting Tweets is the final analysis conducted in this section. Of particular concern is the varying likelihood of \textit{agreement} between the MTWs and the relative properties of the Tweets and their scores in each question in different decision scenarios.
+
+The notion of score \textit{disparity} is used to determine the difference in interest between a set of Tweets presenting with a range of different interestingness scores. To this end, each question asked of the MTWs has a disparity associated with it. The absolute score disparity for a question, $q \in Q$, is calculated such that;
+\[
+    \gdisparity{q} = \max(\gscore{t}) - \min(\gscore{t}) \forall t \in q
+\]
 
 \begin{table}[h]\footnotesize
-\begin{center}
+\centering
 \begin{tabular}{ c | c | c | c }
-	 Num. confident answers in $q$& min. $d^{Avg}(q)$ & max. $d^{Avg}(q)$ & avg. $d^{Avg}(q)$ \\
+	 Num. confident answers in $q$ & min. $\gdisparity{q}$ & max. $\gdisparity{q}$ & avg. $\gdisparity{q}$ \\
 	 \hline
 	0 & 0 & 846 & \textbf{17.6} \\
 	> 0 & 0 & 1445 & 32.1 \\
@@ -551,66 +551,230 @@ For this, analyses were made into the \textit{disparity} of scores for Tweets. T
 	> 1 & 0 & 4 & 0.647 \\
 	> 2 & 0 & 0.55 & 0.204
 \end{tabular}
-\end{center}
-\caption{Absolute $TS_{Avg}(t)$ disparity of questions with varying number of confident answers made. Entries in \textbf{bold} are used to highlight interesting values.}
+\caption{Illustrating trends between the absolute $\gdisparity{q}$ with the varying number of confident answers made in $q$. Entries in \textbf{bold} are used to highlight interesting values}
 \label{table:score_disparities}
 \end{table}
 
-The absolute Tweet score disparity for a question, $q$, is defined as $d(q)$. For example, for a disparity of average scores, this is calculated thus;
+A confident answer to a question is one where the particular question had at least two of its three assessing MTWs select the same Tweet as interesting. Since an MTW could select more than one Tweet from each question, then each question may, in fact, have more than one confident answer. Table \ref{table:score_disparities} illustrates how questions with varying score disparities can have an effect on the probability of MTWs being able to make a confident decision.
 
-\[ d^{Avg}(q) = \max(TS_{Avg}(q)) - \min(TS_{Avg}(q)) \]
+The results show that the average $\gdisparity{q}$ of all $q \in Q$ is roughly double in cases where a question is answered with precisely one confident Tweet than in cases where there was no confident answer made at all. This indicates that a wider range of interestiness of information is helpful to humans in identifying the content they'd prefer to read. If several pieces of information were displayed to a user that had more similar scores, and are therefore more equally interesting (or uninteresting), then it becomes more difficult for an agreement to be made between the different users on which particular piect of information is the \textit{most} interesting.
 
-Table \ref{table:score_disparities} shows how the values for $TS(q)$ vary for questions with differing numbers of confident answers. A confident answer, as mentioned previously, is one where at least two MTWs have agreed on an interesting Tweet.\\
-The data shows that the average $TS(q)$ is around double in cases where a question is answered with precisely one confident answers than in cases where there are no confident answers made. This indicates that a wider scale of interestingness in a question is useful for humans for picking out the content they'd prefer to read. If several pieces of content are more similarly interesting (or, as the case may be, uninteresting), then it becomes more difficult for an agreement to be made on which information is the \textit{most} interesting.\\
-In addition, the average score disparities in cases where multiple confident answers were selected are very low. This helps to reinforce the notion that pieces of information that are very similar in terms of interest level make it hard for users to decide on the \textit{most} interesting. Indeed, in questions where this is the case, MTWs have selected, and agreed on, multiple Tweets.
+Further to this, the average disparity is much lower in cases where the question had multiple confident answers made. In these cases, the MTWs have selected more Tweets as interesting, which helps to reinforce the above point in that identifying one particular piece of information as the most interesting is more difficult when the pieces are all of similar interest levels. Indeed, in questions where this is the case, MTWs have selected, and agreed on, multiple Tweets. 
 
  \begin{figure}[h]
-\centering{
+\centering
 \begin{tikzpicture}
 \pgfplotsset{every axis plot/.style={line width=2pt}}
  \begin{axis}[
-        xlabel=Average $d^{Avg}(q)$,
-        ylabel=Cumulative probability of a confident selection being made,
+        xlabel=Average $\gdisparity{q}$,
+        ylabel=Cumulative probability,
         grid = major,
-        height=7.5cm, width=13cm,
+        ymax=1,
+        ymin=0,
+        xmin=0
        ]
 	\addplot+[mark=none]  table {5.Chapter3/data/cum-question-disparity.dat};
 \end{axis}
 \end{tikzpicture}
-}
-\caption{The probability of a confident selection being made for question $q$ with varying $d(q)$.}
+\caption{Cumulative probability of a confident selection being made for question $q$ with varying $\gdisparity{q}$}
 \label{fig:cum-question-disparity}
 \end{figure}
 
-To take this further, it is demonstrable that the probability of a confident selection being made for a particular question, $q$, increases as $TS(q)$ also increases (Figure \ref{fig:cum-question-disparity}.  Thus, this reinforces the notion that people find it easier to discern interesting information when compared to \textit{un}-interesting information. This, too, is highlighted in Table \ref{table:score_disparities_2}, in which it is shown that amongst \textit{all} questions (i.e. not only questions that have been confidently-answered) the score disparity is much smaller between Tweets that were selected than the score disparity for the entire question. \\
-This is particularly the case in which there are a few Tweets which have similarly high scores amongst Tweets which collectively have \textit{lower} scores. Therefore, selecting confidently from the few Tweets with the similar scores become difficult, but it is demonstrated that these at least are \textit{more} interesting than the ones that weren't selected.\\
+Table \ref{table:score_disparities_2} highlights the effect of disparity on human selection also through demonstrating that in \textit{all} $q \in Q$, and not just those that have been confidently answered, the score disparity between all of the Tweets in a particular question that were selected, $\sdirparity{q}$, is much smaller than the general disparity of the entire question, $\disparity{q}$. In this case, the disparities are dependent on the particular scoring scheme declared in order to highlight the differences between the two scores, and where;
+\[
+    \ascore{t} = \frac{\gscore{t} + \uscore{t}}{2}
+\] 
+
+This feature is particularly observable in cases where a question consists of a few Tweets having similarly high scores amongst Tweets with collecively lower scores. Therefore, inferring the interesting Tweets is easier, demonstrated by the scores of selected Tweets being generally higher, but discerning one \textit{most} interesting Tweet is not as trivial. For example, the results show that, on average, the disparity of the global scores across selected Tweets is around 57\% of the disparity across \textit{all} of the Tweets in a particular question.
+
 
 \begin{table}[h]\footnotesize
 \begin{center}
 \begin{tabular}{ l || c | c | c }
-	   & $TS_G(t)$ &  $TS_U(t)$ &  $TS_{Avg}(t)$\\
+	   & $\gscore{t}$ &  $\uscore{t}$ &  $\ascore{t}$\\
 	 \hline
-	$TS_d(q)$ & 62.4 & 4.7 & 33.3\\
-	$TS_{d_C}(q)$ & 35.3 & 3.1 & 19.0\\
+	$\disparity{q}$ & 62.4 & 4.7 & 33.3\\
+	$\sdisparity{q}$ & 35.3 & 3.1 & 19.0\\
 	\hline
 	Ratio & 57\% & 66\% & 58\%
 \end{tabular}
 \end{center}
-\caption{Score disparity comparison between selected Tweets of question $q$ and \textit{all} Tweets in $q$ when using the three different Tweet scores as metrics}
+\caption{Comparing the disparity between selected Tweets and the disparity between \textit{all} of the Tweets in questions, using three different scoring schemes.}
 \label{table:score_disparities_2}
 \end{table}
 
-For example, this data shows that, on average, the global score disparity for selected Tweets of a question, $q$, was only around 57\% that of the entire disparity of $q$.
+
+\subsection{Methodology and Validation Remarks}
+In this section, the proposed improvements to the inference methodology have been implemented and assessed under a randomised controlled trial using Amazon's Mechanical Turk to crowdsource the validations.
+
+Results from the analyses indicate the method's relative advantages over the techniques used in the previous chapter. In particular, the new method is applicable to generating appropriate interestingness decisions for Tweets from all users on Twitter, is capable of effectively \textit{ranking} Tweets in order of interestingness, and is far more efficient in terms of training and supports `on demand' predictions much more readily.
+
+However, the crowdsourcing validations conducted were contributed to by people who shared no connection with the authors of the Tweets, and were thus assessing Tweets from outside of their own local network. Since it is known that users typically form followships between other users that produce information of interest, then this information is likely to be more relevant to users receiving the Tweets in these communities.  
+
+The following section addresses this area, in that the opinion of users assessing the Tweets within their own local networks is used to further the validations of the scoring mechanism. 
+
+
+\section{Towards Addressing Information Relevance}
+In these analyses, results are studied from validations conducted through users assessing Tweets existing within their own local network. In particular, the interestingness scoring methodology will be validated against people's interestingness decisions on Tweets from those users they directly follow. Interactions with Twitter in this section relate to v1.1 of the Twitter API, as this research was conducted after the mandatory switch-over to this version.
+
+Through assessment in this way, the Tweets being assessed are more relevant to their `environments', which, in this case, consist of those users who would naturally also receive these Tweets and who are making the interestingness decisions based on their content.
+
+
+\subsection{Planning the Further Validations}
+As will become clear, no initial data collection is required for these analyses. Instead, users contributing to the crowdsourced analysis interacted almost directly with Twitter during the course of their assessments, which involved the studying of Tweets sent from the friends of the assessing user.
+
+For this purpose, a web application was set up and ran from July to August 2013, which allowed visiting users to `sign in' using their Twitter account through OAuth. As with v1, v1.1 of Twitter's REST API directly supports this kind of behaviour, and provides the authenticated application with access keys enabling it to interface with the API on the authenticating user's behalf. Applications registered on Twitter can have different levels of elevation - from read-only, in which Tweets, follower information, and so on, can be retrieved; to read and write, with which new Tweets can be posted for the user and new followships can be created. An advantage of using OAuth in this fashion is that each user has a separate rate limit associated with it, meaning that the application could retrieve a lot of information, if necessary, yet without exceeding the rate limit afforded to it by the new policies of v1.1 of the API.
+
+In this case, the web application was advertised through word of mouth and through OSNs, such as Facebook and Twitter itself, as well as through Mechanical Turk. In the latter case, a special link to the site was provided to MTWs, and a code was displayed to them on completion of the task, which they could enter into Mechanical Turk in order to be paid. Participants contributing from the word of mouth and OSN categories are defined as `organic' participants. Since the analysis depended on users assessing Tweets from their Twitter friends, participants could only take part if they had had a Twitter account with at least 30 friends.
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.5]{5.Chapter3/Media/organic_advertising.png} 
+\caption{Advertising the validation site on Twitter.}
+\label{fig:organic_advertising}
+\end{figure}
+
+After signing into the read-only application\footnote{Twinterest: source available at https://github.com/flyingsparx/twinterestingness} and beginning the procedure, participants were faced with a series of ten Tweet timelines. The first consisted of the most recent 20 Tweets from the participant's home timeline, and the next nine consisted of user timelines of the participant's friends. Although the selection of friends for the nine user timelines was done at random, a slight bias was applied towards selecting friends with a higher follower count. Due to the nature of scale-free graphs, there are many vertices with few edges, and few with many edges. As such, in order to obtain a more even distribution of user influence, the weighting was necessary to ensure that the scoring mechanism could be validated against a range of users expressing a wider variety of retweet counts.
+
+Similar to the initial validations using Mechanical Turk in the previous section, participants were simply asked to select the Tweets that they found to be the most interesting from each of the timelines and were not able to proceed to the next timeline without selecting at least one Tweet. Note that, at this stage, the Tweets being assessed did not have interestingness scores applied to them. A Tweet in a timeline that was selected was considered to be interesting, and those not selected were non-interesting.
+
+
+\subsection{Assigning Scores to the Assessed Tweets}
+Through running the validation application, a total of 580 timelines were assessed, consisting of 389 contributed to by MTWs and 191 from organic participants. The totals are not precisely divisible by ten since not all participants assessed all of their ten timelines before leaving the application, but no one participant contributed more than ten timeline assessments. In this case, all responses were considered as confident since it was not appropriate under the conditions of the validation test to gain more than one assessment for each Tweet. Although there was likely some friend overlap between the participants, this was not necessarily the case in the vast majority of users assessed. In cases where there the same Tweet was assessed by more than one user the majority vote was chosen, weighted towards positive interestingness decisions in the case of ties. 
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}
+ \begin{axis}[
+        xlabel=Number of selected Tweets,
+        ylabel=Probability,
+        grid = major,
+        ymax=0.5,
+        ymin=0,
+        xmin=0,
+        xmax=9
+       ]
+	\addplot[mark=+,only marks,blue]  plot coordinates {
+        (1,0.460992908)(2,0.241134752)(3,0.19858156)(4,0.04964539)(5,0.021276596)(6,0.007092199)(7,0.007092199)(8,0.007092199)(9,0.007092199)
+    };
+\end{axis}
+\end{tikzpicture}
+\caption{Probability of selecting different numbers of Tweets from each timeline}
+\label{fig:num_tweets_selected}
+
+\end{figure}
+The validation test resulted in a set of just under 10,000 Tweets, authored by 936 unique users, that had interestingness decisions made on them as part of the assessment of the participants' home timelines and friends' user timelines. These Tweets became the testing dataset $T$, and in order to determine their predicted expected retweet counts using trained classifiers as part of assigning the interestingness scores to each of the Tweets, two procedures were required to take place;
+\begin{itemize}
+    \item Collect further data on each assessed \textit{author} in order to generate the `user' models, and;
+    \item Collect further data on each assessed \textit{Tweet} in order to classify it against the global model and the relevant user model.
+\end{itemize}
+The global model used was the same large model generated during the previous validation tests.
+
+For privacy reasons, each participant's Twitter API credentials were not maintained by the application and so standard authenticated REST API requests were performed to collect the additional data required. In particular, in August 2013, each of the 936 users representing $\aut{t}{O} \forall t \in T$ were queried under an identical collection scheme to that used as part of the previous validation; information on the author itself and on a sample of the author's followers and friends. The collected information was also assigned to each of that user's Tweets $t' \in T$ so that an instance could be built for every $t \in T$ according to the features described in Table \ref{table:globalfeatures}. These Tweets were then classified by the global model and their appropriate user model, which was built from its author's features, in order to eventually produce the two scores. 
+
+It should be noted that if a particular user follows another whose account is protected (see earlier in the thesis for further information on this), then the former user's API credentials can be used to view the latter's information and Tweets. However, since, during the data-collection, a static account was used to query the API, then Tweets and user information for accounts that are protected could not successfully be retrieved. This means that user and Tweet data for these users could not be collected for the purposes of training the user model and testing Tweets against this and the global model, and thus Tweets from protected authors had to be removed from $T$. The numbers stated in this section are those of the \textit{final} dataset after removing these Tweets and users.
+
+
+\subsection{Results from the Further Validations}
+In this section, the patterns observed through the comparison of the Tweers inferred as interesting through the scores and those indicated as interesting by the human participants are analysed. There was no significant difference observed between the accuracy of the scores against the MTWs' and the organic participants' decisions, and thus the combination both sets was considered in the following analyses.
+
+\subsubsection{Ranking performance in further depth}
+\begin{figure}[h]
+\begin{subfigure}{.5\textwidth}
+    \centering
+    \begin{tikzpicture}[scale=0.8]
+    \begin{axis}[
+            ylabel=Chance of occurrence,
+            xlabel=$n$,
+            grid=major,
+            xmin=0,
+            xmax=20,
+            ymin=0,
+            ymax=1
+            ]
+       \addplot[mark=+,only marks,blue] plot coordinates{
+            (0,0)(1,0.194737)(2,0.310526)(3,0.373684)(4,0.484211)(5,0.557895)(6,0.636842)(7,0.694737)(8,0.747368)(9,0.784211)(10,0.847368)(11,0.878947)(12,0.915789)(13,0.931579)(14,0.947368)(15,0.963158)(16,0.989474)(17,0.989474)(18,1)(19,1)(20,1)
+        };    
+        \addplot[gray] plot coordinates{
+            (0,0)(1,0.05)(2,0.1)(3,0.15)(4,0.2)(5,0.25)(6,0.3)(7,0.35)(8,0.4)(9,0.45)(10,0.5)(11,0.55)(12,0.6)(13,0.65)(14,0.7)(15,0.75)(16,0.8)(17,0.85)(18,0.9)(19,0.95)(20,1) 
+        }; 
+    \end{axis}
+    \end{tikzpicture}
+    \caption{In timelines where one Tweet was selected}
+    \label{fig:rank-one}
+\end{subfigure}
+\quad
+\begin{subfigure}{.5\textwidth}
+    \centering
+    \begin{tikzpicture}[scale=0.8]
+    \begin{axis}[
+            ylabel=Chance of occurrence,
+            xlabel=$n$,
+            grid=major,
+            xmin=0,
+            xmax=20,
+            ymin=0,
+            ymax=1
+            ]
+       \addplot[mark=+,only marks,blue] plot coordinates{
+       (0,0)(1,0.275862)(2,0.405172)(3,0.543103)(4,0.637931)(5,0.715517)(6,0.758621)(7,0.810345)(8,0.836207)(9,0.87069)(10,0.887931)(11,0.913793)(12,0.939655)(13,0.948276)(14,0.948276)(15,0.956897)(16,0.974138)(17,0.982759)(18,0.991379)(19,1)(20,1) 
+        };    
+        \addplot[gray] plot coordinates{
+        (0,0)(1,0.1)(2,0.194736842)(3,0.284210526)(4,0.368421053)(5,0.447368421)(6,0.521052632)(7,0.589473684)(8,0.652631579)(9,0.710526316)(10,0.763157895)(11,0.810526316)(12,0.852631579)(13,0.889473684)(14,0.921052632)(15,0.947368421)(16,0.968421053)(17,0.984210526)(18,0.994736842)(19,1)(20,1)
+        }; 
+    \end{axis}
+    \end{tikzpicture}
+    \caption{In timelines where two Tweets were selected}
+    \label{fig:rank-two}
+\end{subfigure}
+\begin{subfigure}{.5\textwidth}
+    \centering
+    \begin{tikzpicture}[scale=0.8]
+    \begin{axis}[
+            ylabel=Chance of occurrence,
+            xlabel=$n$,
+            grid=major,
+            xmin=0,
+            xmax=20,
+            ymin=0,
+            ymax=1,
+            legend entries={Scoring methodology performance, Random performance},
+            legend style={at={(2.4,0.5)}, nodes={right}}
+            ]
+       \addplot[mark=+,only marks,blue] plot coordinates{
+            (0,0)(1,0.282353)(2,0.447059)(3,0.517647)(4,0.682353)(5,0.717647)(6,0.776471)(7,0.823529)(8,0.858824)(9,0.882353)(10,0.905882)(11,0.941176)(12,0.952941)(13,0.976471)(14,0.988235)(15,1)(16,1)(17,1)(18,1)(19,1)(20,1)
+        };    
+        \addplot[gray] plot coordinates{
+            (0,0)(1,0.15)(2,0.284210526)(3,0.403508772)(4,0.50877193)(5,0.600877193)(6,0.680701754)(7,0.749122807)(8,0.807017544)(9,0.855263158)(10,0.894736842)(11,0.926315789)(12,0.950877193)(13,0.969298246)(14,0.98245614)(15,0.99122807)(16,0.996491228)(17,0.999122807)(18,1)(19,1)(20,1)
+        }; 
+    \end{axis}
+    \end{tikzpicture}
+    \caption{In timelines where three Tweets were selected}
+    \label{fig:rank-three}
+\end{subfigure}
+\caption{The chance of a participant selecting one of the top $n$ ranked Tweets in the timeline}
+\end{figure}
+
+In the prevoius validation, the performance of the interestingness scores in ranking Tweets was assessed on a per-question basis. The same concept is expanded here to apply a similar assessment of the scores on the present validation test.
+
+In this case, each assessed \textit{timeline} was ranked in order of descending interestingness score in an effort to find the probability of a participant selecting a Tweet occurring in the top $n$ of Tweets. Timelines were up to 20 Tweets long, compared to the five used in the Mechanical Turk questions in the initial validation test, but the scores have again demonstrated that they are effectively able to rank Tweets. Since the timelines are bigger than the questions used before, the chance of a participant selecting multiple Tweets from a timeline was greater, as indicated by Figure \ref{fig:num_tweets_selected}. To illustrate this, the results for this analysis are demonstrated against the appropriate random performance benchmark produced by the different selection criteria. 
 
 
 
-\section{Addressing Information Relevance}
-- Promising results from the controlled trial - how does it work with people assessing Tweets from their \textit{own} local network
-Twinterest stuff
+- chance of not selecting bottom n tweets
 
 
+\section{Chapter Summary}
 
-Mis-calculation errors when validating the interestingness predictions:
- - caused by non-authorisation to collect the data from Twitter (i.e. user has a protected account). Therefore we cannot build the test (or train data) successfully for these tweets
- - if an experimenter selected one of these Tweets, then we have to discard that timeline from our analyses.
+\subsection{Interestingness Scores}
+Brief overview of scores
 
+\subsection{Validations}
+The different validations conducted
+
+\subsection{Improvements and Qualities}
+Good results, etc.
+Improvements over previous methods, etc.
+Works well in the general case and in more relevant situations
+
+- remove links between users, do still receive the information - (future work?)
