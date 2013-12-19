@@ -1,28 +1,5 @@
 \chapter{Inferring Interestingness of Tweets based on Information Flow Through the Network}
 
-
-Mention:
-\begin{itemize}
-\item How this chapter builds upon network stuff in previous chapter
-\item We hope to compare and contrast two better ways of predicting retweet volume \emph{and} interestness
-\item What needs to be improved (speed, usability - more users with more followers etc.)
-\item Why do improvements need to be made?
-\item How is this useful, and how does first chapter relate to work done here?
-\end{itemize}
-
-Discuss:
-\begin{itemize}
-\item Does not use network to simulate tweets - instead uses a set of user features
-\item Previous chapter shown how basic features can be used to generate a scale-free network, which is what twitter is
-\item Use these features as input attributes of a new machine learning technique model.
-\item This method does not use a network or model individual user decisions
-\item Trained on a set of that particular user's tweets with the retweet outcome of integer type
-\item A new tweet modelled with the regression outputs a retweet volume prediction without having to simulate the Tweet's travels through the network. 
-\item Discuss about the machine learning approach used (logistic regression and how it works)
-\item Talk about the 'binning' of retweet outcome volumes and its approaches (distribution dependent / independent, tables of precisions, etc.)
-\item Link 'retweet volume' to 'retweet group size'
-\end{itemize}
-
 Research in the previous chapter focussed on researching the effect of the social graph on retweet propagation characteristics. From this, a methodology, displaying a range of various shortcomings, emerged based on the models and simulations utilised in the graph analyses. In this chapter, the methodology is modified with the aim of improving its performance and increasing the range of use-cases it is appropriate for. Since the social structure was found to play an important role in propagation, many network and user features are taken into account throughout the improvements.\\
 In addition, modifications are made in order to provide an indication of \textit{how} interesting a piece of information is estimated to be, and more about this particular component is discussed in later sections.
 
@@ -843,26 +820,39 @@ Although the results showed that, with the different selection criteria, the sco
 
 
 \subsubsection{Crowdsourced timeline selections}
+A brief study was additionally made into the selections of Tweets made by the participants. Of particular interest is the \textit{difference} in performance between those pariticpants that were paid to take part (the MTWs) and those who took part without being paid (the organic participants), and whether one group was more likely to select Tweets near the top of the timeline without scrolling down to select those at the bottom of the timeline. Reasons for this case could be laziness on the behalf of the participant, or simply for speed.
 
-\begin{figure}[H]
+The study revealed that there wasn't a significant difference between the two participant groups. The organic participants, on average, selected the Tweet at position 6.07 in the timeline, and the MTWs selected Tweets at the average position of 5.83 out of 20 maximum available positions.
+Whilst these selection position averages are both relatively near to the top of the timeline, it should be noted that the \textit{mean} timeline length was of 14 Tweets, and thus purely average random selections should be made at the seventh Tweet.
+
+It is felt, therefore, that there was some bias in both participant groups in that they were both slightly more likely to select Tweets nearer the top of the timeline than scroll down to view, and make interestingness judgments on those, nearer the bottom of the timelines.
+
+\begin{figure}[h]
 \begin{subfigure}{.5\textwidth}
     \centering
     \begin{tikzpicture}[scale=0.8]
      \begin{axis}[
         view={0}{90},
-        colormap/warm,
+        ylabel=Position of selection,
+        colormap/hot,
         grid=none,
+        ygrid=none,
         y dir=reverse,
         xticklabels=none,
         xticklabel style=none,
         yticklabel style=none,
+        ticks=none,
         separate axis lines,
         y axis line style= { draw opacity=0 },
         x axis line style= { draw opacity=0 },
+        minor grid style={draw opacity=0},
+        major grid style={draw opacity=0},
+        major tick length=0pt,
+        minor tick length=0pt,
         draw=none]
       \addplot3[surf] table [row sep=newline] {5.Chapter3/data/heatmap.dat};
       \addplot[black] plot coordinates{       
-            (0,6.0743)(1,6.0743)
+            (0,6.0743)(19,6.0743)
       };
      \end{axis}
     \end{tikzpicture}
@@ -874,28 +864,29 @@ Although the results showed that, with the different selection criteria, the sco
     \begin{tikzpicture}[scale=0.8]
      \begin{axis}[
         view={0}{90},
-        colormap/warm,
+        ylabel=Position of selection,
+        colormap/hot,
         grid=none,
         y dir=reverse,
         xticklabels=none,
         xticklabel style=none,
         yticklabel style=none,
+        ticks=none,
         separate axis lines,
         y axis line style= { draw opacity=0 },
         x axis line style= { draw opacity=0 },
         draw=none]
       \addplot3[surf] table [row sep=newline] {5.Chapter3/data/heatmap2.dat};
       \addplot[black] plot coordinates{       
-            (0,5.825323475)(1,5.825323475)
+            (0,5.825323475)(19,5.825323475)
       };
      \end{axis}
     \end{tikzpicture}
     \caption{Selections made by MTWs}
 \end{subfigure}
-\caption{Heatmaps illusstrating the timeline position of selections made by participants. Mean selection position is indicated (note that the mean timeline length was 14)}
+\caption{Heatmaps illustrating the timeline position of selections made by participants. Mean selection position is indicated (note that the mean timeline length was 14)}
 \end{figure}
 
-- chance of not selecting bottom n tweets
 
 
 \section{Chapter Summary}

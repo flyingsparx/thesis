@@ -7,7 +7,7 @@ s = ""
 counter = 0
 for line in f.readlines():
     counter += 1
-    for i in range(0,2):
+    for i in range(0,20):
         s = s + str(i)+" "+str(counter)+" "+str(line.replace("\n",""))+"\n"
     s = s + "\n"
 
