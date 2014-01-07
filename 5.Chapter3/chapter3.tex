@@ -820,12 +820,6 @@ Although the results showed that, with the different selection criteria, the sco
 
 
 \subsubsection{Crowdsourced timeline selections}
-A brief study was additionally made into the selections of Tweets made by the participants. Of particular interest is the \textit{difference} in performance between those pariticpants that were paid to take part (the MTWs) and those who took part without being paid (the organic participants), and whether one group was more likely to select Tweets near the top of the timeline without scrolling down to select those at the bottom of the timeline. Reasons for this case could be laziness on the behalf of the participant, or simply for speed.
-
-The study revealed that there wasn't a significant difference between the two participant groups. The organic participants, on average, selected the Tweet at position 6.07 in the timeline, and the MTWs selected Tweets at the average position of 5.83 out of 20 maximum available positions.
-Whilst these selection position averages are both relatively near to the top of the timeline, it should be noted that the \textit{mean} timeline length was of 14 Tweets, and thus purely average random selections should be made at the seventh Tweet.
-
-It is felt, therefore, that there was some bias in both participant groups in that they were both slightly more likely to select Tweets nearer the top of the timeline than scroll down to view, and make interestingness judgments on those, nearer the bottom of the timelines.
 
 \begin{figure}[h]
 \begin{subfigure}{.5\textwidth}
@@ -884,22 +878,54 @@ It is felt, therefore, that there was some bias in both participant groups in th
     \end{tikzpicture}
     \caption{Selections made by MTWs}
 \end{subfigure}
-\caption{Heatmaps illustrating the timeline position of selections made by participants. Mean selection position is indicated (note that the mean timeline length was 14)}
+\caption{Heatmaps illustrating the timeline position of selections made by participants. Mean selection position is indicated}
+\end{figure}
+
+A brief study was additionally made into the selections of Tweets made by the participants. Of particular interest is the \textit{difference} in performance between those pariticpants that were paid to take part (the MTWs) and those who took part without being paid (the organic participants), and whether one group was more likely to select Tweets near the top of the timeline without scrolling down to read and select those at the bottom of the timeline. Reasons for this case could be laziness on the behalf of the participant, or simply for speed.
+
+The study revealed that there wasn't a significant difference between the two participant groups. The organic participants, on average, selected the Tweet at position 6.07 in the timeline, and the MTWs selected Tweets at the average position of 5.83 out of 20 maximum available positions.
+Whilst these selection position averages are both relatively near to the top of the timeline, it should be noted that the \textit{mean} timeline length was of 14 Tweets, and thus purely average random selections should be made around the mark of the seventh Tweet.
+
+It is felt, therefore, that there was some bias in both participant groups in that they were both slightly more likely to select Tweets nearer the top of the timeline than scroll down to view, and make interestingness judgments on those, nearer the bottom of the timelines. As with the previous validation tests, it was also possible to demonstrate that the maximum scores between Tweets in a particular timeline is greater in cases where only selection is made by the participants (Figure \ref{fig:disparity-2}). 
+
+\begin{figure}
+    \centering
+    \begin{tikzpicture}[scale=0.8]
+    \begin{axis}[
+            ylabel=Maximum disparity,
+            xlabel=Number of selected Tweets,
+            grid=major,
+            xmin=1,
+            xmax=9,
+            ymin=0
+            ]
+        \addplot[mark=+,only marks,blue] plot coordinates{
+            (1,4246.666667)(2,2694.0)(3,2444.0)(4,125.0)(5,29.0)(6,998.6666667)(7,15.0)(8,19.33333333)(9,40.33333333)
+        }; 
+    \end{axis}
+    \end{tikzpicture}
+\label{fig:disparity-2}
+\caption{Relationship between the number of selected Tweets in a timeline and the maximum score disparity of the timeline}
 \end{figure}
 
 
-
 \section{Chapter Summary}
+In this chapter, an improvement over the previous iteration of the Tweet interestingness inference methodology has been introduced, tested, and analysed. Bringing the research into the social structure of Twitter forward from the previous chapter, it was possible to determine areas for improvement and the useful metrics for governing the selection of new features.
 
 \subsection{Interestingness Scores}
-Brief overview of scores
+The new methodology introduced the notion of scores, which can be assigned to Tweets in order to signify their relative interestingness. These scores are based on the ratio between the popularity of a Tweet, measured by its observed retweet count, and a value representing an \textit{expected} retweet count for the Tweet. The scoring mechanism works such that different types of users, including across influence and activity frequency\footnote{The activity frequency is how often a user posts Tweets} ranges, can have their Tweets assessed on the same scale. 
 
-\subsection{Validations}
-The different validations conducted
+Two scoring schemes were set up, which are derived from distinct methods for generating the expected retweet count. One method is based on comparing a Tweet's (and its author's) features to a \textit{global} model trained on a large number of Tweets collected from Twitter. The other is generated through the comparison of the Tweet's features to a \textit{user} model trained only on other Tweets posted by that particular user. Generally, there was found to be non-significant difference between the performance of the two scores, however, and thus they were both used interchangeably during the validations.
+
+\subsection{Methodology Validations}
+Two sets of validations were conducted into verifying the performance and accuracy of the new methodology and the scores it produced - one in which Tweets were placed into questions on Amazon's Mechanical Turk, in which MTWs were asked to select the most interesting Tweets; and another, in which users were asked to sign-in through Twitter and then assess Tweets from users they actually follow.
+
+In the first case, the participants shared no connection with the authors of the Tweets they were assessing (except in the case of large coincidences), and were therefore assessing Tweets on a \textit{global} interest level. In particular, this largely involves determining the interesting information from the noise around it. In the second set, information \textit{relevance} came more into play, since participants were assessing Tweets from users they have already declared an interest in (through the action of following).
+
+In both test cases, the validations showed the scores to be able to appropriately label Tweets according to interestingness in a variety of different ways. The second test included an analysis demonstrating that the scores are more efficient at determining interesting Tweets than \textit{un}-interesting Tweets, the latter of which would be useful in deciding on a set of Tweets to discard from an interesting set. 
 
 \subsection{Improvements and Qualities}
-Good results, etc.
-Improvements over previous methods, etc.
-Works well in the general case and in more relevant situations
+The newly introduced methodology presents several improvements over that described in the previous chapter. In particular, the performance of the scores have shown a large accuracy improvement in determining interesting information. The previous method also did not take into account \textit{how} interesting a particular Tweet may be, and was only able to make a binary interesting/uninteresting decision for each Tweet.
 
-- remove links between users, do still receive the information - (future work?)
+Another large improvement is the ability of the scoring method to be applied to a much wider range of Tweets. The previous method was realistically unable to assess Tweets from users with more than 300 or so followers due to data collection inefficiency, the time taken, and the computational complexity involved in simulating large user graphs. The new method can be used to assign scores to Tweets in a more ``on demand'' fashion, where only a small amount of informaiton for each Tweet is required in order to generate the features needed to predict the estimated retweet counts. The scores also allow Tweets from many different sources to be assessed on the same scoring scale, meaning that Tweets on a mixed timeline can be appropriately compared to one-another, as demonstrated by the second set of validations.
+
