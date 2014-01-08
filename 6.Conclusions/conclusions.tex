@@ -1,5 +1,5 @@
 \chapter{Assessment and Conclusions}
-This chapter includes an overview and assessment of the work conducted in this thesis, bringing together the ideas from the initial research and how these have helped in developing the methodologies introduced in later chapters. The validations from the methods are further assessed, followed by how the research forming them may be taken further in potential future projects. Finally, an overview of the thesis in terms of its contributions are described.
+This chapter includes an overview and assessment of the work conducted in this thesis, bringing together the ideas from the initial research and how these have helped in developing the methodologies introduced in later chapters. The validations from the methods are further assessed, followed by how the research forming them may be taken further in potential future projects. Finally, an overview of the thesis in terms of its contributions is described.
 
 
 \section{Analysis of Research and Results}
@@ -10,24 +10,40 @@ Initial research was conducted into the act of retweeting and Twitter in general
 
 It was found that, agreeing with other research in the area, retweet groups, which represent the set of retweets (and their authors) of a particular Tweet, can have widely ranging sizes and depth. The path-length of a retweet group's branch was defined as the number of retweet hops between the author of the initial Tweet and that of the final retweet of the chain. This phenomenal takes into account that retweets can, themselves, be retweeted, and that retweet groups do \textit{not} consider the followships between the set of user's they represent. Retweet groups were found to present an average \textit{maximum} path-length of around two, and the longest maximum path found in the dataset collected from retweets on the public timeline was of length nine. This demonstrates a significant penetration through the social graph, especially considering the `real' world's six degrees of separation, and that social networks often exhibit a social graph even more closely connected than this.
 
-This, and other retweet group analyses, led more onto more focused research on Twitter's social graph, which began by studying the properties of the \textit{audience} size attainable through retweet groups, and the overhead generated through shared followships, and ties between users involved in retweet groups and their relationships on the social graph. It was found that the chance of a retweeter retweeting a Tweet was significantly greater to occur in cases where the retweeter follows the author of the original Tweet, but that as retweet pathways become longer, the chances of the final retweeter following the original author diminishes over the distance, demonstrating strong correlations between the edges between users on the retweet graph and those on the social graph.
+This, and other retweet group analyses, led more onto more focused research on Twitter's social graph, which began by studying the properties of the \textit{audience} size attainable through retweet groups, and the overhead generated through shared followships, and ties between users involved in retweet groups and their relationships on the social graph. It was found that the chance of a retweeter retweeting a Tweet was significantly greater to occur in cases where the retweeter follows the author of the original Tweet, but that as retweet pathways become longer, the chances of the final retweeter following the original author diminishes over the distance, demonstrating strong correlations between the edges between users on the retweet graph and those on the social graph. These experiments were conducted using a trained logistic regression to predict a retweet outcome decision for each user who received the Tweet during simulations of each structure type.
 
 Since, at this stage, it was demonstrable that the social structure of Twitter clearly affects the propagation of retweets, and that this property could provide a way of inferring interestingness. Research then focused on examining the differences in propagation patterns in order to demonstrate that each structure type can present very different retweet propagation patterns. Because the propagation pattern difference at this structural level was so large, it was decided that this could be a basis for an interestingness inference methodology. This method utilised the same research and algorithms behind those used in the graph structure analysis to predict a retweet count for a given Tweet within a graph of connected users, and worked through a simple comparison between this predicted value and the \textit{observed} retweet count of the Tweet. This method was not shown to perform particularly well in the validation tests conducted, and thus improvements were necessary before any further analyses were made.
 
 
 \subsection{Summary of the Improved Methodology}
+Improvements over the previous methodology were based around the introduction of interestingness \textit{scores}, with which Tweets could be ranked according to the ratio of their observed and expected popularities, and where if the observed popularity is proportionately larger than the expected popularity, the score for that Tweet would also be proportionately greater. This in itself provides many benefits over the previous system, which was unable to provide any indication over \textit{how} interesting a Tweet is.
+
+The prediction of the esitmated retweet count was altered so that they could be generated directly through the use of a Bayesian network machine learning classifier, which made predictions based on a larger set of Tweet and environmental network features. These features could be collected much more efficiently from Twitter's REST API, illustrating another advantage in terms of the ease with which predictions (and thus score assignations) can be made. 
+
+Furthermore, the efficiency stretches to providing a more universal approach, allowing Tweets from most users on Twitter to be evaluated equally and on the same scale, since the complexity of any part of the assignation process is not affected by the influence or other properties of the author user. 
+
+
+\subsection{Analysis of Validation Results}
+Producing the scores partially relies on the initial accuracy of making retweet predictions in the \textit{general case}, using cross-validation tests on the Bayesian network classifier and the binning policy of retweet counts explained in the prevoius chapter. The performance of each factor is highlighted in Tables \ref{table:classifierperformance} and \ref{table:binperformance} respectively, which demonstrated that a decent precision and recall could be obtained in cases using up to between 15 and 20 nominal bins. Although the binning algorithm was responsive in terms of the range and distribution of retweet counts in the set being analysed, it was aimed to achieve a projected bin count of 10 in the case of producing the global model. When generating the user-specific classifier models, the number of bins ranged significantly depending on the relative influence of each user, as described previously.
+
+The mention of the ``general case'' is important, since the methodology is designed to discover Tweets which do \textit{not} fit this case, as these would be Tweets which have a greater (or smaller) retweet count than expected, and would therefore be the Tweets which would contribute negatively to the aforementioned performance analyses of the prediction method. As such, if all Tweets fit their general cases as given by their features and the features of their authors, then the general performance of the cross-validations on the classifier could be greater.
+
+Two main human validation tests were conducted into the performance of the scoring mechanisms provided by the improved methods; one based on interestingness decisions from non-related participants, and another based on decisions from Twitter users to whom the Tweets assessed are more relevant, as denoted by the followships of the author users. These validations expressed a good performance of the scoring scheme in a variety of ways, from the ranking of Tweets in order of interestingness through to analyses into the motivation of Tweet selection from the \textit{disparity} of Tweet scores in the timeline.
+
+The background chapter of this thesis described other similar research in this area along with the strengths and weaknesses of each. Whilst this included a fair amount of research into retweet decision and count predictions, they are often quite similar to one another, and these goals are not the primary focus of the work in this thesis. Instead, research into information interestingness with regards to Twitter will now be evaluated against the methods outlined in this thesis.
+
+\cite{gransee12} introduced a system for scoring Tweets based on a na{\"i}ve Bayesian classifier. The authors' learner was concerned only with textual cues for producing a score. The learner was trained using a set of Tweets from a particular author, with each Tweet being assigned a score based, similar to the work in this thesis, on the distance between the observed retweet count of the Tweet and the single \textit{baseline} retweet count for the Tweet's author at that particular time. Words in unseen Tweets are then scored individually according to the scores of Tweets the words have previously been seen in, which, when averaged, generates a score for the unseen Tweet.
+
+The scoring methods in this thesis are superior to this methodology in a number of ways. 
+
+- limited to a set of 175 users with no indication of its performance in the general case 
+- requires a dictionaruy of words to be built for each user based on all of their previous tweets (ours can be used on-demand through comparisons to global model)
+- cannot be used on-demand scoring of tweets
+- maintain a baseline retweet count at granular time intervals
 
 
 
-\subsection{Analysis of Methodology Validation Results}
-
-\begin{itemize}
-\item Have methods been able to sensibly predict retweet volumes?
-\item Have methods sensibly inferred Tweet interestingness?
-\item What might have worked better?
-\item Which parts were useless?
-\item Which parts helped develop other areas of research which may have provided further avenues of research ideas?
-\end{itemize}
+Background described other similar research in the area - (e.g. if URL = interesting, etc.) - how is this better?
 
 
 
@@ -53,3 +69,9 @@ Summarise events and processes covered, reiterate what the point of the work was
 
 \subsection{Contributions}
 Restate the original contributions (from Introduction section). Explain the ways in which the work done relates to the projected contributions, that it is novel and useful.
+contributions:
+- a survey into relevant literature of the area
+- analysis of current interestingness inference techniques
+- thorough research into retweet properties and its ties to users on the social graph
+- a method for suitably predicting estimated retweet counts, leading to...
+- ... a method for suitable inferring the level of interest of a particular Tweet.
