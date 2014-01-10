@@ -6,13 +6,13 @@ This chapter includes an overview and assessment of the work conducted in this t
 Following is an analysis of the research carried out over the stages described in the main chapters of this thesis, from the initial research into retweeting and the social graph through to the interestingness inference methodologies explained at later stages.
 
 \subsection{Summary \& Analysis of Initial Research}
-Initial research was conducted into the act of retweeting and Twitter in general for the purposes of providing a background and foundation for the later work. In particular, research was carried out into retweet \textit{groups} and the properties and behaviours they demonstrate.
+Initial research was conducted into the act of retweeting and Twitter in general for the purposes of providing a background and foundation for the later work. In particular, research was carried out into retweet \textit{groups} and the properties and behaviours they demonstrate. During the review of the relevant literature in the field, it was indicated that a Tweet's popularity cannot generally be directly tied to the Tweet's interestingness due to factors relating to user \textit{influence}.
 
-It was found that, agreeing with other research in the area, retweet groups, which represent the set of retweets (and their authors) of a particular Tweet, can have widely ranging sizes and depth. The path-length of a retweet group's branch was defined as the number of retweet hops between the author of the initial Tweet and that of the final retweet of the chain. This phenomenal takes into account that retweets can, themselves, be retweeted, and that retweet groups do \textit{not} consider the followships between the set of user's they represent. Retweet groups were found to present an average \textit{maximum} path-length of around two, and the longest maximum path found in the dataset collected from retweets on the public timeline was of length nine. This demonstrates a significant penetration through the social graph, especially considering the `real' world's six degrees of separation, and that social networks often exhibit a social graph even more closely connected than this.
+In the initial explorative analyses into Twitter and retweets, it was found that, agreeing with other research in the area, retweet groups, which represent the set of retweets (and their authors) of a particular Tweet, can have widely ranging sizes and depth. The path-length of a retweet group's branch was defined as the number of retweet hops between the author of the initial Tweet and that of the final retweet of the chain. This phenomenal takes into account that retweets can, themselves, be retweeted, and that retweet groups do \textit{not} consider the followships between the set of user's they represent. Retweet groups were found to present an average \textit{maximum} path-length of around two, and the longest maximum path found in the dataset collected from retweets on the public timeline was of length nine. This demonstrates a significant penetration through the social graph, especially considering the `real' world's six degrees of separation, and that social networks often exhibit a social graph even more closely connected than this.
 
 This, and other retweet group analyses, led more onto more focused research on Twitter's social graph, which began by studying the properties of the \textit{audience} size attainable through retweet groups, and the overhead generated through shared followships, and ties between users involved in retweet groups and their relationships on the social graph. It was found that the chance of a retweeter retweeting a Tweet was significantly greater to occur in cases where the retweeter follows the author of the original Tweet, but that as retweet pathways become longer, the chances of the final retweeter following the original author diminishes over the distance, demonstrating strong correlations between the edges between users on the retweet graph and those on the social graph. These experiments were conducted using a trained logistic regression to predict a retweet outcome decision for each user who received the Tweet during simulations of each structure type.
 
-Since, at this stage, it was demonstrable that the social structure of Twitter clearly affects the propagation of retweets, and that this property could provide a way of inferring interestingness. Research then focused on examining the differences in propagation patterns in order to demonstrate that each structure type can present very different retweet propagation patterns. Because the propagation pattern difference at this structural level was so large, it was decided that this could be a basis for an interestingness inference methodology. This method utilised the same research and algorithms behind those used in the graph structure analysis to predict a retweet count for a given Tweet within a graph of connected users, and worked through a simple comparison between this predicted value and the \textit{observed} retweet count of the Tweet. This method was not shown to perform particularly well in the validation tests conducted, and thus improvements were necessary before any further analyses were made.
+The correlations and results from the explorative analyses on the social structure and the arrangement of users on the social graph indicated that the social structure of Twitter clearly affects the propagation of retweets and that this property could provide a way of inferring interestingness. This triggered research focussed on examining the differences in propagation patterns in order to demonstrate that each structure type can present very different retweet propagation patterns. Because the propagation pattern difference at this structural level was so large, it was decided that this could be a basis for an interestingness inference methodology. This method utilised the same research and algorithms behind those used in the graph structure analysis to predict a retweet count for a given Tweet within a graph of connected users, and worked through a simple comparison between this predicted value and the \textit{observed} retweet count of the Tweet. This method was not shown to perform particularly well in the validation tests conducted, and thus improvements were necessary before any further analyses were made.
 
 
 \subsection{Summary of the Improved Methodology}
@@ -118,7 +118,6 @@ There are various ways in which research could be carried out into the methodolo
 
 However, as has been made clear at points in this thesis, not \textit{all} the information a friend posts is likely to be interesting, and that particularly interesting information from a particular source is likely to be retweeted more than less interesting information posted by the same source. If a particular destination user finds only a small subset of Tweets from a source to be interesting, and that these Tweets are therefore more likely to be retweeted by other users also following the source, then is there a non-direct pathway available between the source and the destination user that the interesting Tweets could be passed down?
 
-
 \begin{figure}[h]
 \centering
 \includegraphics[scale=0.8]{6.Conclusions/Media/retweet_path.png} 
@@ -126,26 +125,34 @@ However, as has been made clear at points in this thesis, not \textit{all} the i
 \label{fig:removed_link}
 \end{figure}
 
-If this is the case, as with Figure \ref{fig:removed_link}, then the link representing the followship between the destination user (B) and the source user (A) could be unnecessary, since user B is receiving a fair amount of noise from user A, but the interesting information produced by user A could still reach B through retweets carried out by other followers. 
+If this is the case, as with Figure \ref{fig:removed_link}, then the link representing the followship between the destination user (B) and the source user (A) could be unnecessary, since user B is receiving a fair amount of noise from user A, but the interesting information produced by user A could still reach B through retweets carried out by other followers of A. 
 
-Whilst a lot of this is hypothetical, it would provide an interesting extension to the research carried out in this thesis, in that interestingness scores could be used to assign thresholds of interestingness to users with the aim of discovering whether interesting Tweets could still be propagated to the extent that they deserve, yet by simultaneously reducing the propagation of noisy information.
+Whilst a lot of this is hypothetical, it would provide an interesting extension to the research carried out in this thesis, in that interestingness scores could be used to assign thresholds of interestingness to users with the aim of discovering whether interesting Tweets could still be propagated to the extent that they deserve, yet by simultaneously reducing the propagation of noisy information. 
+
+Since it has been explained how a user's followships act as a `search term' for information retrieval on Twitter, by finding ways of forwading interesting information to users who do not directly follow a source, then it is clear how this could pave a way for enabling interesting and \textit{relevant} information can be delivered to users, yet without them having to know about it or look for it.
 
 
 \section{Conclusions \& Contributions}
+The final part of this concluding chapter summarises the research and processes conducted in this thesis along with the contributions made by this research.
 
 
+\subsection{Final remarks}
+The work in this thesis was carried out with the aim of researching a methodology that is able to suitably infer interesting information in Twitter. Although the research has focused on Twitter as a platform for information disemmination, the motivation for this research stems from the \textit{noise} observed every day in all online social networks that support information propagation, including those such as Facebook and Tumblr.
 
-\subsection{Summary}
-Summarise events and processes covered, reiterate what the point of the work was and how each part of the work covered relates to that.
+The research processes culminated in the development of a method that ranks Tweets by assigning a scored indicating an estimated level of interestingness based on a function of its perceived popularity. The methods were verified through the use of crowd-sourced validation tests covering the notions of general interestingness (in terms of identifying from `noisy' information) and of more \textit{relevant} interestingness (through assessments of Tweets authored by more relevant users).
 
-The point of the thesis was to... 
-... was this covered?
+Analyses into the validation tests demonstrated the mechanism by which users are able to identify interesting information and showed that the scoring mechanism is able to effectively rank Tweets in an appropriate order of interestingness in both mixed timelines and in timelines of Tweets authored by the same user. The scores can be applied to Tweets from all users on the same scale, meaning that inferences are not limited to a specific subset or type of Tweet.
+
+The methods are open enough and use resources that are mostly common to many similar social networks. For example, ``shares'' and ``reblogs'' can be examined as the propagation mechanisms in Facebook and Tumblr, respectively, to attempt to apply the same scoring mechanism to other platforms.
+
 
 \subsection{Contributions}
-Restate the original contributions (from Introduction section). Explain the ways in which the work done relates to the projected contributions, that it is novel and useful.
-contributions:
-- a survey into relevant literature of the area
-- analysis of current interestingness inference techniques
-- thorough research into retweet properties and its ties to users on the social graph
-- a method for suitably predicting estimated retweet counts, leading to...
-- ... a method for suitable inferring the level of interest of a particular Tweet.
+The research in this thesis makes several contributions to social media analytical research. The main contributions are outlined below.
+
+A comprehensive survey is carried out into relevant literature in information propagation in online social networks, along with evaluations and assessments of some of the research more specific to inferring interestingness.
+
+Retweet properties and the way they are influenced by the social graph are thoroughly researched in order to provide a general background and understanding of the notions relating to propagation in online social networks, propagation and information penetration, Tweet `audience', and how these factors are related to the arrangement of users on the social graph. The definition of terms, such as `retweet group' and `maximum path-length' are useful for discussing various properties relating to retweeting on Twitter.
+
+An investigative study is made into the use of machine learning techniques and classifiers in the field of social media, and the ways in which they can be useful for different purposes.
+
+Finally, a method for suitably predicting estimated retweet counts, as dynamically nominal categories, is described, implemented and verified, leading to the development of a method for assigning interestingness scores to Tweets as part of an effort to support the ranking of Tweets and of higlighting interesting Tweets from the noise of everyday communication on Twitter. The research was conducted in such a way as to enable the processes to be applied to other similar social media platforms for the same purpose.
