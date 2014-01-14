@@ -1,42 +1,41 @@
-\chapter{Inferring Interestingness of Tweets based on Information Flow Through the Network}
+\chapter{Development of the Interestingness Inference Methodology}
 
-Research in the previous chapter focussed on researching the effect of the social graph on retweet propagation characteristics. From this, a methodology, displaying a range of various shortcomings, emerged based on the models and simulations utilised in the graph analyses. In this chapter, the methodology is modified with the aim of improving its performance and increasing the range of use-cases it is appropriate for. Since the social structure was found to play an important role in propagation, many network and user features are taken into account throughout the improvements.\\
+Research in the previous chapter focussed on researching the effect of the social graph on retweet propagation characteristics. From this, a methodology, displaying a range of various shortcomings, emerged based on the models and simulations utilised in the graph analyses. In this chapter, the methodology is modified with the aim of improving its performance and increasing the range of use-cases it is appropriate for. Since the social structure was found to play an important role in propagation, many network and user features are taken into account throughout the improvements and investigation.
+
 In addition, modifications are made in order to provide an indication of \textit{how} interesting a piece of information is estimated to be, and more about this particular component is discussed in later sections.
 
-The proposed methodologies also relate to the differences highlighted between a Tweet's raw popularity, as indicated by its retweet count, and hos interesting the Tweet actually is to those who read it. It has been shown that making retweet predictions against models trained with a large number of features can be accurate \cite{zhu11}, but in this work, the focus is more on the Tweet's content and beyond the static features.\\
-That is, that when comparing Tweet popularity, then there may be some content, either within the Tweet itself or perhaps in a resource indicated by a URL contained in the Tweet, that makes the Tweet stand out to its recipients and to cause the aforementioned notion of \textit{affective stimulation} \cite{xu07} to its viewers.
+The proposed methodologies also relate to the differences highlighted between a Tweet's raw popularity, as indicated by its retweet count, and how interesting the Tweet actually is to those who read it. It has been shown that making retweet predictions against models trained with a large number of features can be accurate \cite{zhu11}, but in this work the focus is more on the Tweet's content and properties beyond the static features. That is, that when comparing Tweet popularity, then there may be some content, either within the Tweet itself or perhaps in a resource indicated by a URL contained in the Tweet, that makes the Tweet stand out more to its recipients and to cause the aforementioned notion of \textit{affective stimulation} \cite{xu07} to its viewers.
 
-Of course, this brings about the notion of information \textit{relevance}, and the fact that the same Tweet could be very boring or irrelevant to one user, and very interesting to another. In this work we focus on \textit{global} (or `average') interest, where interestingness inferences are made for the general case. It is considered that Tweets that are retweeted more than expected within their authors' local networks, relative to the usual retweet count of the authors' other Tweets, are also likely to be of interest to a wider audience, especially since they are now more likely to penetrate through the social graph enough to be received by users in different communities..
+Of course, this brings about the notion of information \textit{relevance}, and the fact that the same Tweet could be very boring or irrelevant to one user, and very interesting to another. In this work focus is applied to \textit{global} (or `average') interest, where interestingness inferences are made for the general case. It is considered that Tweets that are retweeted more than expected within their authors' local networks, relative to the usual retweet count of the authors' other Tweets, are also likely to be of interest to a wider audience, especially since they are now more likely to penetrate through the social graph enough to be received by users in different communities.
  
-As such, the focus of the work in this chapter is that of adapting the inference methodology in order to develop a technique for accurately \textit{quantifying} the interestingness of tweets. This is concerning universal relevance in terms of highlighting interesting Tweets from the noise. In particular, there are two main improvements of the previous methodology to be made;
+As such, the focus of the work in this chapter is that of adapting the inference methodology in order to develop a technique for accurately \textit{quantifying} the interestingness of Tweets. This is concerning universal relevance in terms of highlighting interesting Tweets from the noise. In particular, there are two main improvements over the previous methodology to be made;
 \begin{itemize}
-    \item Improve method for generating the \textit{expected} retweet count of a Tweet (in terms of accuracy and range of application)
-    \item Expand the binary retweet interesting inference into a more useful scale in order to support \textit{ranking} of interesting information.
+    \item Improve the method for generating the \textit{expected} retweet count of a Tweet (in terms of accuracy and range of application);
+    \item Expand the binary retweet interesting inference into a more useful scale in order to support the \textit{ranking} of information by interest.
 \end{itemize}
 
 
 \section{User Influence}
-As has previously been posited, of importance to this work is the difference between the retweet count of a Tweet and the interestingness of the Tweet. An example in the Background chapter was provided, which related to the case of Justin Bieber. His account, \texttt{@justinbieber}, is one of the most influential on Twitter, with nearly 50 million followers at the time of writing. His Tweets receive an average of around 50-120 thousand retweets per Tweets, and they rarely receive fewer than 40,000 retweets.\\
-Since an average Twitter user would generally attract a maximum of a few hundred followers, and would normally receive very few, if any, retweets per Tweet. A particularly interesting Tweet from such a user may be retweeted, for example, between 5-20 times. It is therefore apparent that, in the general case, an uninteresting Tweet from an influential user may receive 50,000 retweets, and an exceptionally interesting Tweet from a less-influential user may be retweeted 30 times. It is therefore clear that user influence dictates that this value cannot alone be indicative of Tweet interest.
+As has previously been posited, of importance to this work is the difference between the retweet count of a Tweet and the interestingness of the Tweet. An example in the Background chapter was provided, which was related to the case of Justin Bieber. His account, \texttt{@justinbieber}, is one of the most `influential' on Twitter, with nearly 50 million followers at the time of writing. His Tweets receive an average of around 50-120 thousand retweets per Tweet, and they rarely receive fewer than 40,000 retweets. Since an average Twitter user would generally attract a maximum of a few hundred followers, and would normally receive very few, if any, retweets per Tweet. A particularly interesting Tweet from such a user may be retweeted, for example, between 5-20 times. It is therefore apparent that, in the general case, an uninteresting Tweet from an influential user may receive 50,000 retweets, and an exceptionally interesting Tweet from a less-influential user may be retweeted 30 times. It is therefore clear that user influence dictates that this value cannot alone be indicative of Tweet interest.
 
-However, since interestingness \textit{does} have an effect on an a user's individual retweet decision, this absolute retweet count can be used as part of the method for generating an interestingness \textit{score} for a Tweet.
+However, since interestingness \textit{does} have an effect on an a user's individual retweet decision on a particular Tweet, this absolute retweet count can be used as part of the method for generating an interestingness \textit{score} for that Tweet.
 
 
 \section{Interestingness Scores}
-To address the notion of interest quantification, a scoring scheme is hereby introduced, allowing certain interesting Tweets to be ranked as `more interesting' than other interesting Tweets. This, in itself, is an improvement over the previous method, which allowed only for Tweets to be labelled as `interesting' or `non-interesting'.
+To address the notion of interestingness quantification, a scoring scheme is hereby introduced, allowing certain interesting Tweets to be ranked as `more interesting' than other interesting Tweets. This, in itself, is an improvement over the previous method, which allowed only for Tweets to be labelled as `interesting' or `non-interesting'.
 
-Similar to the previous method's \textit{comparison} between the observed and expected retweet counts, the new scoring technique is based now on the \textit{difference} between the two counts. The general idea and potential use-case for this is that if a score is known for a set of Tweets, then these can be used as a basis for ordering information as part of information retrieval or an information delivery system, where Tweets can be displayed to users in a more useful way and where interesting Tweets could be brought forward to users who don't follow the source user or a retweeter, and thus deliver information to an interested user, yet without him or her having to know about it first.
+Similar to the previous method's \textit{comparison} between the observed and expected retweet counts, the new scoring technique is based now on the \textit{distance} between the two counts. The general idea and potential use-case for this is that if a score is known for a set of Tweets, then these can be used as a basis for ordering information as part of information retrieval or an information delivery system, where Tweets can be displayed to users in a more useful way than simply chronologically, and where interesting Tweets could be brought forward to users who don't follow the source user or a retweeter, and thus deliver information to an interested user, yet without him or her having to know about it first.
 
 Essentially, the notion scoring stems from the following scenario. Consider two Tweets, $A$ and $B$, which have the following properties;
 \begin{itemize}
     \item $\ec{A} = 3000$ and $\rc{A} = 3010$
     \item $\ec{B} = 5$ and $\rc{B} = 15$
 \end{itemize}
-Where $\ec{A}$ represents the expected retweet count of $A$.
+Where $\ec{A}$ and $\ec{B}$ represent the expected retweet count of $A$ and $B$ respectively.
 
 In this case, both Tweets would have been flagged as `interesting' under the previous scheme (although, in reality, the method would not be able to model users who are typically expected to achieve 3,000 retweets). However, it is clear that, despite the \textit{difference} between the counts being equal, Tweet $B$'s observed retweet count is actually much more significantly proportionately greater than what was expected, and is therefore likely to be more significantly interesting.
 
-Since the proportionate difference is the key to this, the interestingness score, $\score{t}$, for Tweet $t$ is hereby simply given by;
+Since the proportionate difference is the key to this, the interestingness score, $\score{t}$, for Tweet $t$ is simply given by;
 \[
 \begin{array}{cc}
  \score{t} = \frac{\ec{t}}{\rc{t}}
@@ -55,40 +54,41 @@ This provides a positive score where;
 
 And where $\score{A} > \score{B}$ implies that $A$ is more interesting than $B$.
 
-Since this methodology relies on data collection from Twitter in order to obtain the observed retweet counts, it involves extracting a snapshot of the state of the evaluated Tweets at one stage during their lifetime. Since Tweets are not removed over time, unless they are deleted by their author, they can be discovered and retweeted at any time after their composition and posting.\\
-The work in this chapter assumes that the most significant portion of retweet activity for a specific Tweet has already occurred by the time the information on the Tweet has been collected. Indeed, the authors of \cite{kwak10} carried out investigative analyses into various temporal retweet brhaviours, and discovered that, on average, that a Tweet receives around 75\% of its retweets within the first day of being posted. 50\% of the retweets of a Tweet take place within the first \textit{hour} of the Tweet being posted.\\
-Due to this, and to ensure that the retweet count collected is mostly representative of the Tweet's exraploated `final' retweet count, only Tweets that had been posted at least one day ago were considered for experimentation.
+Since this methodology relies on data collection from Twitter in order to obtain the observed retweet counts, it involves extracting a snapshot of the state of the evaluated Tweets at one stage during their lifetime. Since Tweets are not removed over time, unless they are deleted by their author, they can be discovered and retweeted at any time after their composition and posting.
+
+The work in this chapter assumes that the most significant portion of retweet activity for a specific Tweet has already occurred by the time the information on the Tweet has been collected. Indeed, the authors of \cite{kwak10} carried out investigative analyses into various temporal retweet behaviours, and discovered that, on average, a Tweet receives around 75\% of its retweets within the first day of being posted. 50\% of the retweets of a Tweet even take place within the first \textit{hour} of the Tweet being posted. Due to this, and to ensure that the retweet count collected is mostly representative of the Tweet's exraploated `final' retweet count, only Tweets that had been posted at least one day ago were considered for experimentation.
 
 
 \section{Further Adaptations of the Inference Methodology}
-In the previous chapter, it was noted how it was necessary to improve the method used for producing a Tweet, $t$'s, expected retweet count, $\ec{t}$. Problems with the previous method dictated that the method could only work under certain restrictions. In particular, that the user must have a small enough local network (in practice, a follower count of more than 500 or so made the method very unsuitable), and that, due to this, Tweets only attracting very few retweets could effectively be simulated. In addition, the interestingness inferences made were not significantly accurate, although this is likely due to a combination of the aforementioned issue providing much less room for error and the fact that the interestingness decision was only binary.
+In the previous chapter, it was noted how it was necessary to improve the method used for producing a Tweet, $t$'s, expected retweet count, $\ec{t}$. Limitations with the previous method dictated that it could only work under certain restrictions. In particular, that the user must have a small enough local network (in practice, a follower count of more than 500 or so made the method very unsuitable), and that, due to this, Tweets only attracting very few retweets could effectively be simulated. In addition, the interestingness inferences made were not significantly accurate, although this is likely due to a combination of the above issue in providing much less room for error and the fact that the interestingness decision was only binary.
 
-A new method is hereby proposed for carrying out the prediction for the value of $\ec{t}$. This method is immediately more superior to the previous, as only a very small amount of data (if any) is required to be collected from Twitter. This means that inferences on Tweet interestingness could be made on demand\footnote{Not `live' due to retweet action relies on time to occur.}.\\
-Essentially, the method involves creating a classifier model capable of producing a base-line expected retweet count for a given Tweet and its relationship with its author. In this case, the classifier would be trained with the Tweet's actual retweet \textit{count} instead of the binary retweet decision used previously, and it would not require the simulations of the user's local network. Many more features regarding the Tweet, and its conetent, and its author are used to represent the particular user-Tweet information required for generating the predictions.
+A new method is hereby proposed for carrying out the prediction for the value of $\ec{t}$. This method is immediately more superior to the previous, as only a very small amount of data is required to be collected from Twitter. This means that inferences on Tweet interestingness could be made on demand\footnote{Not `live' as it relies on time for retweets to have occurred.}.
+
+Essentially, the method involves generating a classifier model capable of producing a base-line expected retweet count for a given Tweet and its relationship with its author. In this case, the classifier would be trained with the Tweet's actual retweet \textit{count} instead of the binary retweet decision used previously, and it would not require the simulations of the user's local network. Many more features regarding the Tweet, and its conetent, and its author are used to represent the particular user-Tweet information required for generating the predictions.
 
 Since the graph structure clearly has an impact on message propagation, then it was felt that a significant consideration should be made towards including features relating to the interconnection of users, such as follower counts, Tweet rate, and information on a sample of friends and followers. More detail on the features used is provided in later sections.
 
 In general, the newly proposed methodology follows these basic steps:
 \begin{enumerate}
     \item Collect sufficent data from Twitter to train a classifier with an appropriate set of features. The trained model is known as the `global' model;
-    \item Obtain a Tweet, $t$, and extract its own features as well as information about its author and its author's network properties;
+    \item Obtain a Tweet, $t$, and extract its own features as well as information about its author and its author's local graph properties;
     \item Classify the Tweet's features against the trained classifier to produce a retweet count prediction, $\ec{t}$ for this feature instance;
     \item Calculate \score{t} through using this $\ec{t}$ value and the known $\rc{t}$.
 \end{enumerate}
 
-In addition to this `global' model, a `user' model was proposed to be built for each user being evaluated. This user model would be much smaller, as it would only contain information on that user's historical Tweets, but would be capable of providing a second value for $\ec{t}$. With two such values, two scores could be generated by comparing the static $\rc{t}$ to each in turn.
+In addition to this `global' model, a `user' model was proposed to be built for each user being evaluated. This user model would be much smaller, as it would only contain information on a history of that user's Tweets, but would be capable of providing a second value for $\ec{t}$ when testing Tweets against it. With two such values generated through the comparisons of Tweets to both the global and user models, two scores could be generated as a function of the static value of $\rc{t}$.
 
 As such, the two scoring mechanisms work as follows;
 \[
-    \gscore{t} = \frac{\rc{t}}{\ec{t}_1}
+    \gscore{t} = \frac{\rc{t}}{\ecg{t}}
 \]
 \[
-    \uscore{t} = \frac{\rc{t}}{\ec{t}_2}
+    \uscore{t} = \frac{\rc{t}}{\ecu{t}}
 \]
-
+Where $\gscore{t}$ is the score generated from comparisons to the \textit{global} model and where $\uscore{t}$ is the score derived from the model representing the historical Tweets of $\aut{t}{O}$.
 
 \section{Retweet Volumes as Nominal Attributes}
-Most machine learning classifiers are not useful in accurately predicting the outcome of a feature of a large-ranging and continuous data type. Instead, the performance can be greatly improved when predicting from a limited range of discrete ranges, or `nominal' data.
+Most machine learning classifiers are not useful in accurately predicting the outcome of a feature of a large-ranging and continuous data type. Instead, the performance can be greatly improved when making predictions from a limited range of discrete ranges, or `nominal' data.
 
 Thus, in order to help improve the accuracy of $\ec{t}$ predictions, it was decided to convert the retweet count feature into a nominal data type for the purposes of training the model and making classifications. By `binning' the retweet counts into categories representing interval ranges, there would be fewer outcome possibilities, and thus the \textit{confidence} of classifcation could be greater.
 
@@ -100,15 +100,17 @@ Since a trained classifier is only generally able to make predictions on feature
 
 There are various ways in which the counts could be binned, and all begin with a decision on the number of bins to use. The varying performance of this factor is considered later.
 
-Initially, retweets were binned in a \textit{linear} fashion. That is, that the full range of retweet counts in the training set was calculated and then split into bins such that each category had an equal a range as possible. If there were no cases where $\rc{t} = 0$, then a category representing $[0,l)$, where $l$ is the minimum value for the lowest range, was pre-pended to the set of available nominal categories. Similarly, in all cases, the interval $[m+1,\infty)$ was appended to the set of categories, where $m$ is the maximum value in the highest range. This dictates that no Tweet in the training set can have a value for $\rc{t}$ in this category, and thus this allows any Tweet to potentially have $\score{t} > 1$. For example, if a training set of Tweets had a total range of values for $\rc{t}$ being between 1 and 20 was binned into four ranges, then the following interval categories would be applicable:
+Initially, retweets were binned in a \textit{linear} fashion. That is, that the full range of retweet counts in the training set was calculated and then split into bins such that each category had as equal a range as possible. If there were no cases where $\rc{t} = 0$, then a category representing $[0,l)$, where $l$ is the minimum value for the lowest range, was pre-pended to the set of available nominal categories. Similarly, in all cases, the interval $[m+1,\infty)$ was appended to the set of categories, where $m$ is the maximum value in the highest range. This dictates that no Tweet in the training set can have a value for $\rc{t}$ in this category, and thus this allows any Tweet to potentially have $\score{t} > 1$ when \textit{testing} against the model. For example, if a training set of Tweets had a total range of values for $\rc{t}$ being between 1 and 20 was binned into four ranges, then the following interval categories would be applicable:
 \[
     [0,1) [1,6) [6,11) [11,16) [16,21) [21,\infty)
 \]
 
-Since the distribution of retweet counts (expressed through retweet group sizes) is known \cite{webberley11}, then it is clear that this binning methodology would produce bins containing a very non-uniform distribution of Tweets, where the lower bin ranges would contain many Tweets and the cardinality of each category would decrease exponentially as the ranges become higher. This means that there would be fewer feature instances representing Tweets with larger retweet counts.\\
+Since the distribution of retweet counts (expressed through retweet group sizes) is known \cite{webberley11}, then it is clear that this binning methodology would produce bins containing a very non-uniform distribution of Tweets, where the lower bin ranges would contain many Tweets and the cardinality of each category would decrease exponentially as the cateogories become higher. This means that there would be fewer feature instances representing Tweets with larger retweet counts.
+
  Indeed, when training classifiers and running cross-validations on these, this binning scheme demonstrated a high accuracy of predictions on Tweets with lower values for $\rc{t}$ and a low accuracy for Tweets with higher counts. It would be more appropriate, and better address the desire for more universal use-cases expressed earlier in this and the previous chapter, if the accuracy of predictions could be more uniform across the bin ranges.
 
-Various other methodologies were implemented, which eventually evolved into a histogram-based responsive  binning algorithm. Essentially, this algorithm involved is based around the initial calculation for the projected size of each bin, which is based on the total number of Tweets to be categorised and the target number of bins. Each bin was then filled according to the interval range specifying the bounds of that bin, and in such a way such that each retweet count frequency would only be present in one bin. For example, all of the retweets achieving one retweet would be placed in the single bin encompassing this value.\\
+Various other methodologies were implemented, which eventually evolved into a histogram-based responsive binning algorithm. Essentially, this algorithm is based around the initial calculation for the projected size of each bin, which is obtained from the total number of Tweets to be categorised and the target number of bins. Each bin was then filled according to the interval range specifying the bounds of that bin, and in such a way as to ensure that each retweet count frequency would only be present in one bin. For example, all of the retweets achieving one retweet would be placed in the single bin encompassing this value.
+
 As such, after the intervals representing the bin bounds have been produced, then these represent the nominal categories for the retweet count feature in each instance for training and testing against the classifier.
 
 
@@ -149,7 +151,7 @@ As such, after the intervals representing the bin bounds have been produced, the
 \label{algo2}
 \end{algorithm}
  
-This new responsive method more readily supports more uniform bin sizes, and copes with this by expressing exponentially larger bin \textit{ranges}. As such, the distribution of bin sizes is generally described by a distribution simular to that shown in Figure \ref{fig:bin-hist}. As with the linear method, the interval $[0,l)$ is pre-pended, where necessary, and $[m+1,\infty)$ is always appended in addition to the intervals produced by the algorithm.
+This new responsive method readily supports more uniform bin sizes, and copes with this by exhibiting exponentially larger bin \textit{ranges}. As such, the distribution of bin sizes is generally described by a distribution simular to that shown in Figure \ref{fig:bin-hist}. As with the linear method, the interval $[0,l)$ is pre-pended, where necessary, and $[m+1,\infty)$ is always appended in addition to the intervals produced by the algorithm.
 
 \begin{figure}[h]
 \centering
@@ -168,49 +170,51 @@ This new responsive method more readily supports more uniform bin sizes, and cop
         
 \end{semilogyaxis}
 \end{tikzpicture}
-\caption{Example distribution of retweet count bin cardinalities under the responsive binning algorithm}
+\caption{Visual example distribution of retweet count bin cardinalities under the responsive binning algorithm}
 \label{fig:bin-hist}
 \end{figure}
 
-This method is responsive in that the bin ranges adapt to the variety and number of retweet counts available, and always attempts to produce a similar number of bins to what is requested. However, due to the disproportinately large number of small retweet groups, the bin sizes cannot be entirely uniform and means that the number of intervals returned will be smaller than the number requested.\\
-This also stems from the fact that a single retweet count cannot exist in more than one bin concurrently; for example, if the interval $[0,2)$ existed in a scenario, and the number of Tweets with retweet count equal to 0 or 1 is greater than the value for $T\textrm{Sum}$, which is often the case, then this will result in a larger bin. Without this particular feature, a Tweet may be categorised into more than one bin, causing the prediction accuracy to be reduced. 
+This method is responsive in that the bin ranges adapt to the variety and number of retweet counts available, and it always attempts to produce a similar number of bins to the target count. However, due to the disproportinately large number of small retweet groups, the bin sizes cannot be entirely uniform and this means that the number of bins returned will generally be smaller than the target number.
 
-Due to this dynamicity, the bin ranges and cardinalities produced by the algorithm vary across different datasets. As a result, the nominal bin categories generated for producing the value for $\uscore{t}$ from the user model trained from the complete set of collected Tweets posted by $\aut{t}{O}$ would be different from those categories generated for a different user. The intervals in each bin category are therefore reflective of the various different number of retweets that each author's Tweets are likely to receive. 
+This also stems from the fact that a single retweet count cannot exist in more than one bin concurrently; for example, if the interval $[0,2)$ existed in a scenario, and the number of Tweets with retweet count equal to 0 or 1 is greater than the value for $T\textrm{Sum}$, which is often the case, then this will result in a larger bin. Without this particular feature, training Tweets with equal observed retweet count may be categorised into multiple bins, causing the eventual prediction accuracy to be reduced. 
+
+Due to this dynamicity, the bin ranges and cardinalities produced by the algorithm vary across different datasets. As a result, the nominal bin categories generated for producing the value for $\uscore{t}$ from the user model trained from the complete set of collected Tweets posted by $\aut{t}{O}$ would be different from those categories generated for a different user. The intervals in each bin category are therefore reflective of the various numbers of retweets that each author's Tweets are likely to receive. 
 
 
 \section{`Twitter is a Memepool'}
-In 1976, Richard Dawkins coined the term `meme' to be defined as a ``unit of cultural transmission'' \cite{dawkins76}. The general idea behind memetics is as an analogy to biological genetics except, unlike genes, memes are entirely non-physical and represent a cultural idea or aspect or another human-based behaviour. The rise of social networks on the Internet has allowed the spread of memes to grow to the extent that they are sometimes now even \textit{represented} by physical constructs, such as images.
+In 1976, Richard Dawkins coined the term `meme' to be defined as a ``unit of cultural transmission'' \cite{dawkins76}. The general idea behind memetics is as an analogy to biological genetics except, unlike genes, memes are entirely non-physical and represent a cultural idea or aspect or another human-based behaviour. The rise of social networks on the Internet has allowed the spread of memes to grow to the extent that they are sometimes now even represented by `physical' constructs, such as images.
 
-In genetics, a gene is a physical entity containing information and instructions. It is a unit of genetic inheritance, in that they are passed from parent to offspring through the act of reproduction, and the result of an organism having a gene will express the features represented by that particular gene. These genes contain instructions that make up the features of an individual, such as physical characteristics like eye colour and height, and non-physical characteristics, including various aspects of personality.\\
-Organisms exist in an evironment that also has features, such as humidity, altitude, temperature, relations to other organisms, and so on. If the genes of an organism are such that they cause the individual to be well-suited to its environment, then that organism has a better chance of survival and, therefore, a better chance of achieving reproduction.
+In genetics, a gene is a physical entity containing information and instructions. It is a unit of genetic inheritance, in that they are passed from parent to offspring through the act of reproduction, and the result of an organism having a gene is that the organism will express the features represented by that particular gene. These genes contain instructions that make up the features of an individual, such as physical characteristics like eye colour and height, and non-physical characteristics, including various aspects of personality.
 
-Memes are similar in that they are effectively made up of a set of features, or `memome', such as the wordings of a particular phrase, or their relevance to other cultural aspects. These enable the meme to be less or more likely to be replicated in different environments, which is made up of the humans exposed to it and the interactions between them. For example, an Internet meme relating to the Star Wars movies would likely have a greater chance of being reproduction, through discussion and reposting, in an environment comprising a set of science-fiction fans than when amongst more mixed-interest groups.
+Organisms exist in an evironment that also has features, such as humidity, altitude, temperature, relationships to other organisms, and so on. If the genes of an organism are such that they cause the individual to be well-suited to its environment, then that organism has a better chance of survival and, therefore, a better chance of achieving reproduction.
 
-The meme is also a useful analogy in this thesis when describing the way in which Tweets undergo replication within Twitter. Like a meme, a Tweet has a specific set of features, such as the text it contains, the inclusion of any mentions or a URL, and so on, and it exists within an environment consisting of a set of interconnected users on the Twitter social graph.\\
-A particular Tweet would generally have a greater chance of `surviving' and being replicated, through the act of retweeting, amongst certain users intereconnected in a particular way than in other environments.
+Memes are similar in that they are effectively made up of a set of features, or a `memome', such as the wordings of a particular phrase, or their relevance to other cultural aspects. These enable the meme to be less or more likely to be replicated in different environments, which is made up of the humans exposed to it and the interactions between them. For example, an Internet meme relating to the Star Wars movies would likely have a greater chance of being reproduced, through discussion and reposting, in an environment comprising a set of science-fiction fans than when amongst more mixed-interest groups.
+
+The meme is also a useful analogy in this thesis when describing the way in which Tweets undergo replication within Twitter. Like a meme, a Tweet has a specific set of features, such as the text it contains, the inclusion of any mentions or a URL, and so on, and it exists within an environment consisting of a set of interconnected users on the Twitter social graph. A particular Tweet would generally have a greater chance of `surviving' and being replicated, through the act of retweeting, amongst a certain subset of users intereconnected in a particular way than in other environments.
 
 As such, the Tweet features are analogous to the \textit{genes} of a genome, and the arrangement and type of users on the social graph that receive the Tweet and have an opportunity to assist in its propagation comprise the Tweet's \textit{environment}. Since the environment has previously been found to have a large effect on propagation, then these features are useful aspects to include as part of the improved methodology covered in this chapter.
 
 
 \section{Generating Values for $\ec{t}$}
-In order to generate the estimated retweet counts, a trained machine learning classifier is needed to make predictions on a set of feature instances. This section covers an overview of the classifier used for this purpose including a justification in terms of an analysis of its performance.
+In order to generate the estimated retweet counts, a trained machine learning classifier is needed to make predictions on a set of feature instances. This section covers an overview of the classifier used for this purpose, including a justification in terms of an analysis of its performance.
 
 
-\subsection{Machine Learning Classifier}
+\subsection{The Classifier}
 An overview of machine learning classifiers and their processes was provided in the previous chapter. In that case, a logistic regression was used to generate a prediction on a binary retweet decision based on a small number of features. If the retweet count for the Tweet being trained or tested was greater than zero, then the retweet decision would be positive (\textsc{True}). Otherwise, the decision was negative (\textsc{False}).
 
-Presently, the new methodology involves the prediction of a retweet count category from a set of nominal values of greater cardinality than two. As mentioned, the instances of a particular Tweet and its evironment are categorised based on the value of the retweet count of the Tweet. Although this means that a degree of accuracy is sacrificed when training the classifier, it does mean that there are fewer categories for predictions on test Tweet feature instances, providing a higher confidence in each prediction made.
+Presently, the new methodology involves the prediction of a retweet count category from a set of nominal values of cardinality greater than one. As mentioned, the instances of a particular Tweet and its evironment are categorised based on the value of the retweet count of the Tweet. Although this means that a degree of accuracy is sacrificed when training the classifier, it does mean that there are fewer categories for predictions on test Tweet feature instances, providing a higher confidence for each prediction made.
 
 The Bayesian network machine learning classifier was elected for use for the purposes required in this chapter. Use of this classifier in the social media domain is more rare than other classifiers, such as those involving a regression or a decision tree, but was selected for the various reasons highlighted later in this section.
 
 The Bayesian network is an unsupervised classifier since its learning algorithms do not simply determine the class of the outcome, the retweet count, from the attribute features alone \cite{friedman97}. Instead, a probabilistic graph is constructed based on the dependencies between the variables. The variable attributes form the nodes of the graph and edges between the nodes denote the dependencies (or lack thereof) between them.
 
-Thus, in the case of this research, the various Tweet and envirnomental features, including the nominal retweet count, form the nodes in the Bayesian Network. When forming the graph through training, the dependencies and their probabilistic weightings are adjusted so that an expected value for the retweet count can then be `predicted' from the values of all the other variable attributes.
+Thus, in the case of this research, the various Tweet and envirnomental features, including the nominal retweet count, form the nodes in the Bayesian Network. When forming the network through training, the dependencies and their probabilistic weightings are adjusted so that an expected value for the retweet count can then be `predicted' from the values of all the other variable attributes.
 
 
 \subsection{Classification Performance}
-When selecting classifiers, the Weka\footnote{http://www.cs.waikato.ac.nz/ml/weka} machine learning and data mining toolkit was used to evaluate the relative performance of various types of appropriate classifiers for the task. The classifiers were selected to cover a sample of the range of available classifier categories. Whilst some types may work inefficiently in this scenario, it is likely that they are more efficient when employed in different use-cases.\\
-Although the accuracy of prediction was important, it would also be useful for the classifier to be \textit{efficient} in training its model and when testing future instances against it. This is so that this method could be used to produce interestingness inferences on demand and to further improve on the methodologies used in the previous chapter.
+When selecting classifiers, the Weka\footnote{http://www.cs.waikato.ac.nz/ml/weka} machine learning and data mining toolkit was used to evaluate the relative performance of various types of appropriate classifiers for the task. The classifiers were selected to cover a sample of the range of available classifier categories. Whilst some types may work inefficiently in this scenario, it is likely that they are more efficient when employed in different use-cases.
+
+Although the accuracy of prediction was important, it would also be useful for the classifier to be \textit{efficient} in training its model and when testing future instances against it. This is so that this method could be used to produce interestingness inferences with a more on-demand policy and to further improve on the methodologies used in the previous chapter.
 
 \begin{table}[h]\footnotesize
 \begin{center}
@@ -230,19 +234,18 @@ Although the accuracy of prediction was important, it would also be useful for t
 \label{table:classifierperformance}
 \end{table}
 
-The Bayesian network was found to be accurate and time efficient when evaluating the performance of the set of classifiers. A dataset, obtained as part of the general data collection (please see the relevant section below) and which contains a set of over 57,000 Tweets, was identically used in each of the analyses. For each Tweet instance the same retweet count binning scheme was used, and each classifier performed the same number of cross-validations against the same dataset in order to obtain the precision and recall values.
+The Bayesian network was found to be accurate and time efficient when evaluating the performance of the set of evaluated classifiers. A dataset, obtained as part of the general data collection (please see the relevant section below) and which contains a set of over 57,000 Tweets, was identically used in each of the analyses. For each Tweet instance the same retweet count binning scheme was used, and each classifier performed the same number of cross-validations against the same dataset in order to obtain the precision and recall values.
 
 Although the dataset used in this analysis is not the complete set used in practice, the cardinality of the dataset was sufficient to cause the outputs to be indicative of the Bayesian network's relative advantages over the other assessed classifiers.
 
 
-\subsection{Varying the Cardinality of Nominally-Categorised Retweet Counts}
-Applying the continuous retweet count values to produce a set of nominal categories representing interval ranges of the retweet counts requires a certain balance.\\
-By reducing the number of target category bins then the classification accuracy increases, but the level of applicability of the eventual interestingness score for the wide range of retweet counts observed would be reduced. Inversely, with too many bins, the classification accuracy reduces, as there would be fewer instances in each category, yet the scores would be apliccable to a wider range of retweet counts.
+\subsection{Effectos of varying the Cardinality of Nominal Retweet Counts}
+Applying the continuous retweet count values to produce a set of nominal categories representing interval ranges of the retweet counts requires a certain balance. By reducing the number of target category bins then the classification accuracy increases, but the level of applicability of the eventual interestingness score for the wide range of retweet counts observed would be reduced. Inversely, with more bins, the classification accuracy reduces, as there would be fewer instances in each category, yet the scores would be apliccable to a wider range of retweet counts.
 
 \begin{table}[h]\footnotesize
 \begin{center}
 \begin{tabular}{ c | c | c | c }
-	Target category count	& Resultant category count & Precision &  Accuracy (recall) \\
+	Target bin count	& Resultant bin count & Precision &  Accuracy (recall) \\
 	\hline
 	\hline 
     1 & 1 & 100\% & 100\% \\
@@ -258,29 +261,28 @@ By reducing the number of target category bins then the classification accuracy 
     \hline  
 \end{tabular}
 \end{center}
-\caption{The effect of varying the number of nominal categories representing retweet counts on the classification performance using a Bayesian network classifier.}
+\caption{The effect of varying the number of nominal categories representing the retweet counts on the classification performance using a Bayesian network classifier}
 \label{table:binperformance}
 \end{table}
 
-Clearly, by increasing the number of nominal categories used, then the relative number of feature instances in each eventual interval decreases. These bins represent the nominal categories that each feature instance is classified as in relation to the predicted retweet count of the instance. Table \ref{table:binperformance} outlines the decrease in classification accuracy observed with increases in target bin count. The dataset used consisted of nearly 67,000 Tweets, also as part of the ongoing general data collection discussed in later sections, and the classifier used to conduct the analysis was a Bayesian network through cross validation.
+Clearly, by increasing the number of nominal categories used, then the relative number of feature instances in each eventual interval decreases. These bins represent the nominal categories that each feature instance is classified as in relation to the predicted retweet count of the instance. Table \ref{table:binperformance} outlines the decrease in classification accuracy observed with increases in target bin count. The dataset used consisted of nearly 67,000 Tweets, also as part of the ongoing general data collection discussed in later sections, and the classifier used to conduct the analysis was a Bayesian network undergoing cross-validations on the same dataset.
 
-It has already been discussed that the resultant bin count is usually likely to be less than that requested of the binning algorithm. This is due to the long-tail distribution of retweet counts referred to previously.\\
-In the coming experimentations the algorithm tried to produce, where possible, about 10 nominal ranges for use with training and testing against the general global dataset for the purposes of generating the global expected retweet count. Since each user's own retweet count ranges were different, the number of categories were calculated individually for producing the user-centric expected retweet counts as part of calculating values for $\uscore{t}$.
+It has already been discussed that the resultant bin count is usually likely to be less than that requested of the binning algorithm. This is due to the long-tail distribution of retweet counts referred to previously. In the upcoming experimentations the algorithm tried to produce, where possible, about ten nominal bins for use with training and testing against the general global dataset for the purposes of generating the global expected retweet count. Since each user's own retweet count ranges were different, the number of categories were calculated individually for producing the user-centric expected retweet counts as part of calculating values for $\uscore{t}$.
 
 
-\section{Training and Testing Against the Bayesian Network Classifier}
-This section discusses the processes used behind the calculation of interestingness scores for Tweets through the generation of expected retweet counts using the methodologies outlined in the previous sections. Particular focus is lended to the data collection and the features extracted through the resultant data corpora.
+\section{Training and Testing Against the Classifier}
+This section discusses the processes used behind the calculation of interestingness scores for Tweets through the generation of expected retweet counts using the methodologies outlined in the previous sections. Particular focus is lended to the data collection and the features extracted from the resultant data corpora.
 
 
 \subsection{Collecting the Training and Testing Data}
 In order to train the model on a set of Tweets and then use it to make predictions, data was required for collection from Twitter. This data could then be divided up when required, as described below.
 
-Since, in this case, it was necessary to collect the Tweet data along with each Tweet's numeric retweet count, rather than the binary nominal yes/no required in the previous chapter, only the retweets of a particular Tweet that had been created using the button method could be considered. This is because a Tweet's retweets executed using the manual copy and paste method do not contribute to the Tweet's official, and observable, retweet count that is returned from Twitter's API. This is not considered to be a limitation, however, since this factor is used consistently through the training and later evaluation of the trained model.
+Since, in this case, it was necessary to collect the Tweet data along with each Tweet's numeric retweet count, rather than the binary nominal yes/no required in the previous chapter, only the retweets of a particular Tweet that had been created using the button method could be considered. This is because a Tweet's retweets executed using the manual copy and paste method do not contribute to the Tweet's official, and observable, retweet count that is returned from Twitter's API. This is not considered to be a limitation, however, since this factor is considered consistently through the training and later evaluation of the trained model.
 
 In March 2013, a random walk was conducted through Twitter's social graph using v1.1 of Twitter's REST API. Although this date was before the mandatory transfer to this version of the API, the crawler method was used in preference over collecting from the public API, which was deprecated and removed in v1.1, so that user data could be collected, as described, for the environmental training features.
 
-The walk originated with one Twitter user, and each stage consisted of focusing on one user before selecting another one from the followers of the currently focused user. As such, the crawler is very similar to that used in the latter sections of the previous chapter.\\
-At each step of the crawl, a set of the most recent Tweets authored by the current user were collected. The number of Tweets obtained for each user had various dependencies, such as the user's Tweet-posting frequency and the number of Tweets in total posted by the user. Usually, several hundredf Tweets from each user were yielded. In addition to the Tweet data, information on the user itself was collected as well as on a sample subset of up to 100, if they exist, of its friends and followers.\\
+The walk originated with one Twitter user, and each stage consisted of focusing on one user before selecting another one from the followers of the currently focused user. As such, the crawler is very similar to that used in the latter sections of the previous chapter. At each step of the crawl, a set of the most recent Tweets authored by the current user were collected. The number of Tweets obtained for each user had various dependencies, such as the user's Tweet-posting frequency and the number of Tweets in total posted by the user. Usually, several hundredf Tweets from each user were yielded. In addition to the Tweet data, information on the user itself was collected as well as on a sample subset of up to 100, if they exist, of each of its friends and followers.
+
 A sample subset of friends and followers was used instead of the complete set for the purposes of efficiency and to address the associated limitation in the previous interestingness inference methodology, yet it still provides an example snapshot of up to an additional 200 users in the author user's local network in order to provide some idea of the activity within the local network both upstream and downstream from the author user. Around ten API calls were required to obtain this information for each user, giving it immediate advantages over the older method. 
 
 The data collection crawl resulted in a dataset containing around 241,000 Tweets authored by 370 unique Twitter users. Of those Tweets, around 90,000 were cases in which the retweet count was greater than zero. The partial datasets as subsets of the complete set, obtained up until various intermediate points of the entire collection, were those used by the classifier and binning performance analyses in the previous section.\\
@@ -362,39 +364,37 @@ As such, the 10 Tweet features were those used in the feature instances in train
 \subsection{Testing Against the Trained Classifier}
 Once the feature extraction was completed and the instances were built for the global training dataset and each individual user set, the models were trained as described above.
 
-In order to produce the expected \textit{global} retweet counts, each Tweet $t \in T$, where $T$ represents the entire testing dataset, had its features extracted, less the retweet count nominal category, and was evaluated against the global model. This classified each Tweet into one of the categories given by that Tweet's predicted retweet count, and the top interval of the expected retweet outcome category became the \textit{expected} retweet count for that particular Tweet.\\
+In order to produce the expected \textit{global} retweet counts, each Tweet $t \in T$, where $T$ represents the entire \textit{test} dataset, had its features extracted and was evaluated against the global model. This classified each Tweet into one of the categories given by that Tweet's predicted retweet count, and the top interval of the expected retweet outcome category became the \textit{expected} retweet count for that particular Tweet.\\
 Similarly, the expected \textit{user} retweet counts were produced in the same way, but instead each Tweet was classified by the user model associated with that Tweet's author.
 
-In each case, the two interestingness scores for each Tweet could be calculated, based on the process described earier, using the ratio between the Tweet's two expected retweet counts and its \textit{observed} retweet count stored as part of the data collection from Twitter. This meant that each Tweet $t \in T$ had two numeric scores, $\uscore{t}$ and $\gscore{t}$, assigned to it. 
+In each case, the two interestingness scores for each Tweet could be calculated, based on the process described earier, using the ratio between the Tweet's two expected retweet counts and its \textit{observed} retweet count stored as part of the data collection from Twitter. This meant that each Tweet $t \in T$ then had two numeric scores, $\uscore{t}$ and $\gscore{t}$, assigned to it. 
 
 
 
 \section{Initial Validations of the Scoring Methodologies}
-Similar to in the previous chapter, tests are required in order to ensure the validity of the interestingness scores applied to each of the Tweets in the testing dataset. By running these validations, the relative performance of the scoring mechanism can be assessed, and the comparative performance of the two scores, $\uscore{t}$ and $\gscore{t}$ can be evaluated.
+In a way similar to in the previous chapter, tests are required in order to ensure the validity of the interestingness scores applied to each of the Tweets in the testing dataset. By running these validations, the relative performance of the scoring mechanism can be assessed, and the comparative performance of the two scores, $\uscore{t}$ and $\gscore{t}$ can be evaluated.
 
 
 \subsection{Planning the Validations}
 It was decided that crowdsourcing through Crowdflower and Mechanical Turk, again, would be used to validate the new scoring mechanism, as this would facilitate interestingness evaluations from a wider range of human input. The MTWs taking part would not be associated with the collected Tweets in any way, and thus this assists in the identification of the non-noisy Tweets that are `globally' interesting and are those that the scores have theoretically determined as `interesting'.
 
-Certain Tweets and users were removed, at this stage, from the dataset of Tweets to be assessd by the MTWs. Since the Tweet data was collected through a random crawl through the Twitter and no checks were placed on the crawler at that stage, there was no governance over the content of the text in each Tweet of the data. Thefore, users who frequently used offensive phrases or wrote Tweets in non-English had their Tweets removed. The reasoning behind the latter is based on the fact that the Mechanical Turk microtasks were submitted to be completed by people living in the USA.\\
-As before, individual Tweets that were `@-replies' were also stripped so that only Tweets intended to be broadcasts were included in the final MTW test set.
+Certain Tweets and users were removed, at this stage, from the dataset of Tweets to be assessd by the MTWs. Since the Tweet data was collected through a random crawl through Twitter and no checks were placed on the crawler at that stage, there was no governance over the content of the text in each Tweet of the data. Thefore, users who frequently used offensive phrases or wrote Tweets in non-English had their Tweets removed. The reasoning behind the latter point is based on the fact that the Mechanical Turk microtasks were submitted to be completed by people living in the USA. As before, individual Tweets that were `@-replies' were also stripped so that only Tweets intended to be broadcasts were included in the final MTW test set.
 
 
 \subsection{Validating the Methodology Outcomes}
-In the context of this validation scheme, the MTWs were random account-holders on Mechanical Turk and had no connection to the Tweets they were evaluating. By not determining the humans to make the assessments, a more diverse opinion on the interestingness can be achieved, as the different users will have varying considerations on what contstitutes `noise' and will therefore form a more diverse opinion and further reinforce a decision when multiple MTWs form agreements on what is interesting. 
+In the context of this validation scheme, the MTWs were random Amazon account-holders on Mechanical Turk, had no connection to the Tweets they were evaluating, and were not required to hold an acticve Twitter account. By not determining the humans to make the assessments, a more diverse opinion on the interestingness can be achieved, as the different users will have varying considerations on what contstitutes `noise' and will therefore form a more diverse opinion and further reinforce a decision when multiple MTWs form agreements on what is interesting. 
 
 The validations were carried out such that the MTWs were presented with a series of questions, each of which consisting of five different Tweets from \textit{one} specific author. As such, Tweets were assessed against others than had been posted by the same user. In each question, the MTWs were asked to select the Tweets that they consider to be the most interesting of the group, and that they must select at least one Tweet for each question. For each judgment, where a judgment is one question answered with one or more Tweets selected, MTWs were paid \$0.05.
 
 The test was conducted under the condtitions of a randomised controlled trial. To this end, each Tweet was assessed in three different contexts, in that it would appear in three different questions alongisde four other randomly chosen Tweets, and that each question would then be judged by three different MTWs.
 
-From the stripped testing dataset, 750 Tweets were selected, at random, to be filtered by the author user into the questions to be assessed on Mechanical Turk. Since each Tweet was to appear in three different questions and since each question consisted of five unique Tweets, then this resulted in a total of 450 different questions. Each of these questions was then judged by three different MTWs.
+From the stripped testing dataset, 750 Tweets were selected, at random, to be divided by the author user into the questions to be assessed on Mechanical Turk. Since each Tweet was to appear in three different questions and since each question consisted of five unique Tweets, then this resulted in a total of 450 distinct questions. Each of these questions was then judged by three different MTWs.
 
 
 \subsection{Outcomes From the Validations}
-The validation test involved contributions from 91 different MTWs, demonstrating the wide diversity of human input attainable validations employing crowdsourcing in this way. From these MTWs, 325 of the 450 questions in total asked had responses where a Tweet was selected with a confidence of two-thirds or greater. Since the MTWs had the opportunity to select more than one Tweet of each question to be the most interesting, there were 349 Tweets of the original 750 Tweets, denoted as $T' : T' \subset T$, that were selected as sufficiently interesting by the MTWs. Tweets selected from individual questions that did not have sufficient confidence were discarded.
+The validation test involved contributions from 91 different MTWs, demonstrating the wide diversity of human input attainable in validations employing crowdsourcing in this way. From these MTWs, 325 of the 450 questions in total asked had responses where a Tweet was selected with a confidence of two-thirds or greater. Since the MTWs had the opportunity to select more than one Tweet of each question to be the most interesting, there were 349 Tweets of the original 750 Tweets, denoted as $T' : T' \subset T$, that were selected as sufficiently interesting by the MTWs. Tweets selected from individual questions that did not have sufficient confidence were discarded.
 
-The remainder of this section analyses the validation data in various ways to demonstrate the strengths and weakenesses of the interestingness score inferences.\\
-Of immediate notice was the comparitive difference between the two different scoring mechanisms for each Tweet $t$; $\gscore{t}$ and $\uscore{t}$. The inference validation results are not significant between the use of the two scores in any of the analyses conducted. As such, the following analyses concern only the use of $\gscore{t} \forall t \in T'$.
+The remainder of this section analyses the validation data in various ways to demonstrate the strengths and weakenesses of the interestingness score inferences. Of immediate notice was the comparitive difference between the two different scoring mechanisms for each Tweet $t$; $\gscore{t}$ and $\uscore{t}$. The inference validation results are not significant between the use of the two scores in any of the analyses conducted. As such, the following analyses concern only the use of $\gscore{t} \forall t \in T'$.
 
 
 \subsubsection{General Performance}
@@ -430,7 +430,7 @@ It is also demonstrable that the proportionate frequency of Tweets with higher v
 This means that, in general, the humans were marking a greater number of Tweets as interesting that were inferred as interesting by the scores than ones that \textit{weren't} inferred as interesting. Although this demonstrates a clear advantage on the binary inference of interestingness over the methodologies in the previous chapter, this analysis does not consider how well the scheme is able to \textit{rank} Tweets in order of interestingness.
 
 
-\subsubsection{Per-Question Performance}
+\subsubsection{Ranking Performance}
 
 In order to assess the ability of the scores to effectively rank Tweets in order of inferred interest \textit{level}, the Tweets were studied on a per-question basis.
 
@@ -477,12 +477,13 @@ and where;
 \[
     \gscore{t^q_1} \geq \gscore{t^q_2} \geq ... \geq \gscore{t^q_5}
 \]
-In cases where $\sum\limits_{i=1}^5 \gscore{t^q_i} = 0$, then that $q$ was removed from $Q$ and discarded for the analysis.
+In cases where $\sum\limits_{i=1}^5 \gscore{t^q_i} = 0$, then that $q$ was removed from $Q$ and discarded from the analysis.
 
-Calculations were then made on the number of times the MTWs selected a Tweet as interesting that appeared in the top $n$ of the ranked list Tweets for each $q \in Q$. For example, in the case of $n=2$ with a set of ten questions, if the MTWs selected one of the top two of Tweets in five of ten cases, then the chance of this occurring is 0.5. Figure \ref{fig:score-dist} illustrates the relationship between increasing values of $n$ and this calculation on likelihood of selection. Although the `random' performance represents the relative likelihoods of a random selection being made when only one Tweet is selected from each question, the vast majority of questions were actually answered with only one Tweet selected. Further analysis to cover the consideration of this particular point is conducted later on in this chapter.\\
-Further to this, the minimum allowed value of $\gscore{t^q_1}$, which represents the highest score of all $t \in q$, was varied with the aim of demonstrating that the detection of more interesting Tweets can be more accurate when the relative score \textit{range} of a particular question is more disparate.
+Calculations were then made on the number of times the MTWs selected a Tweet as interesting that appeared in the top $n$ of the ranked list Tweets for each $q \in Q$. For example, in the case of $n=2$ with a set of ten questions, if the MTWs selected one of the top two of Tweets in five of ten cases, then the chance of this occurring is 0.5. Figure \ref{fig:score-dist} illustrates the relationship between increasing values of $n$ and this calculation on likelihood of selection. Although the `random' performance represents the relative likelihoods of a random selection being made when only one Tweet is selected from each question, the vast majority of questions were actually answered with only one Tweet selected. Further analysis to cover the consideration of this particular point is conducted later on in this chapter.
 
-When considering cases where the most interesting Tweet in a particular question is, indeed, inferred as interesting ($\gscore{t} \geq 1$), then the MTWs selected one of the \textit{top two} Tweets in around 66\% of cases, and they selected one of the \textit{top three} ranked Tweets in 87\% of the questions. This demonstrates the method's ability of being able to effective rank Tweets in agreement with humans in identifying information from the noise around it.
+%Further to this, the minimum allowed value of $\gscore{t^q_1}$, which represents the highest score of all $t \in q$, was varied with the aim of demonstrating that the detection of more interesting Tweets can be more accurate when the relative score \textit{range} of a particular question is more disparate.
+
+When considering cases where the most interesting Tweet in a particular question is, indeed, inferred as interesting ($\gscore{t} \geq 1$), then the MTWs selected one of the \textit{top two} Tweets in around 66\% of cases, and they selected one of the \textit{top three} ranked Tweets in 87\% of the questions. This demonstrates the method's ability of being able to effective rank Tweets in agreement with humans in identifying information from the noise around them.
 
 
 \subsubsection{Probability of Selection}
@@ -505,7 +506,7 @@ A further analysis in this section is with regard to the \textit{probability} of
 \label{fig:score-cum-dist}
 \end{figure}
 
-Although the cases of Tweets where $\gscore{t} > 4$ are excluded, for the purposes of noise reduction from fewer samples, Figure \ref{fig:score-cum-dist} shows an observable increase in probability of selection as the score increases. This pattern is particularly applicable in the score interval of 0-1, which represents the range of Tweets that the scoring scheme has inferred as uninteresting to those that achieved a correctly-predicted popularity, and are thus `as expected' in terms of interestingness.\\
+Although the cases of Tweets where $\gscore{t} > 4$ are excluded from this analysis, for the purposes of noise reduction from fewer samples, Figure \ref{fig:score-cum-dist} shows an observable increase in probability of selection as the score increases. This pattern is particularly applicable in the score interval of 0-1, which represents the range of Tweets that the scoring scheme has inferred as uninteresting to those that achieved a correctly-predicted popularity, and are thus `as expected' in terms of interestingness.\\
 The analysis is also clear that Tweets with an inferred interestingness score of three or more are not significantly different from one another in terms of the level of interestingness assigned from the `real' human judgment.
 
 
@@ -522,11 +523,13 @@ The notion of score \textit{disparity} is used to determine the difference in in
 \begin{tabular}{ c | c | c | c }
 	 Num. confident answers in $q$ & min. $\gdisparity{q}$ & max. $\gdisparity{q}$ & avg. $\gdisparity{q}$ \\
 	 \hline
+     \hline
 	0 & 0 & 846 & \textbf{17.6} \\
 	> 0 & 0 & 1445 & 32.1 \\
 	1 & 0 & 1445 & \textbf{34.3} \\
 	> 1 & 0 & 4 & 0.647 \\
-	> 2 & 0 & 0.55 & 0.204
+	> 2 & 0 & 0.55 & 0.204\\
+     \hline
 \end{tabular}
 \caption{Illustrating trends between the absolute $\gdisparity{q}$ with the varying number of confident answers made in $q$. Entries in \textbf{bold} are used to highlight interesting values}
 \label{table:score_disparities}
@@ -534,7 +537,7 @@ The notion of score \textit{disparity} is used to determine the difference in in
 
 A confident answer to a question is one where the particular question had at least two of its three assessing MTWs select the same Tweet as interesting. Since an MTW could select more than one Tweet from each question, then each question may, in fact, have more than one confident answer. Table \ref{table:score_disparities} illustrates how questions with varying score disparities can have an effect on the probability of MTWs being able to make a confident decision.
 
-The results show that the average $\gdisparity{q}$ of all $q \in Q$ is roughly double in cases where a question is answered with precisely one confident Tweet than in cases where there was no confident answer made at all. This indicates that a wider range of interestiness of information is helpful to humans in identifying the content they'd prefer to read. If several pieces of information were displayed to a user that had more similar scores, and are therefore more equally interesting (or uninteresting), then it becomes more difficult for an agreement to be made between the different users on which particular piect of information is the \textit{most} interesting.
+The results show that the average $\gdisparity{q}$ of all $q \in Q$ is roughly double in cases where a question is answered with precisely one confident Tweet than in cases where there was no confident answer made at all. This indicates that a wider range of interestingness of information is helpful to humans in identifying the content they'd prefer to read. If several pieces of information were displayed to a user that had more similar scores, and are therefore more equally interesting (or uninteresting), then it becomes more difficult for an agreement to be made between the different users on which particular piect of information is the \textit{most} interesting.
 
 Further to this, the average disparity is much lower in cases where the question had multiple confident answers made. In these cases, the MTWs have selected more Tweets as interesting, which helps to reinforce the above point in that identifying one particular piece of information as the most interesting is more difficult when the pieces are all of similar interest levels. Indeed, in questions where this is the case, MTWs have selected, and agreed on, multiple Tweets. 
 
@@ -557,7 +560,7 @@ Further to this, the average disparity is much lower in cases where the question
 \label{fig:cum-question-disparity}
 \end{figure}
 
-Table \ref{table:score-disparities-2} highlights the effect of disparity on human selection also through demonstrating that in \textit{all} $q \in Q$, and not just those that have been confidently answered, the score disparity between all of the Tweets in a particular question that were selected, $\disparity{q}$, is much smaller than the general disparity of the entire question, $\disparity{q}$. In this case, the disparities are dependent on the particular scoring scheme declared in order to highlight the differences between the two scores, and where;
+Table \ref{table:score-disparities-2} also highlights the effect of disparity on human selection by demonstrating that the disparity of scores across \textit{selected} Tweets in a question ($\sdisparity{q}$) is much smaller than the disparity across \textit{all} of the Tweets in a question ($\disparity{q}$). In this case, the disparities are dependent on the particular scoring scheme declared in order to highlight the differences between the two scores, and where;
 \[
     \ascore{t} = \frac{\gscore{t} + \uscore{t}}{2}
 \] 
@@ -570,13 +573,15 @@ This feature is particularly observable in cases where a question consists of a 
 \begin{tabular}{ l || c | c | c }
 	   & $\gscore{t}$ &  $\uscore{t}$ &  $\ascore{t}$\\
 	 \hline
+     \hline
 	$\disparity{q}$ & 62.4 & 4.7 & 33.3\\
 	$\sdisparity{q}$ & 35.3 & 3.1 & 19.0\\
-	\hline
-	Ratio & 57\% & 66\% & 58\%
+	 \hline
+	Ratio & 57\% & 66\% & 58\%\\
+     \hline
 \end{tabular}
 \end{center}
-\caption{Comparing the disparity between selected Tweets and the disparity between \textit{all} of the Tweets in questions, using three different scoring schemes.}
+\caption{Comparing the average disparity of \textit{selected} Tweets and the disparity of \textit{all} of the Tweets in questions. Three different scoring schemes are used.}
 \label{table:score-disparities-2}
 \end{table}
 
@@ -592,7 +597,7 @@ The following section addresses this area, in that the opinion of users assessin
 
 
 \section{Towards Addressing Information Relevance}
-In these analyses, results are studied from validations conducted through users assessing Tweets existing within their own local network. In particular, the interestingness scoring methodology will be validated against people's interestingness decisions on Tweets from those users they directly follow. Interactions with Twitter in this section relate to v1.1 of the Twitter API, as this research was conducted after the mandatory switch-over to this version.
+In these analyses, results are studied from validations conducted through users assessing Tweets existing within their own local network. In particular, the interestingness scoring methodology will be validated against people's interestingness decisions on Tweets from those users that they directly follow. Interactions with Twitter in this section relate to v1.1 of the Twitter API, as this research was conducted after the mandatory switch-over to this version.
 
 Through assessment in this way, the Tweets being assessed are more relevant to their `environments', which, in this case, consist of those users who would naturally also receive these Tweets and who are making the interestingness decisions based on their content.
 
@@ -600,7 +605,7 @@ Through assessment in this way, the Tweets being assessed are more relevant to t
 \subsection{Planning the Further Validations}
 As will become clear, no initial data collection is required for these analyses. Instead, users contributing to the crowdsourced analysis interacted almost directly with Twitter during the course of their assessments, which involved the studying of Tweets sent from the friends of the assessing user.
 
-For this purpose, a web application was set up and ran from July to August 2013, which allowed visiting users to `sign in' using their Twitter account through OAuth. As with v1, v1.1 of Twitter's REST API directly supports this kind of behaviour, and provides the authenticated application with access keys enabling it to interface with the API on the authenticating user's behalf. Applications registered on Twitter can have different levels of elevation - from read-only, in which Tweets, follower information, and so on, can be retrieved; to read and write, with which new Tweets can be posted for the user and new followships can be created. An advantage of using OAuth in this fashion is that each user has a separate rate limit associated with it, meaning that the application could retrieve a lot of information, if necessary, yet without exceeding the rate limit afforded to it by the new policies of v1.1 of the API.
+For this purpose, a web application was set up and ran from July to August 2013, which allowed visiting users to `sign in' using their Twitter account through OAuth. As with v1, v1.1 of Twitter's REST API directly supports this kind of behaviour, and provides the authenticated application with access keys enabling it to interface with the API on the authenticating user's behalf. Applications registered on Twitter can have different levels of elevation - from read-only, in which Tweets, follower information, and so on, can be retrieved; to read and write, with which new Tweets can be posted for the user and new followships can be created. An advantage of using OAuth in this fashion is that each user has a separate rate limit associated with it, meaning that the application could retrieve a lot of information, if necessary, yet without exceeding the rate limit afforded to application-pnly authentication by the new policies of v1.1 of the API.
 
 In this case, the web application was advertised through word of mouth and through OSNs, such as Facebook and Twitter itself, as well as through Mechanical Turk. In the latter case, a special link to the site was provided to MTWs, and a code was displayed to them on completion of the task, which they could enter into Mechanical Turk in order to be paid. Participants contributing from the word of mouth and OSN categories are defined as `organic' participants. Since the analysis depended on users assessing Tweets from their Twitter friends, participants could only take part if they had had a Twitter account with at least 30 friends.
 
@@ -611,13 +616,13 @@ In this case, the web application was advertised through word of mouth and throu
 \label{fig:organic_advertising}
 \end{figure}
 
-After signing into the read-only application\footnote{Twinterest: source available at https://github.com/flyingsparx/twinterestingness} and beginning the procedure, participants were faced with a series of ten Tweet timelines. The first consisted of the most recent 20 Tweets from the participant's home timeline, and the next nine consisted of user timelines of the participant's friends. Although the selection of friends for the nine user timelines was done at random, a slight bias was applied towards selecting friends with a higher follower count. Due to the nature of scale-free graphs, there are many vertices with few edges, and few with many edges. As such, in order to obtain a more even distribution of user influence, the weighting was necessary to ensure that the scoring mechanism could be validated against a range of users expressing a wider variety of retweet counts.
+After signing into the read-only application\footnote{Twinterest: source available at https://github.com/flyingsparx/twinterestingness} and beginning the procedure, participants were faced with a series of ten Tweet timelines. The first consisted of the most recent 20 Tweets from the participant's home timeline, and the next nine consisted of user timelines of the participant's friends. Although the selection of friends for the nine user timelines was done at random, a slight bias was applied towards selecting friends with a higher follower count. Due to the nature of scale-free graphs, there are many vertices with few edges, and few with many edges. As such, in order to obtain a more even distribution of user influence, the weighting was necessary to ensure that the scoring mechanism could be validated against a range of users expressing Tweets with a wider variety of retweet counts.
 
-Similar to the initial validations using Mechanical Turk in the previous section, participants were simply asked to select the Tweets that they found to be the most interesting from each of the timelines and were not able to proceed to the next timeline without selecting at least one Tweet. Note that, at this stage, the Tweets being assessed did not have interestingness scores applied to them. A Tweet in a timeline that was selected was considered to be interesting, and those not selected were non-interesting.
+Similar to the initial validations using Mechanical Turk in the previous section, participants were simply asked to select the Tweets that they found to be the most interesting from each of the timelines and were not able to proceed to the next timeline without selecting at least one Tweet. Note that, at this stage, the Tweets being assessed did not have interestingness scores applied to them. A Tweet in a timeline that was selected was considered to be interesting, and those not selected were considered non-interesting.
 
 
 \subsection{Assigning Scores to the Assessed Tweets}
-Through running the validation application, a total of 580 timelines were assessed, consisting of 389 contributed to by MTWs and 191 from organic participants. The totals are not precisely divisible by ten since not all participants assessed all of their ten timelines before leaving the application, but no one participant contributed more than ten timeline assessments. In this case, all responses were considered as confident since it was not appropriate under the conditions of the validation test to gain more than one assessment for each Tweet. Although there was likely some friend overlap between the participants, this was not necessarily the case in the vast majority of users assessed. In cases where there the same Tweet was assessed by more than one user the majority vote was chosen, weighted towards positive interestingness decisions in the case of ties. 
+A total of 580 timelines were assessed through the applciation validations, consisting of 389 contributed to by MTWs and 191 from organic participants. The totals are not precisely divisible by ten since not all participants assessed all of their ten timelines before leaving the application, but no one participant contributed more than ten timeline assessments. In this case, all responses were considered as confident since it was not appropriate under the conditions of the validation test to gain more than one assessment for each Tweet. Although there was likely some friend overlap between the participants, this was not necessarily the case in the vast majority of users assessed. In cases where there the same Tweet was assessed by more than one user the majority vote was chosen, weighted towards positive interestingness decisions in the case of ties. 
 
 \begin{figure}[h]
 \centering
@@ -643,18 +648,17 @@ Through running the validation application, a total of 580 timelines were assess
 The validation test resulted in a set of just under 10,000 Tweets, authored by 936 unique users, that had interestingness decisions made on them as part of the assessment of the participants' home timelines and friends' user timelines. These Tweets became the testing dataset $T$, and in order to determine their predicted expected retweet counts using trained classifiers as part of assigning the interestingness scores to each of the Tweets, two procedures were required to take place;
 \begin{itemize}
     \item Collect further data on each assessed \textit{author} in order to generate the `user' models, and;
-    \item Collect further data on each assessed \textit{Tweet} in order to classify it against the global model and the relevant user model.
+    \item Collect further data on each assessed \textit{Tweet} in order to classify it against the previously-generated global model and the relevant user model.
 \end{itemize}
 The global model used was the same large model generated during the previous validation tests.
 
-For privacy reasons, each participant's Twitter API credentials were not maintained by the application and so standard authenticated REST API requests were performed to collect the additional data required. In particular, in August 2013, each of the 936 users representing $\aut{t}{O} \forall t \in T$ were queried under an identical collection scheme to that used as part of the previous validation; information on the author itself and on a sample of the author's followers and friends. The collected information was also assigned to each of that user's Tweets $t' \in T$ so that an instance could be built for every $t \in T$ according to the features described in Table \ref{table:globalfeatures}. These Tweets were then classified by the global model and their appropriate user model, which was built from its author's features, in order to eventually produce the two scores. 
+For reasons of privacy, each participant's Twitter API credentials were not maintained by the application and so standard authenticated REST API requests were performed to collect the additional data required. In particular, in August 2013, each of the 936 users representing $\aut{t}{O} \forall t \in T$ were queried under an identical collection scheme to that used as part of the previous validation; information on the author itself and on a sample of the author's followers and friends was retrieved. The collected information was also assigned to each of that user's Tweets $t' \in T$ so that an instance could be built for every $t \in T$ according to the features described in Table \ref{table:globalfeatures}. These Tweets were then classified by the global model and their appropriate user model, which was built from its author's features, in order to eventually produce the two scores. 
 
 It should be noted that if a particular user follows another whose account is protected (see earlier in the thesis for further information on this), then the former user's API credentials can be used to view the latter's information and Tweets. However, since, during the data-collection, a static account was used to query the API, then Tweets and user information for accounts that are protected could not successfully be retrieved. This means that user and Tweet data for these users could not be collected for the purposes of training the user model and testing Tweets against this and the global model, and thus Tweets from protected authors had to be removed from $T$. The numbers stated in this section are those of the \textit{final} dataset after removing these Tweets and users.
 
 
 \subsection{Results from the Further Validations}
-In this section, the patterns observed through the comparison of the Tweers inferred as interesting through the scores and those indicated as interesting by the human participants are analysed. There was no significant difference observed between the accuracy of the scores against the MTWs' and the organic participants' decisions, and thus the combination both sets was considered in the following analyses.
-The $\gscore{t}$ was used as the scoring scheme for the analysis in this section.
+In this section, the patterns observed through the comparison of the Tweers inferred as interesting through the scores and those indicated as interesting by the human participants are analysed. There was no significant difference observed between the accuracy of the scores against the MTWs' and the organic participants' decisions, and thus the combination of both sets was considered in the following analyses. The $\gscore{t}$ was used as the scoring scheme for the analysis in this section.
 
 \subsubsection{Ranking performance in further depth}
 
@@ -734,9 +738,9 @@ The $\gscore{t}$ was used as the scoring scheme for the analysis in this section
 \caption{The chance of a participant selecting one of the \textit{highest} $n$ ranked Tweets in the timeline}
 \end{figure}
 
-In the prevoius validation, the performance of the interestingness scores in ranking Tweets was assessed on a per-question basis. The same concept is expanded here to apply a similar assessment of the scores on the present validation test.
+In the previous validation, the performance of the interestingness scores in ranking Tweets was assessed on a per-question basis. The same concept is expanded here to apply a similar assessment of the scores on the present validation test.
 
-In this case, each assessed \textit{timeline} was ranked in order of descending interestingness score in an effort to find the probability of a participant selecting a Tweet occurring in the top $n$ of Tweets. Timelines were up to 20 Tweets long, compared to the five used in the Mechanical Turk questions in the initial validation test, but the scores have again demonstrated that they are effectively able to rank Tweets. Since the timelines are bigger than the questions used before, the chance of a participant selecting multiple Tweets from a timeline was greater, as indicated by Figure \ref{fig:num_tweets_selected}. To illustrate this, the results for this analysis are demonstrated against the appropriate random performance benchmark produced by the different selection criteria.
+In this case, each assessed \textit{timeline} was ranked in order of descending interestingness score in an effort to find the probability of a participant selecting a Tweet occurring in the top $n$ of Tweets. Timelines were up to 20 Tweets long, compared to the five used in the Mechanical Turk questions in the initial validation test, but the scores have again demonstrated that the mechanism is able to effectively rank Tweets. Since the timelines are larger than the questions used before, the chance of a participant selecting multiple Tweets from a timeline was greater, as indicated by Figure \ref{fig:num_tweets_selected}. To illustrate this, the results for this analysis are demonstrated against the appropriate random performance benchmark produced by the different selection criteria.
 
 It is clear that the scores are able to identify interesting information from the noise around it, and so further analyses were conducted into the performance of the scores in detecting \textit{un}-interesting information. In this scenario, each timeline had its Tweets ranked in order of \textit{ascending} interestingness score and calculations were carried out into the probability of participants \textit{not} selecting the \textit{bottom} $n$ interesting Tweets in each timeline.
 
@@ -830,7 +834,6 @@ Although the results showed that, with the different selection criteria, the sco
         ylabel=Position of selection,
         colormap/hot,
         grid=none,
-        ygrid=none,
         y dir=reverse,
         xticklabels=none,
         xticklabel style=none,
@@ -839,10 +842,6 @@ Although the results showed that, with the different selection criteria, the sco
         separate axis lines,
         y axis line style= { draw opacity=0 },
         x axis line style= { draw opacity=0 },
-        minor grid style={draw opacity=0},
-        major grid style={draw opacity=0},
-        major tick length=0pt,
-        minor tick length=0pt,
         draw=none]
       \addplot3[surf] table [row sep=newline] {5.Chapter3/data/heatmap.dat};
       \addplot[black] plot coordinates{       
@@ -884,9 +883,9 @@ Although the results showed that, with the different selection criteria, the sco
 A brief study was additionally made into the selections of Tweets made by the participants. Of particular interest is the \textit{difference} in performance between those pariticpants that were paid to take part (the MTWs) and those who took part without being paid (the organic participants), and whether one group was more likely to select Tweets near the top of the timeline without scrolling down to read and select those at the bottom of the timeline. Reasons for this case could be laziness on the behalf of the participant, or simply for speed.
 
 The study revealed that there wasn't a significant difference between the two participant groups. The organic participants, on average, selected the Tweet at position 6.07 in the timeline, and the MTWs selected Tweets at the average position of 5.83 out of 20 maximum available positions.
-Whilst these selection position averages are both relatively near to the top of the timeline, it should be noted that the \textit{mean} timeline length was of 14 Tweets, and thus purely average random selections should be made around the mark of the seventh Tweet.
+Whilst these selection position averages are both relatively near to the top of the timeline, it should be noted that the \textit{mean} timeline length was of 14 Tweets, and thus purely average random selections would be made at around the mark of the seventh Tweet.
 
-It is felt, therefore, that there was some bias in both participant groups in that they were both slightly more likely to select Tweets nearer the top of the timeline than scroll down to view, and make interestingness judgments on those, nearer the bottom of the timelines. As with the previous validation tests, it was also possible to demonstrate that the maximum scores between Tweets in a particular timeline is greater in cases where only selection is made by the participants (Figure \ref{fig:disparity-2}). 
+It is felt, therefore, that there was some bias in both participant groups in that they were both slightly more likely to select Tweets nearer the top of the timeline than scroll down to view, and make interestingness judgments on those, nearer the bottom of the timelines. As with the previous validation tests, it was also possible to demonstrate that the score disparity between Tweets in a particular timeline is greater in cases where only one selection is made by the participants (Figure \ref{fig:disparity2}). 
 
 \begin{figure}
     \centering
@@ -904,8 +903,8 @@ It is felt, therefore, that there was some bias in both participant groups in th
         }; 
     \end{axis}
     \end{tikzpicture}
-\label{fig:disparity-2}
 \caption{Relationship between the number of selected Tweets in a timeline and the maximum score disparity of the timeline}
+\label{fig:disparity2}
 \end{figure}
 
 
@@ -913,19 +912,19 @@ It is felt, therefore, that there was some bias in both participant groups in th
 In this chapter, an improvement over the previous iteration of the Tweet interestingness inference methodology has been introduced, tested, and analysed. Bringing the research into the social structure of Twitter forward from the previous chapter, it was possible to determine areas for improvement and the useful metrics for governing the selection of new features.
 
 \subsection{Interestingness Scores}
-The new methodology introduced the notion of scores, which can be assigned to Tweets in order to signify their relative interestingness. These scores are based on the ratio between the popularity of a Tweet, measured by its observed retweet count, and a value representing an \textit{expected} retweet count for the Tweet. The scoring mechanism works such that different types of users, including across influence and activity frequency\footnote{The activity frequency is how often a user posts Tweets} ranges, can have their Tweets assessed on the same scale. 
+The new methodology introduced the notion of scores, which can be assigned to Tweets in order to signify their relative interestingness. These scores are based on the ratio between the popularity of a Tweet, measured by its observed retweet count, and a value representing an \textit{expected} retweet count for the Tweet. The scoring mechanism works such that different types of users, including those ranging across influence and activity frequency\footnote{The activity frequency is how often a user posts Tweets} levels, can have their Tweets assessed on the same scale. 
 
-Two scoring schemes were set up, which are derived from distinct methods for generating the expected retweet count. One method is based on comparing a Tweet's (and its author's) features to a \textit{global} model trained on a large number of Tweets collected from Twitter. The other is generated through the comparison of the Tweet's features to a \textit{user} model trained only on other Tweets posted by that particular user. Generally, there was found to be non-significant difference between the performance of the two scores, however, and thus they were both used interchangeably during the validations.
+Two scoring schemes were set up, which are derived from distinct methods for generating the expected retweet count. One method is based on comparing a Tweet's (and its author's) features to a \textit{global} model trained on a large number of Tweets collected from Twitter. The other is generated through the comparison of the Tweet's features to a \textit{user} model trained only on other Tweets posted by that same particular user. Generally, there was found to be a non-significant difference between the performance of the two scores, however, and thus they were both used interchangeably during the validations.
 
 \subsection{Methodology Validations}
-Two sets of validations were conducted into verifying the performance and accuracy of the new methodology and the scores it produced - one in which Tweets were placed into questions on Amazon's Mechanical Turk, in which MTWs were asked to select the most interesting Tweets; and another, in which users were asked to sign-in through Twitter and then assess Tweets from users they actually follow.
+Two sets of validations were conducted into verifying the performance and accuracy of the new methodology and the scores it produced - one in which Tweets were placed into questions on Amazon's Mechanical Turk, in which MTWs were asked to select the most interesting Tweets; and another, in which participants were asked to sign-in through Twitter and then assess Tweets from users they actually follow.
 
-In the first case, the participants shared no connection with the authors of the Tweets they were assessing (except in the case of large coincidences), and were therefore assessing Tweets on a \textit{global} interest level. In particular, this largely involves determining the interesting information from the noise around it. In the second set, information \textit{relevance} came more into play, since participants were assessing Tweets from users they have already declared an interest in (through the action of following).
+In the first case, the participants shared no connection with the authors of the Tweets they were assessing (except in the case of coincidences), and were therefore assessing Tweets on a \textit{global} interest level. In particular, this largely involves determining the interesting information from the noise around it. In the second set, information \textit{relevance} came more into play, since participants were assessing Tweets from users they have already declared an interest in (through the action of following).
 
 In both test cases, the validations showed the scores to be able to appropriately label Tweets according to interestingness in a variety of different ways. The second test included an analysis demonstrating that the scores are more efficient at determining interesting Tweets than \textit{un}-interesting Tweets, the latter of which would be useful in deciding on a set of Tweets to discard from an interesting set. 
 
 \subsection{Improvements and Qualities}
 The newly introduced methodology presents several improvements over that described in the previous chapter. In particular, the performance of the scores have shown a large accuracy improvement in determining interesting information. The previous method also did not take into account \textit{how} interesting a particular Tweet may be, and was only able to make a binary interesting/uninteresting decision for each Tweet.
 
-Another large improvement is the ability of the scoring method to be applied to a much wider range of Tweets. The previous method was realistically unable to assess Tweets from users with more than 300 or so followers due to data collection inefficiency, the time taken, and the computational complexity involved in simulating large user graphs. The new method can be used to assign scores to Tweets in a more ``on demand'' fashion, where only a small amount of informaiton for each Tweet is required in order to generate the features needed to predict the estimated retweet counts. The scores also allow Tweets from many different sources to be assessed on the same scoring scale, meaning that Tweets on a mixed timeline can be appropriately compared to one-another, as demonstrated by the second set of validations.
+Another large improvement is the ability of the scoring method to be applied to a much wider range of Tweets. The previous method was realistically unable to assess Tweets from users with more than 300 or so followers due to data collection inefficiency, the time taken, and the computational complexity involved in simulating large user graphs. The new method can be used to assign scores to Tweets in a more ``on demand'' fashion, where only a small amount of information for each Tweet is required in order to generate the features needed to predict the estimated retweet counts. The scores also allow Tweets from many different sources to be assessed on the same scoring scale, meaning that Tweets on a mixed timeline can be appropriately compared to one-another, as demonstrated by the second set of validations.
 

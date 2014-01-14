@@ -1,34 +1,46 @@
 \chapter*{Glossary} 
 
+{\bf Audience}\\
+The number of users that receive a given Tweet, either directly or as the result of retweets of that Tweet.
+
 {\bf Author}\\
-A user that has written a Tweet  (\textit{the author of Tweet} $t$ \textit{is denoted as} $A(t)$). 
+A user that has written a Tweet. The original author of Tweet $t$ is denoted as $\aut{t}{O}$. 
 
 {\bf Follower}\\
-A type of user. A user, \textit{x}, is a follower of user \textit{y} if user \textit{x} follows user \textit{y}. Other users who follow a particular user will receive all of the user's Tweets and retweets to their home timeline. A user can elect to follow another user.
+A type of user. A user, \textit{x}, is a follower of user \textit{y} if user \textit{x} follows user \textit{y}. Other users who follow a particular user will receive all of the user's Tweets and retweets to their home timeline. A user can elect to follow another user. The subset of users that are followers of user $u$ is denoted as $\fos{u}$.
 
 {\bf Friend}\\
-The inverse of follower. User \textit{x} is a friend to user \textit{y} if \textit{y} follows \textit{x}.
+The inverse of follower. User \textit{x} is a friend to user \textit{y} if \textit{y} follows \textit{x}. The subset of users that are friends of user $u$ is denoted as $\frs{u}$.
+
+{\bf Local Graph}\\
+The local graph of a user, $u$, is the subgraph of the full social graph (see below) representing the users and edges existing within $n$ hops of $u$.
 
 {\bf Path-length}\\
 The penetration of a Tweet - i.e. the number of times a Tweet is retweeted down one chain. The final retweeter in the chain indicates the number of hops the Tweet has taken from its author.
 			
 {\bf Retweet}\\
-\textit{n.} - A replica of a Tweet, which has been forwarded on by a user (who is not the Tweet's original author) to their own followers (\textit{denoted as} $RT(t)$). \\
-\textit{v.} - The act of replicating a Tweet. A user who finds a Tweet interesting may retweet it so that it gets more exposure.
+\textit{n.} - A replica of a Tweet, which has been forwarded on by a user (who is not the Tweet's original author) to their own followers. The set of retweets of a given Tweet, $t$, is denoted as $\rt{t}$.\\
+\textit{v.} - The act of replicating a Tweet. A user who finds a Tweet interesting may retweet it so that it gains more exposure through an increase in the audience size (see above).
 									
 {\bf Retweet Group}\\
-Set of Twitter users responsible for the propagation of a Tweet. Comprises the original author of the Tweet and the users which have since retweeted it.
+Set of Twitter users responsible for the propagation of a Tweet. Comprises the original author of the Tweet and the users which have since retweeted it. The set of members of a retweet group of Tweet $t$ is denoted as $\rg{t}$.
 
 {\bf Retweet Count}\\
-The number of times a particular Tweet has been retweeted.
+The number of times a particular Tweet has been retweeted. The retweet count of Tweet $t$ is denoted as $\rc{t}$.
+
+{\bf Score Disparity}\\
+The \textit{range} of scores assigned to a particular set of Tweets. Typically this is calculated by calculating the difference between the highest and lowest score of the set, and is denoted by $\disparity{T}$, where $T$ represents a set of Tweets. 
+
+{\bf Social Graph}\\
+The representation of users and the links illustrating relationships between them in real-world and online social networks.
 
 {\bf Timeline}\\
-A collection of Tweets in Twitter in reverse-chronological order. A \textbf{user} timeline consists of that user's Tweets. A user's \textbf{home} timeline consists of the Tweets of each friend of the user.
+A set of Tweets in Twitter in reverse-chronological order. A \textbf{user} timeline consists of that user's Tweets and retweets created by the user. A user's \textbf{home} timeline consists of that user's Tweets and retweets, the Tweets of each friend of the user, and retweets created by friends of the user. The home timeline contains all of the information that the user directly receives. 
 
 {\bf Tweet}\\
-\textit{n.} - A piece of information in Twitter; a piece of text, less than 140 characters long, which is written by a user. When sent, the Tweet is pre-pended to its author's user timeline and also to the home timelines of each of the followers of the Tweet's author (\textit{denoted as} $t$).\\
+\textit{n.} - A piece of information in Twitter; a piece of text, less than 140 characters long, which is written by a user. When sent, the Tweet is pre-pended to its author's user timeline and also to the home timelines of each of the followers of the Tweet's author. A Tweet is denoted as $t$.\\
 \textit{v.} - The act of writing and sending a Tweet.\\ \\
 \textit{Note -} A Tweet, in the context of Twitter, is treated as a proper noun and as such has its first letter capitalised\footnote{https://twitter.com/logo}.
 
 {\bf User}\\
-An account on Twitter. Each user (usually representing a real-life person or organisation) can Tweet, retweet, follow other users and be followed by other users. In this thesis, sometimes the terms \textit{user} and \textit{person} are used interchangeably.
+An account on Twitter. Each user (usually representing a real-life person or organisation) can Tweet, retweet, follow other users and be followed by other users. In this thesis, the terms \textit{user} and \textit{person} are occasionally used interchangeably.

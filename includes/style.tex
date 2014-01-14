@@ -178,36 +178,6 @@
 \usepackage{epic}
 \usepackage{eepic}
 
-% Algorithm environment
-%\newcounter{algorithm}[chapter]
-%\renewcommand{\thealgorithm}{\thechapter.\@arabic\c@algorithm}
-%\def\fps@algorithm{t}
-%\def\ftype@algorithm{1}
-%\def\ext@algorithm{loa}
-%\def\fnum@algorithm{Algorithm~\thealgorithm}
-%\newenvironment{algorithm}{\@float{algorithm}}{\end@float}
-%\newenvironment{algorithm*}{\@dblfloat{algorithm}}{\end@dblfloat}
-%\newenvironment{alevel}%
-%   {\begin{list}{}{%
-%      \setlength{\topsep}{0pt}%
-%      \setlength{\parskip}{0pt}%
-%      \setlength{\partopsep}{0pt}%
-%      \setlength{\parsep}{0pt}%
-%      \setlength{\itemsep}{0pt}}}%
-%   {\end{list}}
-%\newcommand\listalgorithmsname{List of Algorithms}
-%\newcommand\listofalgorithms{%
-%    \if@twocolumn
-%      \@restonecoltrue\onecolumn
-%    \else
-%      \@restonecolfalse
-%    \fi
-%    \chapter*{\listalgorithmsname}%
-%      \@mkboth{\listalgorithmsname}{\listalgorithmsname}%
-%    \@starttoc{loa}%
-%    \if@restonecol\twocolumn\fi
-%    }
-%\newcommand*\l@algorithm{\@dottedtocline{1}{1.5em}{2.3em}}
 
 % List of figures and tables
 \renewcommand\listoffigures{%
@@ -274,6 +244,7 @@
 \usepackage{thmbox}
 \newtheorem[S,leftmargin=18pt,thickness=0.9pt,bodystyle=\noindent]{mydefinition}{Definition}[chapter]
 
+
 % STUFF I ADDED:
 
 \usepackage{amssymb}
@@ -297,6 +268,7 @@
     plot 1/.style={red,fill=red!30!white,mark=none},%
     plot 2/.style={brown!60!black,fill=brown!30!white,mark=none},%
 }
+
 \usepackage{listings}
 \usepackage{color}
 \lstset{ %
@@ -336,6 +308,8 @@
 
 % expected retweet count
 \newcommand{\ec}[1]{#1.\textrm{count}_E}
+\newcommand{\ecg}[1]{#1.\textrm{count}^G_E}
+\newcommand{\ecu}[1]{#1.\textrm{count}^U_E}
 
 % follower count
 \newcommand{\foc}[1]{\textrm{deg}^+(#1)}
