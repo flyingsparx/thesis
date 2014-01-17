@@ -292,8 +292,7 @@ Importantly, Tweets from many different types of user were collected; from less-
 \subsection{Data Corpora}
 After collection, the complete data was divided into two datasets; a training set, consisting of 90\% of the entire set, and a testing dataset, consisting of the remaining 10\%. The original set was divided in such a way as to ensure that all of the Tweets authored by one particular user existed in only one of the two resultant datasets. After being used to train the Bayesian network model, the larger dataset was then discarded from use for the rest of the experimentation.
 
-As has been previously mentioned, of interest is the generation of \textit{two} interestingness scores for each Tweet, $t$; one based on a comparison between $\rc{t}$ and an $\ec{t}$ produced from the global model, and the other between $\rc{t}$ and an $\ec{t}$ produced from $\aut{t}{O}$'s user model. As such, each Tweet requires the two models in order to provide the predicted values for $\ec{t}$.\\
-To assist with this, individual user datasets were extracted from the testing dataset, each containing information only on that particular user and its local network and its Tweets, from which individual user Bayesian network models could be trained.
+As has been previously mentioned, of interest is the generation of \textit{two} interestingness scores for each Tweet, $t$; one based on a comparison between $\rc{t}$ and an $\ec{t}$ produced from the global model, and the other between $\rc{t}$ and an $\ec{t}$ produced from $\aut{t}{O}$'s user model. As such, each Tweet requires the two models in order to provide the predicted values for $\ec{t}$. To assist with this, individual user datasets were extracted from the testing dataset, each containing information only on that particular user and its local network and its Tweets, from which individual user Bayesian network models could be trained.
 
 The complete testing dataset is referred to as the `global' corpus of Tweets, and each individual user dataset is known as a `user' corpus.
 
@@ -308,8 +307,7 @@ Each Tweet is represented by an instance of a complete set of features relating 
 
 
 \subsubsection{Features for the global corpus model}
-The global corpus model is the Bayesian network model representing the classifier trained from the complete training dataset. In this case, a total of 31 features, outlined in Table \ref{table:globalfeatures}, were used to train the classifier.\\
-As such, there were around 217,000 Tweet instances using this feature scheme used for traning the global classifier.
+The global corpus model is the Bayesian network model representing the classifier trained from the complete training dataset. In this case, a total of 31 features, outlined in Table \ref{table:globalfeatures}, were used to train the classifier. As such, there were around 217,000 Tweet instances using this feature scheme used for traning the global classifier.
 
 \begin{table}[h]\footnotesize
 \begin{center}
@@ -356,7 +354,8 @@ It should be noted that although the Tweet features, aside from the retweet coun
 
 
 \subsubsection{Features for individual user models}
-Since the author and network features have identical values in the instances representing all of the Tweets from one particular user, then these features were not considered when training and testing using the user models.\\
+Since the author and network features have identical values in the instances representing all of the Tweets from one particular user, then these features were not considered when training and testing using the user models.
+
 As such, the 10 Tweet features were those used in the feature instances in training, and testing against, each user model.
 
  
@@ -364,8 +363,7 @@ As such, the 10 Tweet features were those used in the feature instances in train
 \subsection{Testing Against the Trained Classifier}
 Once the feature extraction was completed and the instances were built for the global training dataset and each individual user set, the models were trained as described above.
 
-In order to produce the expected \textit{global} retweet counts, each Tweet $t \in T$, where $T$ represents the entire \textit{test} dataset, had its features extracted and was evaluated against the global model. This classified each Tweet into one of the categories given by that Tweet's predicted retweet count, and the top interval of the expected retweet outcome category became the \textit{expected} retweet count for that particular Tweet.\\
-Similarly, the expected \textit{user} retweet counts were produced in the same way, but instead each Tweet was classified by the user model associated with that Tweet's author.
+In order to produce the expected \textit{global} retweet counts, each Tweet $t \in T$, where $T$ represents the entire \textit{test} dataset, had its features extracted and was evaluated against the global model. This classified each Tweet into one of the categories given by that Tweet's predicted retweet count, and the top interval of the expected retweet outcome category became the \textit{expected} retweet count for that particular Tweet. Similarly, the expected \textit{user} retweet counts were produced in the same way, but instead each Tweet was classified by the user model associated with that Tweet's author.
 
 In each case, the two interestingness scores for each Tweet could be calculated, based on the process described earier, using the ratio between the Tweet's two expected retweet counts and its \textit{observed} retweet count stored as part of the data collection from Twitter. This meant that each Tweet $t \in T$ then had two numeric scores, $\uscore{t}$ and $\gscore{t}$, assigned to it. 
 
@@ -424,8 +422,7 @@ The remainder of this section analyses the validation data in various ways to de
 \label{fig:hist}
 \end{figure}
 
-Of the subset $T'$, the scoring mechanism found 140 of the Tweets to have a value of $\gscore{t} > 1$, and thus inferred as interesting. Of these, 65\% were agreed on as interesting by the MTWs. The performance of the $\uscore{t}$ was worse in providing a 55\% agreement, resulting in a general of 60\% agreement on the mean of the two scoring schemes.\\
-It is also demonstrable that the proportionate frequency of Tweets with higher values of $\gscore{t}$ is greater in the subset $T'$ than in $T$. This implies that, on average, the MTWs were selecting and agreeing on Tweets being interesting that had a higher score than those that were \textit{not} selected. Further to this, there is a greater proportion of Tweets with lower scores ($0 \leq \gscore{t} < 1$) in $T$ than in $T'$, and a greater proportion of higher values for $\gscore{t}$ in $T'$ than in $T$.
+Of the subset $T'$, the scoring mechanism found 140 of the Tweets to have a value of $\gscore{t} > 1$, and thus inferred as interesting. Of these, 65\% were agreed on as interesting by the MTWs. The performance of the $\uscore{t}$ was worse in providing a 55\% agreement, resulting in a general of 60\% agreement on the mean of the two scoring schemes. It is also demonstrable that the proportionate frequency of Tweets with higher values of $\gscore{t}$ is greater in the subset $T'$ than in $T$. This implies that, on average, the MTWs were selecting and agreeing on Tweets being interesting that had a higher score than those that were \textit{not} selected. Further to this, there is a greater proportion of Tweets with lower scores ($0 \leq \gscore{t} < 1$) in $T$ than in $T'$, and a greater proportion of higher values for $\gscore{t}$ in $T'$ than in $T$.
 
 This means that, in general, the humans were marking a greater number of Tweets as interesting that were inferred as interesting by the scores than ones that \textit{weren't} inferred as interesting. Although this demonstrates a clear advantage on the binary inference of interestingness over the methodologies in the previous chapter, this analysis does not consider how well the scheme is able to \textit{rank} Tweets in order of interestingness.
 
@@ -468,8 +465,7 @@ In order to assess the ability of the scores to effectively rank Tweets in order
 \label{fig:score-dist}
 \end{figure}
 
-These questions are those that were assessed by the MTWs and where a particular question, $q \in Q$, where $Q$ is the set of all 450 questions, is comprised of a set of Tweets such that $|q| = 5 \forall q \in Q$.\\
-In order to conduct this analysis, each question $q$ had its five Tweets $t \in q$ ranked in order of ascending $\gscore{t}$, such that;
+These questions are those that were assessed by the MTWs and where a particular question, $q \in Q$, where $Q$ is the set of all 450 questions, is comprised of a set of Tweets such that $|q| = 5 \forall q \in Q$. In order to conduct this analysis, each question $q$ had its five Tweets $t \in q$ ranked in order of ascending $\gscore{t}$, such that;
 \[
     q = (t^q_1, t^q_2, t^q_3, t^q_4, t^q_5)
 \]
@@ -506,8 +502,7 @@ A further analysis in this section is with regard to the \textit{probability} of
 \label{fig:score-cum-dist}
 \end{figure}
 
-Although the cases of Tweets where $\gscore{t} > 4$ are excluded from this analysis, for the purposes of noise reduction from fewer samples, Figure \ref{fig:score-cum-dist} shows an observable increase in probability of selection as the score increases. This pattern is particularly applicable in the score interval of 0-1, which represents the range of Tweets that the scoring scheme has inferred as uninteresting to those that achieved a correctly-predicted popularity, and are thus `as expected' in terms of interestingness.\\
-The analysis is also clear that Tweets with an inferred interestingness score of three or more are not significantly different from one another in terms of the level of interestingness assigned from the `real' human judgment.
+Although the cases of Tweets where $\gscore{t} > 4$ are excluded from this analysis, for the purposes of noise reduction from fewer samples, Figure \ref{fig:score-cum-dist} shows an observable increase in probability of selection as the score increases. This pattern is particularly applicable in the score interval of 0-1, which represents the range of Tweets that the scoring scheme has inferred as uninteresting to those that achieved a correctly-predicted popularity, and are thus `as expected' in terms of interestingness. The analysis is also clear that Tweets with an inferred interestingness score of three or more are not significantly different from one another in terms of the level of interestingness assigned from the `real' human judgment.
 
 
 \subsubsection{Discerning Interesting Information from Noise}
@@ -927,4 +922,3 @@ In both test cases, the validations showed the scores to be able to appropriatel
 The newly introduced methodology presents several improvements over that described in the previous chapter. In particular, the performance of the scores have shown a large accuracy improvement in determining interesting information. The previous method also did not take into account \textit{how} interesting a particular Tweet may be, and was only able to make a binary interesting/uninteresting decision for each Tweet.
 
 Another large improvement is the ability of the scoring method to be applied to a much wider range of Tweets. The previous method was realistically unable to assess Tweets from users with more than 300 or so followers due to data collection inefficiency, the time taken, and the computational complexity involved in simulating large user graphs. The new method can be used to assign scores to Tweets in a more ``on demand'' fashion, where only a small amount of information for each Tweet is required in order to generate the features needed to predict the estimated retweet counts. The scores also allow Tweets from many different sources to be assessed on the same scoring scale, meaning that Tweets on a mixed timeline can be appropriately compared to one-another, as demonstrated by the second set of validations.
-
