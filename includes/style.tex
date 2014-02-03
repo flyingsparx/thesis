@@ -241,12 +241,15 @@
 %% Now actually use the newly defined style.
 \urlstyle{leo}
 
-\usepackage{thmbox}
-\newtheorem[S,leftmargin=18pt,thickness=0.9pt,bodystyle=\noindent]{mydefinition}{Definition}[chapter]
-\newtheorem[S,leftmargin=18pt,thickness=0.9pt,bodystyle=\noindent]{mytheorem}{Theorem}[chapter]
+
 
 
 % STUFF I ADDED:
+
+\usepackage{thmbox}
+\newtheorem[S,leftmargin=18pt,thickness=0.9pt,bodystyle=\noindent]{mydefinition}{Definition}[chapter]
+\newtheorem[S,leftmargin=18pt,thickness=0.9pt,bodystyle=\noindent]{myproposition}{Proposition}[chapter]
+\newtheorem[S,leftmargin=18pt,thickness=0.9pt,bodystyle=\noindent]{myobservation}{Observation}[chapter]
 
 \usepackage{amssymb}
 \usepackage{graphicx}
@@ -327,11 +330,11 @@
 % set of friends
 \newcommand{\frs}[1]{N^-(#1)}
 
-% immediate audience
-\newcommand{\ima}[1]{\textrm{audience}(#1)}
+% raw audience
+\newcommand{\raa}[1]{\textrm{audience}(#1)}
 
 % distinct audience
-\newcommand{\dia}[1]{\textrm{distinct audienct}(#1)}
+\newcommand{\dia}[1]{\textrm{audience}(#1)}
 
 % interestingness score
 \newcommand{\score}[1]{s(#1)}

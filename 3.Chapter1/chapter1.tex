@@ -19,35 +19,63 @@ Since a Tweet can be retweeted multiple times, and, as mentioned, a retweet itse
 
 
 \section{Tweet and Retweet Properties}
+In this section, a more formal overview on retweet properties is provided in addition to an introduction and definition of concepts frequently referred to in the thesis.
 
 \subsection{Retweet Groups}
-A Tweet has various attributes associated with it, which make up the features that describe that particular Tweet and its author. These properties relate the to the Tweet's content, its author, and other metadata, such as creation time, geographical location coordinates, language, and so on. However, not all of these properties are necessary for use in this research and, as such, a particular Tweet, $t$, can have its relevant properties declared and be defined as follows;
+A Tweet has various attributes associated with it, which make up the features that describe it and its author. These properties relate the to the content, the author, and other metadata, such as its creation time, geographical location coordinates, language, and so on. However, not all of these properties are required or used in this research and, as such, a particular Tweet, $t$, can have its relevant properties declared and be defined as follows;
 \[
-	t = (\mathrm{text}, \mathrm{count}_R, \mathrm{author}_O, \mathrm{author}_R, \mathrm{orig})
+	t = (\mathrm{text}, \rc{}, \aut{}{O}, \aut{}{R}, \mathrm{orig}, \mathrm{prev})
 \]
 
-Respectively, this represents the Tweet's text, its retweet count, and the \textit{original} author of the Tweet. The final two values depend on whether $t$ is a retweet or not and represent the author of the retweet and a reference to the original Tweet respectively and are nullified when $t$ is not a retweet. Since a retweet is simply an extension of a class of Tweet, then the same properties can be assigned to retweets as to Tweets, except that in the case of retweets the values $\mathrm{orig}$ and $\mathrm{author}_R$ will be non-null.
+Respectively, this represents the Tweet's text, its retweet count, and the \textit{original} author of the Tweet. The final three values depend on whether $t$ is a retweet or not and represent the author of the retweet and a reference to the original Tweet respectively and are \texttt{null} when $t$ is not a retweet. Since a retweet is simply an extension of a class of Tweet, then the same properties can be assigned to retweets as to Tweets, except that in the case of retweets the values $\mathrm{prev}$, $\mathrm{orig}$ and $\mathrm{author}_R$ will be non-\texttt{null}.
 
-A Twitter user, $u$, is represented by a Twitter account, and also has a set of properties. In relevance to the work in this thesis, these largely relate to the user's position in the social graph. In particular, the set of followers and the set of friends of user $u \in G$ are denoted as $\fos{u}$ and $\frs{u}$ respectively, where;
+For example, let the Tweet shown in Figure \ref{fig:retweet_button} be $t^1$. This is not a retweet and has the following properties; 
+\begin{flalign*}
+t^1.\mathrm{prev} & = \textrm{\texttt{null}}\\
+t^1.\mathrm{orig} & = \textrm{\texttt{null}}\\
+\aut{t^1}{R} & = \textrm{\texttt{null}}\\
+\aut{t^1}{O} & = \textrm{\texttt{Adrian Bradley}}
+\end{flalign*}
+and $\rc{t^1}$ is not known in this context.
+
+Inversely, the Tweet displayed in Figure \ref{fig:northern_lights_tweet} ($r^1$) \textit{is} a retweet of another Tweet, $t^2$, where;
+\begin{flalign*}
+r^1.\mathrm{prev} & = t^2 \quad \textrm{(assumed)}\\
+r^1.\mathrm{orig} & = t^2\\
+\aut{r^1}{R} & = \textrm{\texttt{Discover The World}}\\
+\aut{r^1}{O} & =  \textrm{\texttt{Alda Sigmundsd\'{o}ttir}}\\
+\rc{t^2} & \geq 1 
+\end{flalign*}
+and $\rc{r^1}$ is also unknown. $r^1.\mathrm{prev}$ is assumed since $r^1$ was created using the button retweet method, which does not cite any intermediate retweeters, even if they exist.
+
+A Twitter user, $u$, is represented by a Twitter account, and also has a set of properties. In relevance to the work in this thesis, these largely relate to the user's position in the social graph. 
+
+The full social graph, denoted by $G$, comprises $V(G)$, the vertices representing the full set of users on Twitter; and $E(G)$, which contains the set of edges connecting these vertices. In Twitter's case, the edges denote the followships between users, and are therefore \textit{directional}. Thus, the set of followers and the set of friends of user $u \in G(V)$ are denoted by $\fos{u}$ and $\frs{u}$ respectively, where;
 \[
-    N^+ = \left\{u_i \quad \forall \quad 0 \leq i \leq |G| \quad : \quad \exists \quad \overrightarrow{u_i u} \right\}
+    \fos{u} = \left\{u \in V(G) :  \overrightarrow{u v} \in E(G)\right\}
+    %\quad \forall \quad 0 \leq i \leq |G| \quad : \quad \exists \quad \overrightarrow{u_i u} \right\}
 \]
 \[
-    N^- = \left\{u_i \quad \forall \quad 0 \leq i \leq |G| \quad : \quad \exists \quad \overleftarrow{u_i u} \right\}
+    \frs{u} = \left\{u \in V(G) :  \overleftarrow{u v} \in E(G)\right\}
+    %\left\{u_i \quad \forall \quad 0 \leq i \leq |G| \quad : \quad \exists \quad \overleftarrow{u_i u} \right\}
 \]
+In other friendship-based social networks, such as Facebook, relationships are mutual and are therefore represented by non-directional edges in the relevant social graphs.
 
-The Tweet attributes $\aut{}{O}$ and $\aut{}{R}$ are types of user. For example, since users represent vertices on the social graph, the author of a Tweet, $t$, has a follower count of $\foc{\aut{t}{O}}$ and a friend count of $\frc{\aut{t}{O}}$.
+The terms $\foc{u}$ and $\frc{u}$ respectively refer to the in-degree and out-degree of a user $u$, where $u \in V(G)$. These in turn represent the cardinality of each of the set of followers and friends of $u$, and therefore the author of Tweet $t$ has a follower count of $\foc{\aut{t}{O}}$ and a friend count of $\frc{\aut{t}{O}}$.
 
-Since a Tweet can be retweeted more than once, the set of Tweets that are in the set of \textit{all} Tweets, $T$, and are retweets of $t$ is defined as;
+Let $T$ represent the set of \textit{all} Tweets. Since a Tweet can be retweeted more than once, and have its retweets also retweeted, the set of retweets of Tweet $t \in T$ is defined as;
 \[
     \rt{t} = \left\{ r \in T : r.\textrm{orig} = t \right\}
 \]
 
-Clearly, the retweet count of $t$ is $ \rc{t} = \left\vert{\rt{t}}\right\vert $.
+Hence, the retweet count of $t$ is given by $ \rc{t} = \left\vert{\rt{t}}\right\vert $.
 
 
 \begin{mydefinition}
-A \textbf{retweet group}, denoted by $\rg{t}$, describes the original Tweet, $t$, along with the set of the retweets of $t$, $\rt{t}$. The term can be used to refer to the individual Tweet and retweets themselves or to the author users of those Tweets.
+A \textbf{retweet group}, denoted by $\rg{t}$, describes the original Tweet, $t$, along with the set of the retweets of $t$, $\rt{t}$. Thus;
+\[
+    \rg{t} = \left\{t\right\} \cup \rt{t}
+\]
 \end{mydefinition}
 
 
@@ -56,53 +84,48 @@ Retweet groups are useful for classifying a Tweet and the users who have retweet
 	\left\vert{
 \rg{t}}\right\vert = \rc{t} + 1 
 \] 
-Which can have a minimum size of two - the original author and at least one retweeter.
+which can have a minimum size of one - the original author - in cases where there are no retweets of $t$.
  
-If $ r_1,...,r_n $ are the members of $\rt{t}$ then the raw audience size of the group can be calculated thus (assuming $\rc{t} \geq 1$);
-\[
-	\textrm{audience}(
-\rg{t}) = \foc{\aut{t}{O}} + \sum\limits_{i=1}^{\rc{t}} \textrm{deg}^+(r_i.\textrm{author}_O)
-\]
-
-However, properties of Twitter's social structure dictate that this raw audience size is not an accurate calculation in most cases, as is discussed later in this chapter.
-
 
 \subsection{Retweet Trees}
-As a Tweet gains in popularity and attracts more and more retweets to be created from it, and since its retweets themselves can \textit{also} be retweeted, then this ultimately results in the generation of a retweet \textit{tree}, which represents the retweet group of a particular Tweet. This tree is formed from the users who have retweeted the Tweet (or a retweet of the Tweet), and represents the original Tweeter and the various pathways taken by the Tweet as it is retweeted through the social graph. The tree is not a representation of the actual social ties between the tree's nodes, as users are able to retweet Tweets and retweets sent from others that they do not follow. However, as is mentioned later in this chapter, most retweeting does generally occur between directly-linked users. \cite{kwak10} also uses retweet trees to assist in illustrating information dissemination in Twitter, particularly in observing the Twitter reactions to the 2009 Air France airline crash.
+As a Tweet gains in popularity and attracts more and more retweets to be created from it, and since its retweets themselves can \textit{also} be retweeted, then this ultimately results in the generation of a retweet \textit{tree}, which represents the retweet group of a particular Tweet. This tree is represented by the original Tweet and the various propagation pathways it takes as it is retweeted through the social graph. 
 
-The root of the tree representing every $\rg{t} \forall t \in T$ is $\aut{t}{O}$ and, if $t$ has been retweeted, each of the other nodes are $$r_1.\textrm{author}_R, ... , r_n.\textrm{author}_R \: \forall \: 1 \leq n \leq \rc{t} $$ 
-A similar illustrative device is used by \cite{galuba10} in describing URL cascades in Twitter.
+The tree is not a representation of the actual social ties between the authors of the tree's nodes, as users are able to retweet Tweets and retweets sent from others that they do not follow. However, as is mentioned later in this chapter, most retweeting does generally occur between directly-linked users. \cite{kwak10} also uses retweet trees to assist in illustrating information dissemination in Twitter, particularly in observing the Twitter reactions to the 2009 Air France airline crash.
+
+The root of the tree representing every $\rg{t} \forall t \in T$ is $t$ and, if $t$ has been retweeted, each of the other nodes are made up of the set of retweets in $\rt{t}$. Each non-root member of the tree refers to its parent through its own `$\textrm{prev}$' attribute, as illustrated in Figure \ref{fig:retweet_tree}. Retweet trees are useful for this purpose as they help demonstrate the temporal nature in terms of the order in which the retweets occur and the chains they produce. A similar illustrative device is used by \cite{galuba10} in describing URL cascades in Twitter.
 
 \begin{figure}[h]
 \centering
-\includegraphics[scale=0.5]{3.Chapter1/Media/tree.png} 
-\caption{A hypothetical retweet pathway tree}
+\includegraphics[scale=0.6]{3.Chapter1/Media/tree.png} 
+\caption{A hypothetical retweet pathway tree.}
 \label{fig:retweet_tree}
 \end{figure}
 
-Although these retweet pathways can technically be acyclic through the use of the manual retweet method, the case of a user retweeting a Tweet more than once is very rare and a user retweeting a retweet that they are already part of the upstream chain of is even less likely to occur. The retweet button method simply does not support users retweeting a Tweet more than once. As such, retweet trees are used in preference over retweet \textit{graphs} as they help illustrate the temporal nature in terms of the order in which the retweets occur and the chains they produce.
+In very rare cases, more than one node in a retweet tree may share an author user. This only occurs when a particular user retweets a Tweet more than once, and would only generally happen in scenarios where the user is using the manual method to modify the content as part of a conversation with others or for expressing multiple opinions. For example, a user may receive a Tweet relating to a particular news story, and then decide to retweet it with a small annotation. Upon feedback from followers, the user then retweets the Tweet again, yet with a different annotation. Each of these new retweets could then become the root of two branches in the complete tree of the Tweet.
+
+Retweeting the same Tweet multiple times is not supported through the button method. Once a Tweet has been retweeted by a user in this way, all members of its retweet group are displayed equally to the user and there is no provision for the functionality to retweet a different member of the same group or, indeed, the original Tweet. A retweet can be `un-done' by clicking the button again on any member of the retweet group.
 
 
 \subsection{Path-Length}
 In addition to retweet groups having a size property, a retweet groups's branch's \textit{path-length} refers to the length of a particular retweet chain. 
 
 \begin{mydefinition}
-The \textbf{path-length} of a single retweet chain in a retweet group is defined as the number of times a Tweet, $t$, is retweeted down the chain from $\aut{t}{O}$ to $\aut{r}{R}$, where $r \in \rt{t}$ and where $r$ is the leaf node of the branch of the retweet tree representing this chain.\\
-The \textbf{maximum path-length} of a retweet group is the largest path-length observed in the retweet group.
+The \textbf{path-length} of a single retweet chain in a retweet group is defined as the number of hops between a Tweet, $t$, and the retweet represented by the leaf node of the chain's branch in $\rg{t}$'s tree.\\
+The \textbf{maximum path-length} of a retweet group is the greatest path-length observed in the retweet group.
 \end{mydefinition}
 
-Figure \ref{fig:retweet_tree} represents the users in the retweet group of a hypothetical Tweet. This retweet group has a size of 11 and has 7 distinct retweet chains, the longest of which is the one traversing users 1, 3, 6 and 11. The \textit{maximum} path-length of this retweet group is therefore 3, as the leaf node of this branch is three hops away from the original author at the root.
+Figure \ref{fig:retweet_tree} represents the users in the retweet group of a hypothetical Tweet. This retweet group has a size of 8 and has 3 distinct retweet chains, the longest of which are the two involving [$t, r_1, r_3, r_6$] and [$t, r_2, r_4, r_7$]. The \textit{maximum} path-length of this retweet group is therefore 3, as the leaf node of both of these branches is three hops away from the original author at the root.
+
+Although the tree does not illustrate the edges between users on the social graph, is is possible for the underlying graph to connect the authors of the tree in various ways. For example, it is likely that user 3 follows user 1, but it's also possible that user 3 follows user 2. More on this topic is discussed in the audience analysis in Section \ref{section:audience} and in the social graph analyses in Section  \ref{section:retweets_graph}.
 
 As has been mentioned previously, when a user retweets a Tweet or retweet through the manual approach, it involves pre-pending the current state of the Tweet with the text \texttt{RT @<username>:}. Therefore, a Tweet with the content;\newline
 \texttt{RT @user2: RT @user1: This is the body of the Tweet}\newline
 was originally authored by \texttt{user1}, then retweeted by \texttt{user2}, and then finally retweeted by the author of this current retweet (a Tweet or retweet's author's username is not credited in the body of the text in this way).
 
-It should be noted that this phenomenon can only be observed through retweets by the manual approach, since the button method always simply credits the original author, and not any of the internal members of the retweet group.
-
-Although most retweets today are carried out using the button method, the manual approach still remained popular at the time the research in this chapter was carried out. This allowed for making useful observations of retweet patterns that could not be as successful later on.
+It should be noted that this phenomenon can only be observed through retweets by the manual approach, since the button method always simply credits the original author, and not any of the internal members of the retweet group. Although a significant number of retweets today are carried out using the button method, the manual approach still remains popular currently and even more so at the time the research in this chapter was carried out in the spring of 2011. This allowed for making useful observations of retweet patterns that could not be as successful later on.
 
 
-\section{More on Information Retrieval}
+\section{Information Searching and Affective Stimulation}
 A Twitter user electing to follow another user cannot, in most cases, predict precisely what the new friend will Tweet about in the future. The user has some \textit{expectation} of the type of information they are likely to receive based on the previous Tweets of the new friend, which is generally the main cue the user can use to base the follow decision on.
 
 Part of the follow decision is based on the notion of relevance judgement, which is an idea discussed at more length by \cite{xu07} and is partly made up of the goal of achieving \textit{affective stimulation} through \textit{hedonic} searching as opposed to the use of \textit{epistemic} searching.
@@ -113,6 +136,7 @@ An epistemic information search is one that involves carrying out a search with 
 An example of this type of search is a `crawl' through Wikipedia, in which a searcher may start at one particular page of interest and then follow links within that page to other related pages of interest that stem away from the source topic. In this case, the search `parameter' is simply the name or title of the article the searcher wants to view. As mentioned previously, a followship between users is effectively a search parameter in Twitter, since the following user has elected to follow the new friend to receive information from him/her. It is clear that this type of `searching' cannot be epistemic as the following user cannot know exactly the \textit{type} of information they are going to receive.
 
 \subsection{Hedonic Search and Affective Stimulation}
+\label{section:affective_stimulation}
 Hedonic searching is similar to epistemic searching in that it is also not carried out with the aim to solve an immediate problem, but is different in that it is done to search for fun or `affective stimulation' \cite{xu07}.
 
 A person can be said to be affectively stimulated if they view a piece of information that has some effect on the person, such as something that conveys emotion, something that is of particular interest to the person, or something that is capable of provoking some further thought.
@@ -141,12 +165,11 @@ To assist in providing a further grounding in this area of research, a series of
 
 
 \subsection{Data Collection Methodology}
-The analyses involve the examination of Tweets extracted from Twitter. Twitter's REST API v1 was used between 26\textsuperscript{th} January and 24\textsuperscript{th} May to collect around 26,000 Tweets, which represent a total of around 4,400 retweet groups. The complete set is made up of three subsets, the use of each individually is described later.\\
-The relatively limited size of the dataset is acknowledged, yet it should be emphasised that these analyses are simply exploratory and are not used to answer or solve any specific problem.
+The analyses involve the examination of Tweets extracted from Twitter's REST API v1, which was used between 26\textsuperscript{th} January and 24\textsuperscript{th} May 2011 to collect Tweets and retweets from the public timeline.
 
 The data collection involved a mixture of using Twitter's timelines and its search capabilities. Version 1 of the REST API supported retrieval of Tweets, 20 at a time, from the Twitter \textit{public} timeline. Historically, this timeline contained the 20 most recent Tweets published by all the authors that have non-protected Twitter accounts, and it used to be visible on their website's homepage\footnote{http://twitter.com} to non-logged-in users.
 
-In particular, the public timeline endpoint was queried periodically to retrieve the current set of the most recent public Tweets. From all of the retrieved Tweets, the Tweets that were retweets were filtered out and stored. Retweets, as mentioned earlier, are distinguishable since they start with the characters `RT' followed by a username. It should be noted that when retrieving Tweets from Twitter's APIs that even retweets that were created using the button method begin with the same character sequence, allowing detection of these also.
+In particular, for the data-collection periods, the public timeline endpoint was queried every ten seconds to retrieve the current set of the most recent public Tweets. Millions of Tweets are posted each hour, and ten seconds was a granular-enough frequency to ensure that there was no duplication in the data returned. From all of the retrieved Tweets, the ones that were retweets were filtered out and stored. Retweets, as mentioned earlier, are distinguishable since they start with the characters `RT' followed by a username. It should be noted that when retrieving Tweets from Twitter's API that even retweets that were created using the button method begin with the same character sequence, allowing detection of these also.
 
 Following storage, the content of the retweets were parsed in order to extract the text that the original Tweet contained. Sometimes, retweets using the manual approach are used to provide additional annotation to the Tweet. Although this can often be distinguished by the fact that the original Tweet content is inside quotation marks (`` ''), it is not true in all cases, meaning that sometimes the original text could not be reliably extracted programmatically by a machine. In these cases additional queries were made to Twitter's search API in an attempt to resolve the problem, yet, failing that, the retweet was discarded.
 
@@ -154,25 +177,30 @@ Once the original text had been successfully extracted, this was used along with
 
 Once the API search was complete (in some cases, with Tweets achieving many retweets, many API calls were required in order to page through results), the original Tweet could easily be identified as the only one of the set \textit{not} starting with the sequence ``RT''. This provided a retweet group comprising the original Tweet and all available retweets of this Tweet.
 
-On some occasions, more than one Tweet were each identified as the original Tweet and so the entire set was discarded. This could occur, for example, if many users may Tweet exactly the same text if it comes external sources, such as a news webpage, and means that the entire set of retrieved Tweets are not likely to be part of the same retweet group.
-In cases where no results were returned, the retweet was discarded and assumed an orphan retweet (perhaps as a result of a retweet of a Tweet posted by a protected Twitter account). And in cases where no original Tweet could be identified, it was sometimes possible to calculate it through cross-matching against other retweets in the retrieved retweet group, but if not they, too, were discarded.
+On some occasions, more than one Tweet were each identified as the original Tweet and so no data was stored for this group. This could occur, for example, if many users may Tweet exactly the same text if it comes external sources, such as a news webpage, and means that the entire set of retrieved Tweets are not likely to be part of the same retweet group. In cases where no results were returned, the retweet was not stored and was assumed to be an orphan retweet (perhaps as a result of a retweet of a Tweet posted by a protected Twitter account). Where no original Tweet could be identified it was sometimes possible to calculate it through cross-matching against other retweets in the retrieved retweet group, but were discarded if unsuccessful.
 
-The retweet groups were finally stored along with relevant metadata in order to carry out the studies described in the following sections.
+The retweet groups were finally stored along with relevant metadata in order to carry out the studies described in the following sections. The data consisted of a set of around 4,400 retweet groups, which comprised of 26,000 Tweets and retweets. The relatively limited size of the dataset is acknowledged, yet it should be emphasised that these analyses are simply exploratory and are not used to answer or solve any specific problem.
 
 
 \subsection{Exploring Retweet Group Path-Lengths}
-The path-lengths of each chain in a retweet group can be calculated by identifying the users involved in retweet activity down that chain; from the original author to the final retweeter. The \textit{maximum} path-length of a particular retweet group is the longest path-length observed in the group.
+The path-lengths of each chain in a retweet group can be calculated by identifying the members involved in retweet activity down that chain; from the original Tweet to the final retweet. The \textit{maximum} path-length of a particular retweet group is the longest path-length observed in the group.
 
 Identification of path-lengths can be carried out through parsing the text of a retweet, and following the citations. Although it cannot be guaranteed that all users will be properly cited in a chain, and there is no realistic method to verify this, it is felt that correct citations will be made enough times to make these cases relatively insignificant.
 
-On average, the maximum path-length observed across the retweet groups was around 1.8, with the vast majority of retweet chains being between one and two edges in length. When one considers that many retweets are made through the button method, which removes citations of internal users in the chain and simply credits the original author and would therefore produce many single-length retweet chains, this average could theoretically be an underestimate. \cite{kwak10}'s similar obsevations in the area also indicate a large number of groups with maximum path-lengths of one and two.
+On average, the maximum path-length observed across the retweet groups was around 1.8, with the vast majority of retweet chains being between one and two edges in length. When one considers that many retweets are made through the button method, which removes citations of internal users in the chain and simply credits the original author and would therefore produce many single-length retweet chains, this average will theoretically be an underestimate. \cite{kwak10}'s similar obsevations in the area also indicate a large number of groups with maximum path-lengths of one and two.
 
 The longest observed maximum path-length was nine, which is a huge depth of penetration through the social structure since the total number of users involved in propagating the Tweet was ten. This, combined with the knowledge that social networks can represent a `closer' social graph than the real world's six degrees of separation (see Introduction), shows how retweeting can have a huge impact in information spread amongst millions of people worldwide very quickly.
+
+\begin{myobservation}
+\label{observation:path-length}
+The mean maximum path-length observed across the retweet groups analysed was around 1.8.\\
+The longest maximum path-length observed was 9.
+\end{myobservation}
 
 \begin{figure}[h]
 \centering
     \begin{tikzpicture}
-     \begin{loglogaxis}[
+     \begin{axis}[
             xlabel=Maximum path-length of $\rg{t}$,
             ylabel=Frequency of occurrence,
             grid = major,
@@ -184,13 +212,13 @@ The longest observed maximum path-length was nine, which is a huge depth of pene
             (1,2437) (2, 1049) (3, 461) (4, 191) (5,96) (6,65) (7,30) (8,7) (9,1)
             };
             % Data from pathlength-distribution.csv
-    \end{loglogaxis}
+    \end{axis}
     \end{tikzpicture}
-    \caption{Log/log distribution of maximum path-lengths observed in $\rg{t} \forall t \in T`$, where $T`$ is the set of Tweets analysed}
+    \caption{Distribution of maximum path-lengths observed in $\rg{t} \forall t \in T'$, where $T'$ is the set of Tweets analysed}
     \label{fig:pathlength-distribution}
 \end{figure}
 
-Also of interest is the relationship in terms of the social ties between different the different user members of a retweet group. In cases where a retweet group's maximum path-length is precisely one, i.e. the situation where a user (or set of) has retweeted a particular Tweet only once, the retweeters at the leaves of this group's retweet tree follow the original author around 90\% of the time.
+Also of interest is the relationship in terms of the social ties between the different user members of a retweet group's Tweets. In cases where a retweet group's maximum path-length is precisely one, i.e. the situation where a user (or set of) has retweeted a particular Tweet only once, the retweeters at the leaves of this group's retweet tree follow the original author around 90\% of the time.
 
 This implies, therefore, that in the remaining 10\% of cases, a retweeter has retweeted a Tweet from outside of their home timeline and has instead seen a Tweet whilst browsing through another user, who isn't a friend, timeline that the retweeter regards as sufficiently interesting. This helps to demonstrate that the more followers a particular user has, the greater the chance that another user somewhere has of viewing the user's Tweets and then having the opportunity to retweet them. The fact that 90\% of retweets of a particular user are created by direct followers reinforces this further.
 
@@ -272,12 +300,12 @@ The distribution of $|\rg{t}|$ across all of the original Tweets $t \in T$ colle
 
 The mean group size from this dataset was found to be just below six, and the largest size was 284. The smallest $|\rg{t}|$ were the cases in which $\rc{t} = 1$, and which were significantly the most common occurrences.
 
-Of interest also is the relationship between a group's size and its maximum path-length. Generally, the maximum path-length of a group, $\rg{t}$, increases with $|\rg{t}|$, indicating a mostly uniform growth in the retweet trees representing these groups - as might be expected. Thus this illustrates that as the retweet count of $t$ increases, then the longer the retweet chains in $\rg{t}$ are likely become. This would increase its penetrative dissemination away from the source and further facilitate its spread between communities, increasing its potential \textit{audience size}.
+Of interest also is the relationship between a group's size and its maximum path-length. Generally, the maximum path-length of a group, $\rg{t}$, increases with $|\rg{t}|$, indicating a mostly uniform growth in the retweet trees representing these groups - as might be expected. Figure \ref{fig:totalretweets-pathlength} demonstrates this trend, which this illustrates that as the retweet count of $t$ increases, then the longer the retweet chains in $\rg{t}$ are likely become. This would increase its penetrative dissemination away from the source and further facilitate its spread between communities, increasing its potential \textit{audience size}.
 
 \begin{figure}[h]
 \centering
     \begin{tikzpicture}
-    \begin{loglogaxis}[
+    \begin{axis}[
             ylabel=Mean $|\rg{t}|$,
             xlabel=Maximum path-length of $\rg{t}$,
             grid=major,
@@ -286,28 +314,47 @@ Of interest also is the relationship between a group's size and its maximum path
        \addplot[mark=+,only marks,blue] plot coordinates{
             (1,2) (2,6) (3,11) (4,12) (5,16) (6, 16) (7,29) (8,19) (9,78)    
         };    
-    \end{loglogaxis}
+    \end{axis}
     \end{tikzpicture}
-    \caption{Log/log relationship between the maximum path-length and size of a retweet group}
+    \caption{Relationship between the maximum path-length and size of a retweet group. The greatest path-length was included for context, but had a sample size of only one.}
 \label{fig:totalretweets-pathlength}
 \end{figure}
 
 \subsection{A Tweet's Audience - How Many Users Can be Reached?}
-$\rg{t}$'s (immediate) audience size refers to the number of Twitter users that have received $t$, either in its original form or as a retweet, $r$, such that $r.\textrm{orig} = t$, onto their home timelines. The term `immediate' is used to signify the distinction between those users who passively receive the Tweet, due to following the original author or a retweeter, and those who see the Tweet whilst actively browsing through other user timelines or the public timeline.
+\label{section:audience}
+$\rg{t}$'s (immediate) audience size refers to the number of Twitter users that have received $t$, either in its original form or as a retweet, $r$, such that $r.\textrm{orig} = t$. Users in the audience are not guaranteed to have read the Tweets, but they are the users who will see the Tweet on their home timelines.
 
-Users in the latter group are therefore not direct followers of $\aut{t}{O}$ or $\aut{r}{R} \forall r \in \rt{t}$ and thus cannot be tracked as members of $t$'s audience, which, as discussed earlier, can have its size calculated through the summation of the followers of the original author and each retweeter of $t$.
+The term `immediate' is used to signify the distinction between those users who passively receive the Tweet, due to following the original author or a retweeter, and those who see the Tweet whilst actively browsing through other user timelines or the public timeline. Users in the latter group are therefore not direct followers of $\aut{t}{O}$ or $\aut{r}{R} \forall r \in \rt{t}$ and thus cannot be tracked as members of $t$'s audience.
 
-However, this audience calculation is na{\"i}ve in that, particularly in the case of more tightly-knit communities, users who are authors of $t$ or $r \in \rt{t}$ are likely to share a subset of each of their followers. The more dense the communities, the more followers are likely to be shared between the authors in $\rg{t}$ and, as such, the aforementioned audience size calculation is likely to be an overestimate in nearly all cases. The following analyses of retweet group audience sizes relies on a dataset which began collecting at a later date than the general set used in this chapter, and thus the data represented in the rest of this section contains 2860 of the total 4400 groups originally collected. The longest maximum path-length of retweet groups observed in this subset was eight.
-
-The \textit{overhead} of a group, $\rg{t}$, which attempts to address this problem, is related to the redundency in the audience and thus represents the number of cases in which a user receives a retweet that they have already previously received the original Tweet or retweet thereof - i.e. the number of times users receive a Tweet they've already seen. The overhead also takes into account users who might receive versions of the same Tweet many times.
-
-This overhead was found to exist in 71\% of all observed retweet groups, further reinforcing that retweets often occur within communities containing users sharing links with other users. The \textit{proportionate} overhead is the ratio of the overhead to the \textit{distinct} audience size, which is the \textit{absolute} number of users who have recieved the Tweet (or a retweet of) at least once to their home timeline. It should be noted that the audience size does not signify the number of users who have \textit{read} the Tweet - rather the number of users who have the \textit{opportunity} to read it.
-
-Effectively, therefore the distinct audience size of a Tweet can be found by modifying the earlier calculation:
+Let $ r_1,...,r_n $ be the members of $\rt{t}$. The users representing the audience of the group can then be denoted by (assuming $\rc{t} \geq 1$);
 \[
-	\textrm{distinct audience}(\rg{t}) = \foc{\aut{t}{O}} + \sum\limits_{i=1}^{\rc{t}} \textrm{deg}^+(r_i.\textrm{author}_O) - \textrm{overhead}(\rg{t})
+	\raa{\rg{t}} = [\left\{\fos{\aut{t}{O}}\right\} + \left\{\fos{\aut{t}{r^1}}\right\} + ... + \left\{\fos{\aut{t}{r^n}}\right\}] 
+%	\ima{\rg{t}} = \fos{\aut{t}{O}} + \sum\limits_{i=1}^{\rc{t}} \frs{\aut{r_i}{R}}
 \]
-Where the overhead of the group is simply the magnitude of shared followers of all authors in the group.
+where $\aut{t}{r^1} ... \aut{t}{r^n}$ are the users who retweeted $t$.
+
+Despite this, properties of Twitter's social graph dictates that this audience definition is na{\"i}ve in that, particularly in the case of more tightly-knit communities, users who are authors of $t$ or $r \in \rt{t}$ are likely to share a subset of each of their followers. The more dense the communities, the more followers are likely to be shared between the authors in $\rg{t}$ and, as such, the aforementioned audience calculation is likely to be an overestimate in nearly all cases. As such, $\raa{\rg{t}}$ is a list and not a formal \textit{set} of users, since it is likely to have some non-distinct members.
+
+The following analyses of retweet group audience sizes relies on a dataset which began collecting at a later date than the general set used in this chapter, and thus the data represented in the rest of this section contains 2860 of the total 4400 groups originally collected. The longest maximum path-length of retweet groups observed in this subset was eight.
+
+The \textit{overhead} of a group, $\rg{t}$, which attempts to address this problem, is related to the level of redundancy of received information by the audience.
+
+\begin{mydefinition}
+    The $\rg{t}$'s \textbf{overhead} is a value equal to the number of users in $\raa{\rg{t}}$ that receive $t$ or any $r \in \rt{t}$ more than once and, if received more than once, the number of times $t$ is received by each user.
+\end{mydefinition}
+
+The audience overhead was found to exist (be greater than 0) in 71\% of all observed retweet groups, further reinforcing that retweets often occur within communities containing users sharing many edges.
+
+Therefore, the actual audience of a Tweet is given by the \textit{set} of users that can be found by modifying the existing definition to take the overhead into account;
+\[
+	\dia{\rg{t}} = \left\{\fos{\aut{t}{O}}\right\} \cup \left\{\fos{\aut{t}{r^1}}\right\} \cup ... \cup \left\{\fos{\aut{t}{r^n}}\right\}
+	%|\dia{\rg{t}}| = \left\{\foc{\aut{t}{O}}\right\} \cup \sum\limits_{i=1}^{\rc{t}} \frc{\aut{r_i}{R}} - \textrm{overhead}(\rg{t})
+\]
+where $\aut{t}{r^1} ... \aut{t}{r^n}$ are the users who retweeted $t$. This definition (`distinct') of audience is used in preference over the previous (`raw') definition for the remainder of the thesis.
+
+ The \textit{proportionate} overhead is defined as the ratio of the overhead to the audience size, and is sometimes more useful for analysing the size of the overhead compared to the popularity of the original Tweet.
+
+For example, a Tweet $t$ has been received onto the home timelines of 800 users as a result of a single retweet by user $r_1$. 400 of those users received the Tweet twice due to the presence of shared followers between $\aut{t}{O}$ and $\aut{r_1}{R}$. In this case, the overhead is 400, the proportionate overhead is 0.5, the old method for calculating the audience gives a size of 1200, and the new method gives a size of 800.
 
 \begin{figure}[h]
 \begin{subfigure}{.5\textwidth}
@@ -323,7 +370,7 @@ Where the overhead of the group is simply the magnitude of shared followers of a
         };    % audienceDISTINCT_pathlength.csv
     \end{axis}
     \end{tikzpicture}
-    \caption{Varying $\rg{t}$'s \textit{distinct} audience size with its longest path-length}
+    \caption{Varying $\rg{t}$'s \textit{distinct} audience size with its longest path-length.}
     \label{fig:pathlength-audience}
 \end{subfigure}
 \quad
@@ -340,15 +387,22 @@ Where the overhead of the group is simply the magnitude of shared followers of a
         };    % audienceDISTINCT_pathlength.csv
     \end{semilogyaxis}
     \end{tikzpicture}
-    \caption{Varying $\rg{t}$'s \textit{immediate} audience size with its longest path-length}
-    \label{fig:pathlength-immediateaudience}
+    \caption{Varying $\rg{t}$'s \textit{raw} audience size with its longest path-length.}
+    \label{fig:pathlength-rawaudience}
 \end{subfigure}
-\caption{Comparison of the relationships between $\rg{t}$'s distinct and immediate audience size and its maximum path-length $\forall t \in T`$, where $T`$ is the set of analysed Tweets}
+\caption{Comparison of the relationships between a $\rg{t}$'s distinct and raw audience size and its maximum path-length $\forall t \in T'$, where $T'$ is the set of analysed Tweets}
 \end{figure}
 
-Figure \ref{fig:pathlength-audience} illustrates, initially, that which might be expected; that the distinct audience size of a Tweet, $t$, is mostly proportional to the maximum path length of $\rg{t}$. However, as the maximum path-length of retweet groups exceeds 5, then a \textit{decline} in the distinct audience size is observed. This particular behaviour has an unclear cause, but it is felt that this could be to do with a saturation in the proportionate overhead's ratio at this stage - in particular, that retweet groups attracting many retweets are circulated more within communities than outside and between communuties. At this stage, the overhead becomes so large, causing this reduction in audience size. This is significant in that the distribution of the non-distict over the increasing path-lengths demonstrates, mostly, a continuous positive correlation.
+Figure \ref{fig:pathlength-audience} illustrates, initially, that which might be expected; that the distinct audience size of a Tweet, $t$, is mostly proportional to the maximum path length of $\rg{t}$. However, as the maximum path-length of retweet groups exceeds 5, then a \textit{decline} in the distinct audience size is observed. This particular behaviour has an unclear cause, but it is felt that this could be to do with a saturation in the proportionate overhead's ratio at this stage - in particular, that retweet groups attracting many retweets are circulated more within communities than outside and between communuties. At this stage, the overhead becomes so large, causing this reduction in audience size. This is significant in that the distribution of the non-distict over the increasing path-lengths demonstrates, mostly, a continuous positive correlation (Figure \ref{fig:pathlength-rawaudience}).
 
-Three of the largest five overheads in the set occur in retweet groups which have a maximum path-length of one. The \textit{largest} overhead was of a size over six times greater than the group's distinct audience size itself, indicating a massive overlap between the followers of the author of the original Tweet and the authors of its retweets. Whilst the audience overhead was only found to be greater than the distinct audience size in around 3\% of observed retweet groups, it is still clear that the potential for overlap in the followers of retweet group members can be very large in more closely-knit communities - i.e. those groups whose representative trees are wide and shallow. Groups having trees with longer path-lengths typically have a proportinately lower overhead, and the chance of achieving zero overhead increases as the retweet group size decreases.
+ 
+
+The \textit{largest} overhead was of a size over six times greater than the group's distinct audience size itself, indicating a massive overlap between the followers of the author of the original Tweet and the authors of its retweets. Whilst the audience overhead was only found to be greater than the distinct audience size in around 3\% of observed retweet groups, it is still clear that the potential for overlap in the followers of retweet group members can be very large in more closely-knit communities Figures \ref{fig:pathlength-largestoverhead} and \ref{fig:pathlength-largestproportionateoverhead} show that the largest overheads observed diminishes in groups with greater maximum path-lengths, which helps illustrate this concept.
+
+Inversely, Figures \ref{fig:pathlength-meanoverhead} and \ref{fig:pathlength-meanproportionateoverhead} respectively show that the \textit{mean} overhead and mean proportionate overhead increase in retweet groups with greater maximum path-lengths. It is assumed that with larger retweet groups there is a greater chance for overlap between the followers of the authors of the members due to there being a greater audience size. Since it is known that increases in the sizes of groups can be indicated by increases in the groups' maximum path-lengths, then this suggests that, on average, the overhead should increase with maximum path-length. 
+
+The diminishing behaviour observed in the other two previously-discussed subplots suggest that these groups with smaller maximum path-lengths exhibiting greater overheads are those that do not fit the trends across retweet group size and maximum path-length observed earlier in this chapter. As such, it is likely that these groups are actually large, with representative trees that are shallow and very \textit{wide}. This illustrates that the Tweets have not propagated far from the original author, yet have circulated thoroughly through a local community. Indeed, three of the largest five overheads in the set of analysed Tweets occur in retweet groups which have a maximum path-length of one. 
+
 
 \begin{figure}[h]
 \begin{subfigure}{.5\textwidth}
@@ -377,7 +431,7 @@ Three of the largest five overheads in the set occur in retweet groups which hav
         };
     \end{axis}
     \end{tikzpicture}
-    \caption{Varying mean overhead with maximum path-length}
+    \caption{Varying mean overhead with maximum path-length.}
     \label{fig:pathlength-meanoverhead}
 \end{subfigure}
 \quad
@@ -395,7 +449,7 @@ Three of the largest five overheads in the set occur in retweet groups which hav
         };    % largestoverhead-pathlength.csv
     \end{axis}
     \end{tikzpicture}
-    \caption{Varying \textit{largest} observed overhead with maximum path-length}
+    \caption{Varying \textit{largest} observed overhead with maximum path-length.}
     \label{fig:pathlength-largestoverhead}
 \end{subfigure}
 
@@ -425,7 +479,7 @@ Three of the largest five overheads in the set occur in retweet groups which hav
         };
     \end{axis}
     \end{tikzpicture}
-    \caption{Varying mean overhead \textit{proportion} with maximum path-length}
+    \caption{Varying mean overhead \textit{proportion} with maximum path-length.}
     \label{fig:pathlength-meanproportionateoverhead}
 \end{subfigure}
 \quad
@@ -443,20 +497,20 @@ Three of the largest five overheads in the set occur in retweet groups which hav
         };    % largestoverheadproportion-pathlength.csv
     \end{axis}
     \end{tikzpicture}
-    \caption{Varying \textit{largest} observed overhead \textit{proportion} with maximum path-length}
+    \caption{Varying \textit{largest} observed overhead \textit{proportion} with maximum path-length.}
     \label{fig:pathlength-largestproportionateoverhead}
 \end{subfigure}
-\caption{Relationships between $\rg{t}$'s audience overhead properties and its maximum path-length $\forall t \in T`$, where $T`$ is the set of analysed Tweets}
+\caption{Relationships between $\rg{t}$'s audience overhead properties and its maximum path-length $\forall t \in T'$, where $T'$ is the set of analysed Tweets}
 \end{figure}
 
-The power of the retweet phenomeon in terms of how it affects the potential audience reach of a particular Tweet is discussed in further detail by the authors of \cite{kwak10}, in which they find that a retweeted Tweet of sufficient interest can reach a very large number of users even if the original author has only a few followers. The same paper more specifically mentions that the audience size of a retweeted Tweet reaches, on average, at least 1,000 users, no matter the number of followers of the original author.\\
-This is also clear in the results in this thesis, in that even Tweets with a short maximum path-length can still have a relatively large audience size.
+The power of the retweet phenomeon in terms of how it affects the potential audience reach of a particular Tweet is discussed in further detail by the authors of \cite{kwak10}, in which they find that a retweeted Tweet of sufficient interest can reach a very large number of users even if the original author has only a few followers. The same paper more specifically mentions that the audience size of a retweeted Tweet reaches, on average, at least 1,000 users, no matter the number of followers of the original author. This result agrees with the results in Figure \ref{fig:pathlength-audience} in that even Tweets with a short maximum path-length still, on average, have a relatively large audience size.
 
 
 \subsection{Retweet Groups on the Social Graph}
+\label{section:retweets_graph}
 Now that an understanding has been achieved in the behaviours and properties of retweets and retweet groups, it is important that the social ties between users in groups is studied. This will provide a grounding for the research in the following chapter, in which the social structure and its role in facilitating propagation, are discussed in more detail.
 
-It has already been mentioned that the probability of a retweeting author following the original author in single-length retweet chains was found to be around 90\%. However, in retweet groups with longer chains, a decrease in the likelihood of the final retweeter (the user at the bottom of the retweet tree) following the original author was observed. Indeed, on average across all retweet groups, the final retweeter follows the \textit{previous} retweeter in a particular retweet chain in around 67\% of cases. The final retweeter is defined as the author of the chronologically final retweet in the group, and is not necessarily the user at the leaf node of the group's longest retweet chain.
+It has already been mentioned that the probability of a retweeting author following the original author in unit-length retweet chains was found to be around 90\%. However, in retweet groups with longer chains, a decrease in the likelihood of the final retweeter (the user at the bottom of the retweet tree) following the original author was observed. Indeed, on average across all retweet groups, the final retweeter follows the \textit{previous} retweeter in a particular retweet chain in around 67\% of cases. The final retweeter is defined as the author of the chronologically final retweet in the group, and is not necessarily the user at the leaf node of the group's longest retweet chain.
 
 %\begin{figure}[h]
 %\centering
@@ -465,11 +519,27 @@ It has already been mentioned that the probability of a retweeting author follow
 %\label{fig:followingchance_pathlength}
 %\end{figure}
 
-It is interesting that this value should be about 20\% lower than in single-length maximum path-length groups, and it suggests that users have a greater chance of `stumbling over' retweets found on non-friends' timelines whilst browsing through other users. Since it has been shown that with an increase in maximum path-length an increase in the audience size is also observed, then this demonstrates the increased chance of discovery of the Tweet through users searching through others' profiles. In cases where the maximum path-length of $\rg{t}$ is equal to one, then the audience size is far smaller and thus there is a lower chance of users who aren't followers of $\aut{t}{O}$ or $\aut{r}{R} \forall r \in \rt{t}$ finding the Tweet.
+It is interesting that this value should be about 20\% lower than in unit-length maximum path-length groups, and it suggests that users have a greater chance of `stumbling over' retweets found on non-friends' timelines whilst browsing through other users. Since it has been shown that with an increase in maximum path-length an increase in the audience size is also observed, then this demonstrates the increased chance of discovery of the Tweet through users searching through others' profiles. In cases where the maximum path-length of $\rg{t}$ is equal to one, then the audience size is far smaller and thus there is a lower chance of users who aren't followers of $\aut{t}{O}$ or $\left\{\aut{r}{R} \forall r \in \rt{t}\right\}$ finding the Tweet.
 
-In addition, there is some evidence of user influence playing a role in the analyses of these data. In particular, in the 67\% of retweet groups in which the final retweeter \textit{does} follow the author of the retweet (or original Tweet) directly `upstream', the latter user has, on average, around 950 followers. Inversely, in the remaining 33\% of groups (in which the author of the final retweet does \textit{not} follow the preceding author), the preceding author has an average of 600 followers, thus implying a significant difference in the retweet potential with varying author influence levels.
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.7]{3.Chapter1/Media/final_following_upstream.png} 
+\caption{Effect of the final retweeter following the upstream user on the follower count of the upstream user}
+\label{fig:final_following_upstream}
+\end{figure}
 
-This is further accentuated when one studies the follower connections of $\aut{t}{O}$. Whilst it was found earlier that the likelihood of a $\aut{r}{R}$ following $\aut{t}{O}$ when the maximum path-length of $\rg{t}$ is greater than one is around 40\%, the average follower count of $\aut{t}{O}$ has a four-fold increase (from about 550 to 2,000) when he/she is also followed by the final retweeter. In fact, in groups of all maximum path-lengths, $\aut{t}{O}$ had a consistently higher follower count when followed also by the final retweeter of $\rg{t}$ than when not followed.
+In addition, there is some evidence of user influence playing a role in the analyses of these data. In particular, in the 67\% of retweet groups in which the final retweeter \textit{does} follow the author of the retweet (or original Tweet) directly `upstream', the latter user has, on average, around 950 followers. Inversely, in the remaining 33\% of groups (in which the author of the final retweet does \textit{not} follow the preceding author), the preceding author has an average of 600 followers. This is illustrated by an example in Figure \ref{fig:final_following_upstream} and it implies that there is a significant difference in the retweet potential with varying author influence levels.
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.7]{3.Chapter1/Media/final_following_original.png} 
+\caption{Effect of the final retweeter following the original author on the follower count of the original author}
+\label{fig:final_following_original}
+\end{figure}
+
+This is further accentuated when one studies the follower connections of $\aut{t}{O}$ in groups where the maximum path-length is greater than one. Whilst it was found earlier that the likelihood of a $\aut{r}{R}$ following $\aut{t}{O}$ is around 40\%, the average follower count of $\aut{t}{O}$ has a four-fold increase (from about 550 to 2,000) when he/she is also followed by the final retweeter. Figure \ref{fig:final_following_original} demonstrates an example of this in a retweet chain of two retweets; that when the author of $r_3$ follows the author of $t$, then $\foc{\aut{t}{O}}$ is significantly greater. 
+
+In fact, in groups of \textit{all} maximum path-lengths, $\aut{t}{O}$ had a consistently higher follower count when followed also by the final retweeter of $\rg{t}$ than when not followed.
 
 This particular behaviour also helps illustrate that a user is more likely to be retweeted when having more followers - in this case, having four times the follower count increases the correlation dramatically (40\% to 90\%). The follower count can, therefore, be directly related in this way to the discussions of user influence in \cite{cha10}, and also of users using retweeted Tweets to passively `advertise' themselves.
 
@@ -499,7 +569,7 @@ This particular behaviour also helps illustrate that a user is more likely to be
 %\label{fig:originalfollowers-pathlength}
 %\end{figure}
 
-Strangely, it was found that $\aut{t}{O}$'s follower count actually diminishes with increasing maximum path-length of $\rg{t}$, indicating further penetrative depth of propagation when the original author has \textit{fewer} followers. The collected retweet groups that contained longer retweet chains often also contained retweet chains that were much shorter. For example, a group containing chains with path-lengths of five, or more, are also likely to contain many more chains with path-lengths of one and two (as is implied in the distribution in Figure \ref{fig:pathlength-distribution}). There are, therefore, various possible explanations for this property, including the argument that users with many followers are generally likely to be part of a large community of users, from which retweets are not transmitted. Users that are part of several communities, and are therefore less involved with any given one, may find that their Tweets have the potential to be retweeted a further distance.
+Strangely, it was found that increases in maximum path-length of retweet groups caused the follower count of the original author to diminish, indicating further penetrative depth of propagation when the original author has \textit{fewer} followers. The collected retweet groups that contained longer retweet chains often also contained retweet chains that were much shorter. For example, a group containing chains with path-lengths of five, or more, are also likely to contain many more chains with path-lengths of one and two (as is implied in the distribution in Figure \ref{fig:pathlength-distribution}). There are, therefore, various possible explanations for this property, including the argument that users with many followers are generally likely to be part of a large community of users, from which retweets are not transmitted. Users that are part of several communities, and are therefore less involved with any given one, may find that their Tweets have the potential to be retweeted a further distance.
 
 Additionally, and more interestingly, it is possible that users possess some awareness of their local networks and the users within them. A user, who is part of a large community with lots of obvious follower overlaps occurring between the members, may decide \textit{not} to retweet a particular Tweet if he/she feels that many of their own followers may have already seen the Tweet due to them also having a high chance of following the original author.
 
@@ -542,24 +612,24 @@ This frequency did not vary with any consistent correlation upon changes to the 
 \subsection{The Temporal Properties of Retweets}
 The final set of analyses in this chapter relate to time's influence on retweet propagation. This provides insights into how quickly information can spread and, when combined with the knowledge of the social structure and audience, how this can relate to the rate of information dissemination and consumption.
 
-\begin{figure}[h]
-\centering
-    \begin{tikzpicture}
-    \begin{axis}[
-            ylabel=Time elapsement (secs.),
-            xlabel=Maximum path-length of $\rg{t}$,
-            grid=major,
-            xmin=1,
-            width=8cm]
-       \addplot[mark=+,blue] plot coordinates{
-            (1,21766) (2,33466) (3,53582) (4,80658) (5,41600) (6,31360) (7,23989) (8,63102) (9,133611) 
-        };    
-    \end{axis}
-    \end{tikzpicture}
-    \caption{Comparison between the average time elapsement from $t$ to the final $r \in 
-\rt{t}$ and the maximum path-length of $\rg{t} \forall t \in T`$, where $T`$ is the set of analysed Tweets}
-\label{fig:timedelay-pathlength}
-\end{figure}
+%\begin{figure}[h]
+%\centering
+%    \begin{tikzpicture}
+%    \begin{axis}[
+%            ylabel=Time elapsement (secs.),
+%            xlabel=Maximum path-length of $\rg{t}$,
+%            grid=major,
+%            xmin=1,
+%            width=8cm]
+%       \addplot[mark=+,blue] plot coordinates{
+%            (1,21766) (2,33466) (3,53582) (4,80658) (5,41600) (6,31360) (7,23989) (8,63102) (9,133611) 
+%        };    
+%    \end{axis}
+%    \end{tikzpicture}
+%    \caption{Comparison between the average time elapsement from $t$ to the final $r \in 
+%\rt{t}$ and the maximum path-length of $\rg{t} \forall t \in T'$, where $T'$ is the set of analysed Tweets}
+%\label{fig:timedelay-pathlength}
+%\end{figure}
 
 %\begin{figure}[h]
 %\centering
@@ -568,9 +638,11 @@ The final set of analyses in this chapter relate to time's influence on retweet 
 %\label{fig:timedelay-pathlength}
 %\end{figure}
 
-A general observation is that the elapsement of time between the original Tweet and the final retweet of retweet groups of varying maximum path-lengths increases with path-length, indicating that if there are more hops for a Tweet to travel down between users then it takes longer to do so. However, this correlation is only really applicable for shorter retweet chains and, particularly in cases where the maximum path-length is five and above, this pattern is not consistent. The groups with shorter maximum path-lengths more uniformly increase in temporal elapsement with increases in maximum path-length in a linear fashion roughly proportional to $ v=\frac{s}{t} $, where the distance, \textit{s}, is the hypothetical distance given by the number of hops between users, thus indicating that the speed, $v$, of propagation remains relatively constant. 
+Generally, it was found that the elapsement of time between the original Tweet and the final retweet in retweet groups increased with the groups' maximum path-lengths, indicating that if there are more hops for a Tweet to travel down between users then it takes longer to do so. However, this correlation is only really applicable to shorter retweet chains, which more uniformly increase in temporal elapsement with increases in maximum path-length in a linear fashion roughly proportional to $ v=\frac{s}{t} $, where the distance, \textit{s}, is the hypothetical distance given by the number of hops between users, thus indicating that the speed, $v$, of propagation remains relatively constant. 
 
-Despite this, there are conflicting arguments for patterns observed in retweet propagation speed, which rely on various different factors. As mentioned, the time taken for a Tweet to reach a specific path-length could be a function of the path-length itself, where as the path-length increases, then so does the time taken for the Tweet to be retweeted to the end of the chain. Inversely, Tweets that are especially popular, possibly as a result of being particularly topical (such as in the disaster cases mentioned in the Introduction), may be retweeted more quickly by users so that the information is spread more quickly. In these cases, retweet groups with longer retweet chains may complete their trees more quickly than those groups with much shallower retweet trees.
+Retweet groups exhibiting longer maximum path-lengths are less consistent in terms of the groups' propagation speeds. Whilst this is likely attributed to smaller samples, there are conflicting arguments for patterns observed in this propagation speed, which rely on various intervening factors. 
+
+As mentioned, the time taken for a Tweet to reach a specific path-length could be a function of the path-length itself, where as the path-length increases, then so does the time taken for the Tweet to be retweeted to the end of the chain. Inversely, Tweets that are especially popular, possibly as a result of being particularly topical (such as in the disaster cases mentioned in the Introduction), may be retweeted more quickly by users so that the information is spread more quickly. In these cases, retweet groups with longer retweet chains may complete their trees more quickly than those groups with much shallower retweet trees.
 
 Similarly, user influence could play a role in dissemination speed; if a Tweet is retweeted by a user with many followers, then there is an increased likelihood of propagation through this user. Whilst this could, in addition to the previous argument, cause longer retweet trees to be completed more quickly than groups with shorter trees, it could also facilitate `faster branches', in which particular long branches grow faster and reach their leaves more quickly than shorter ones in the same retweet tree if the other branches consist of less-influential author users.
 
@@ -578,7 +650,8 @@ There is not enough evidence provided in this analysis to make any inferences to
 
 The temporality of retweets has been the focus of some researchers, including the authors of \cite{kwak10}, who also used retweet trees as an illustration of the propagation pattern produced by Tweets. They found that, generally, half of all retweet action on a Tweet occurs \textit{within an hour} of the Tweet being posted, and that by the end of the first day, 75\% of all retweets of the Tweet will have been carried out. The authors also conducted an analysis on the elapsed time of a Tweet's travel between hops as it is retweeted. Although they observe a flatter time elapsement initially, indicating that Tweets travelling over the first few hops are retweeted almost concurrently, they also found there to be a general incline in time elapsement over the shorter path-lengths. After this point, as seen and discussed in the analysis earlier, the elapsement becomes more `noisy'. 
 
-An interesting notion that is not directly addressed in this thesis is that the time a particular Tweet is authored may have some effect on its propagation speed. Just as `prime-time' television achieves higher audience ratings as it is at a time of the day when many people are at home and relaxing, Twitter may also have a time window in which its users are more active. For example, if a user posts a Tweet at a time when many of his/her followers are asleep, then the immediate audience size of the Tweet can be significantly reduced.\\
+An interesting notion that is not directly addressed in this thesis is that the time a particular Tweet is authored may have some effect on its propagation speed. Just as `prime-time' television achieves higher audience ratings as it is at a time of the day when many people are at home and relaxing, Twitter may also have a time window in which its users are more active. For example, if a user posts a Tweet at a time when many of his/her followers are asleep, then the immediate audience size of the Tweet can be significantly reduced.
+
 If there are fewer initial users viewing the Tweet, then the likelihood of retweet, as a function of this, is also reduced. This could have an effect on the perceived popularity of the Tweet, although since, by definition, there are fewer active users on Twitter at this time, then the number of Tweets sent during this period will be much smaller. We therefore do not take this factor into account during our experimentation in later chapters.
 
 
