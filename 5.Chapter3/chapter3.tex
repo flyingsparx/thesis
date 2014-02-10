@@ -1,6 +1,6 @@
 \chapter{Development of the Interestingness Inference Methodology}
 
-Research in the previous chapter focussed on researching the effect of the social graph on retweet propagation characteristics. From this, a methodology, displaying a range of various shortcomings, emerged based on the models and simulations utilised in the graph analyses. In this chapter, the methodology is modified with the aim of improving its performance and increasing the range of use-cases it is appropriate for. Since the social structure was found to play an important role in propagation, many network and user features are taken into account throughout the improvements and investigation.
+Research in the previous chapter focussed on researching the effect of the social graph on retweet propagation characteristics. From this, a methodology, displaying a range of various shortcomings, emerged based on Proposition \ref{proposition:1} and the models and simulations utilised in the graph analyses. In this chapter, the methodology is modified with the aim of improving its performance and increasing the range of use-cases it is appropriate for. Since the social structure was found to play an important role in propagation, many network and user features are taken into account throughout the improvements and investigation.
 
 In addition, modifications are made in order to provide an indication of \textit{how} interesting a piece of information is estimated to be, and more about this particular component is discussed in later sections.
 
@@ -21,24 +21,29 @@ As has previously been posited, of importance to this work is the difference bet
 However, since interestingness \textit{does} have an effect on an a user's individual retweet decision on a particular Tweet, this absolute retweet count can be used as part of the method for generating an interestingness \textit{score} for that Tweet.
 
 
-\section{Interestingness Scores}
+\section{Interestingness Quantification through Tweet Scoring}
 To address the notion of interestingness quantification, a scoring scheme is hereby introduced, allowing certain interesting Tweets to be ranked as `more interesting' than other interesting Tweets. This, in itself, is an improvement over the previous method, which allowed only for Tweets to be labelled as `interesting' or `non-interesting'.
 
-Similar to the previous method's \textit{comparison} between the observed and expected retweet counts, the new scoring technique is based now on the \textit{distance} between the two counts. The general idea and potential use-case for this is that if a score is known for a set of Tweets, then these can be used as a basis for ordering information as part of information retrieval or an information delivery system, where Tweets can be displayed to users in a more useful way than simply chronologically, and where interesting Tweets could be brought forward to users who don't follow the source user or a retweeter, and thus deliver information to an interested user, yet without him or her having to know about it first.
+As an enhancement to Proposition \ref{proposition:1}'s \textit{comparison} between the observed and expected retweet counts, the new scoring technique is based now on the \textit{distance} between the two counts. The general idea and potential use-case for this is that if a score is known for a set of Tweets, then these can be used as a basis for ordering information as part of information retrieval or an information delivery system, where Tweets can be displayed to users in a more useful way than simply chronologically, and where interesting Tweets could be brought forward to users who don't follow the source user or a retweeter, and thus deliver information to an interested user, yet without him or her having to know about it first.
 
-Essentially, the notion scoring stems from the following scenario. Consider two Tweets, $A$ and $B$, which have the following properties;
+\begin{myproposition}
+\label{proposition:2}
+If the positive difference between a Tweet's observed and predicted popularity is proportionately greater than those attributes in a different Tweet, then the first Tweet is proportionately \textit{more} interesting than the second.
+\end{myproposition}
+
+Essentially, Proposition \ref{proposition:2} stems from the following scenario. Consider two Tweets, $A$ and $B$, which have the following properties;
 \begin{itemize}
     \item $\ec{A} = 3000$ and $\rc{A} = 3010$
     \item $\ec{B} = 5$ and $\rc{B} = 15$
 \end{itemize}
 Where $\ec{A}$ and $\ec{B}$ represent the expected retweet count of $A$ and $B$ respectively.
 
-In this case, both Tweets would have been flagged as `interesting' under the previous scheme (although, in reality, the method would not be able to model users who are typically expected to achieve 3,000 retweets). However, it is clear that, despite the \textit{difference} between the counts being equal, Tweet $B$'s observed retweet count is actually much more significantly proportionately greater than what was expected, and is therefore likely to be more significantly interesting.
+In this case, both Tweets would have been flagged as `interesting' under Proposition \ref{proposition:1} (although, in reality, the derived method would not be able to model users who are typically expected to achieve 3,000 retweets). However, it is clear that, despite the \textit{difference} between the counts being equal, Tweet $B$'s observed retweet count is actually much more significantly proportionately greater than what was expected, and is therefore likely to be more significantly interesting.
 
 Since the proportionate difference is the key to this, the interestingness score, $\score{t}$, for Tweet $t$ is simply given by;
 \[
 \begin{array}{cc}
- \score{t} = \frac{\ec{t}}{\rc{t}}
+ \score{t} = \frac{\rc{t}}{\ec{t}}
 \end{array}
 \]
 
@@ -51,8 +56,7 @@ This provides a positive score where;
 		\leq 1	&	\text{indicates } t	\text{ is non-interesting}
   \end{cases}
 \]
-
-And where $\score{A} > \score{B}$ implies that $A$ is more interesting than $B$.
+and where $\score{A} > \score{B}$ implies that $A$ is more interesting than $B$.
 
 Since this methodology relies on data collection from Twitter in order to obtain the observed retweet counts, it involves extracting a snapshot of the state of the evaluated Tweets at one stage during their lifetime. Since Tweets are not removed over time, unless they are deleted by their author, they can be discovered and retweeted at any time after their composition and posting.
 
@@ -62,7 +66,7 @@ The work in this chapter assumes that the most significant portion of retweet ac
 \section{Further Adaptations of the Inference Methodology}
 In the previous chapter, it was noted how it was necessary to improve the method used for producing a Tweet, $t$'s, expected retweet count, $\ec{t}$. Limitations with the previous method dictated that it could only work under certain restrictions. In particular, that the user must have a small enough local network (in practice, a follower count of more than 500 or so made the method very unsuitable), and that, due to this, Tweets only attracting very few retweets could effectively be simulated. In addition, the interestingness inferences made were not significantly accurate, although this is likely due to a combination of the above issue in providing much less room for error and the fact that the interestingness decision was only binary.
 
-A new method is hereby proposed for carrying out the prediction for the value of $\ec{t}$. This method is immediately more superior to the previous, as only a very small amount of data is required to be collected from Twitter. This means that inferences on Tweet interestingness could be made on demand\footnote{Not `live' as it relies on time for retweets to have occurred.}.
+A new method is hereby proposed, derived from Proposition \ref{proposition:2}, for carrying out the prediction for the value of $\ec{t}$. This method is immediately more superior to the previous, as only a very small amount of data is required to be collected from Twitter. This means that inferences on Tweet interestingness could be made on demand\footnote{Not `live' as it relies on time for retweets to have occurred.}.
 
 Essentially, the method involves generating a classifier model capable of producing a base-line expected retweet count for a given Tweet and its relationship with its author. In this case, the classifier would be trained with the Tweet's actual retweet \textit{count} instead of the binary retweet decision used previously, and it would not require the simulations of the user's local network. Many more features regarding the Tweet, and its conetent, and its author are used to represent the particular user-Tweet information required for generating the predictions.
 
@@ -85,7 +89,7 @@ As such, the two scoring mechanisms work as follows;
 \[
     \uscore{t} = \frac{\rc{t}}{\ecu{t}}
 \]
-Where $\gscore{t}$ is the score generated from comparisons to the \textit{global} model and where $\uscore{t}$ is the score derived from the model representing the historical Tweets of $\aut{t}{O}$.
+where $\gscore{t}$ is the score generated from comparisons to the \textit{global} model and where $\uscore{t}$ is the score derived from the model representing the historical Tweets of $\aut{t}{O}$.
 
 \section{Retweet Volumes as Nominal Attributes}
 Most machine learning classifiers are not useful in accurately predicting the outcome of a feature of a large-ranging and continuous data type. Instead, the performance can be greatly improved when making predictions from a limited range of discrete ranges, or `nominal' data.

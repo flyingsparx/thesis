@@ -392,7 +392,7 @@ The microtasks presented to the MTWs each consisted of a question containing fiv
 
 Figure \ref{fig:mtk_question} shows an example of a question asked of the workers. It demonstrates also how the MTWs were not provided with any additional context, such as the author's username or the post date and time, for any of the Tweets to be evaluated.
 
-Although Tweet selection was random, those whose content starts with a user's ``@'' username (i.e. `@-replies') were excluded, since these Tweets typically form part of a conversation between a small number of users and are unlikely to convey any interest to those not directly involved. The final validation set consisted of a total of around 4,500 Tweets to be assessed in the questions, and MTWs were encouraged to follow links to any websites or media included in the Tweets' contents as part of their evaluations.
+Although Tweet selection was random, those whose content starts with a user's ``@'' username (i.e. `@-replies') were excluded, since these Tweets typically form part of a conversation between a small number of users and are unlikely to convey any interest to those not directly involved. The final validation set consisted of a total of around 4,300 Tweets to be assessed in the questions, and MTWs were encouraged to follow links to any websites or media included in the Tweets' contents as part of their evaluations.
 
 
 \subsubsection{Inference Performance Validation Results}
@@ -400,15 +400,20 @@ The Mechanical Turk validation take place between the 7th and 11th December 2012
 
 \begin{table}[h]\footnotesize
 \begin{center}
-\begin{tabular}{ l || c }
+\begin{tabular}{ l || r }
+     Information key & Value\\
+     \hline
+     \hline
 	 Total assessments by MTWs & 2568\\
 	 Number of distinct questions & 856\\
 	 Number of unique MTWs & 177\\
+	 Number of unique Tweets & 4280\\
 	 \hline
 	 Num. questions with $\geq \frac{2}{3}$ agreement on most interesting & 510\\
 	 Num. questions with $\geq \frac{2}{3}$ agreement on least interesting & 493\\
 	 \hline
 	 Amount paid to MTWs per assessment & \$0.03\\
+	 Total amount paid & \$77.04\\
      \hline
 \end{tabular}
 \end{center}
@@ -426,7 +431,7 @@ As such, further investigation would be required to address the method with the 
 
 
 \subsection{Improving The Interestingness Inference Performance}
-The deduction of the interestingness of a Tweet through the comparison of the expected and observed popularity of that Tweet is considered a viable way of addressing the problem for reasons discussed earlier. However, a more convenient and accurate method is clearly required for acquiring the \textit{expected} retweet value.
+Proposition \ref{proposition:1} is still considered to be a viable way of addressing the problem of identifying interesting information for the reasons discussed earlier. However, a more convenient and accurate method is clearly required for acquiring the \textit{expected} retweet value.
 
 The issue with the current method is two-fold; as mentioned, lots of data is required in order to reconstruct the Tweets' authors' local networks in which to simulate the Tweets, which leads to the second problem of only being able to simulate Tweets from authors in sparser local networks. Under the current scheme, only users with a small enough local network (i.e. users that have lower folower counts) can realistically be evaluated, due to the collection criteria discussed previously, meaning that the methodology cannot be used in the general case. Although a high accuracy was achieved in predicting the \textit{correct} retweet counts for the Tweets assessed in this section, most of these Tweets only actually had an observed retweet count of 0 or 1. This is the by-product of the previous issue in that only users with fewer followers could have their Tweets simulated, and these users will therefore typically receive few retweets per Tweet. Ideally, the methodology should have the capabilities to be applied to any type of user and any Tweet on Twitter.
 
