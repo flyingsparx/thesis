@@ -16,14 +16,14 @@ The inverse of follower. User \textit{x} is a friend to user \textit{y} if \text
 The local graph of a user, $u$, is the subgraph of the full social graph representing the users and edges existing within $n$ hops of $u$. In the scope of this thesis, local graphs of users are limited to the subgraph generated using $n=2$.
 
 {\bf Path-length}\\
-The penetration of a Tweet - i.e. the number of times a Tweet is retweeted down one chain. The distance between the leaf user and root user of the chain indicates the number of hops the Tweet has taken from its author down this chain.
+The penetration of a Tweet - i.e. the number of times a Tweet is retweeted down one chain. The distance between the leaf user and root user of the chain indicates the number of hops the Tweet has taken from its author down this chain. For more information, see Definition \ref{definition:path_length}.
 			
 {\bf Retweet}\\
 \textit{n.} - A replica of a Tweet, which has been forwarded on by a user (who is not the Tweet's original author) to their own followers. The set of retweets of a given Tweet, $t$, is denoted as $\rt{t}$.\\
 \textit{v.} - The act of replicating a Tweet. A user who finds a Tweet interesting may retweet it so that it gains more exposure through an increase in the audience size (see above).
 									
 {\bf Retweet Group}\\
-A set containing all of the retweets of a particular Tweet, $t$, and $t$ itself. The retweet group of $t$ is denoted by $\rg{t}$, and has a minimum cardinality of $1$ in cases where $t$ has not been retweeted.
+A set containing all of the retweets of a particular Tweet, $t$, and $t$ itself. The retweet group of $t$ is denoted by $\rg{t}$, and has a minimum cardinality of $1$ in cases where $t$ has not been retweeted. For more information, see Definition \ref{definition:retweet_group}.
 
 {\bf Retweet Count}\\
 The number of times a particular Tweet has been retweeted. The retweet count of Tweet $t$ is denoted as $\rc{t}$ and has a minimum value of $0$ in cases where $t$ has not been retweeted.

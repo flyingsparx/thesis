@@ -25,7 +25,7 @@ Measuring retweet behaviour is carried out through studying the distribution of 
 \subsection{Overview of the Simulation Algorithm}
 The algorithm covers the simulation of Tweet propagation through a given set of connected users by emulating retweet decisions of each user who receives the Tweet, as is described below. The retweet decision is made using a prediction based on a logistic regression classifier, which is discussed in more detail in Section \ref{section:logistic_regression}.
 
-\cite{zhu11} developed a simulation algorithm which was found to be capable of accurately predicting retweet decisions using a logistic regression. These methods were modified and adapted to fit the purposes of the simulation algorithm used in this section. In essence, the simulation is initialised with a graph of connected users, $U$, and a Tweet, $t$, which will be introduced to the graph and retweeted between the users. $U = \left\{V,E\right\}$ is the social graph of the vertices and edges representing the users who may receive $t$ and the followships between them.
+\cite{zhu11} developed a simulation algorithm which was found to be capable of accurately predicting retweet decisions using a logistic regression. These methods were modified and adapted to fit the purposes of the simulation algorithm used in this section. In essence, the simulation is initialised with a graph of connected users, $G_U$, and a Tweet, $t$, which will be introduced to the graph and retweeted between the users. $G_U = (V,E)$ is the social graph of the vertices and edges representing the users who may receive $t$ and the followships between them.
 
 It begins by initialising a set of users, $S$, to contain the followers of $\aut{t}{O}$. As such, users in $S$ form the set of users to have $t$ or a member of $\rt{t}$ currently on their home timelines and available to retweet. 
 
@@ -37,14 +37,14 @@ The algorithm terminates either when the timesteps thus far iterated exceed the 
 
 \newfloat{algorithm}{H}{lop}
 \begin{algorithm}
-\caption{Simulation of retweet decisions on $t$ in a given graph, $U$}
+\caption{Simulation of retweet decisions on $t$ in a given graph, $G_U$}
 \begin{algorithmic}[1]
-\Procedure{simulate}{graph $U$, Tweet $t$}
+\Procedure{simulate}{graph $G_U$, Tweet $t$}
     \State $RT\gets \left\{\right\}$
     \State $T\gets$ total timesteps
     \State $H\gets$ decay threshold \Comment{Emulate $t$ `slipping down' timeline}
-    \State $S\gets \left\{u' \in V(U) : \exists \overleftarrow{\aut{t}{O} u'} \in E(U)\right\}$
-    \State $u.\textrm{TIME\_HELD}\gets 0 \forall u \in V(U)$
+    \State $S\gets \left\{u' \in V(G_U) : \exists \overleftarrow{\aut{t}{O} u'} \in E(G_U)\right\}$
+    \State $u.\textrm{TIME\_HELD}\gets 0 \forall u \in V(G_U)$
     \Statex % new line
     \ForAll{$t_i$ in range $(0,T)$}
         \ForAll{$u \in S$}
@@ -54,7 +54,7 @@ The algorithm terminates either when the timesteps thus far iterated exceed the 
                 \State $r\gets$ new retweet, where $r.\textrm{orig} = t$ \& $\aut{r}{R} = u$
                 \State $\rg{t}\gets \rg{t} \cup \left\{r\right\}$
                 \State $S\gets S - \left\{u\right\}$
-                \State $S\gets S \cup \left\{u' \in V(U) : \exists \overleftarrow{u u'} \in E(U)\right\}$
+                \State $S\gets S \cup \left\{u' \in V(G_U) : \exists \overleftarrow{u u'} \in E(G_U)\right\}$
             \Else
                 \State $u.\textrm{TIME\_HELD}\gets u.\textrm{TIME\_HELD} + 1$
                 \If{$u.\textrm{TIME\_HELD} > H$}
@@ -145,11 +145,11 @@ After storage, the regression model was trained using features extracted from th
 
 
 \subsection{Running the Simulations}
-The logistic regression model, having been trained with the features collected for the training dataset, could then be tested against newly-generated Tweet features ($t$) in order to output the probability, $P(u,t)$, indicating $u$'s retweet decision likelihood on $t$. The simulation method only produces probabilities for those $u \in V(U)$ that actually receive $t$ and have a chance to retweet it. Since some of the features used rely on the relationships of the current $u$ to $\aut{t}{O}$, not every user in the graph will have the same value for $P(u,t)$.
+The logistic regression model, having been trained with the features collected for the training dataset, could then be tested against newly-generated Tweet features ($t$) in order to output the probability, $P(u,t)$, indicating $u$'s retweet decision likelihood on $t$. The simulation method only produces probabilities for those $u \in V(G_U)$ that actually receive $t$ and have a chance to retweet it. Since some of the features used rely on the relationships of the current $u$ to $\aut{t}{O}$, not every user in the graph will have the same value for $P(u,t)$.
 
 For each simulation experiment, a network of users was generated according to a structured model, as described in the next section. A Tweet object was then constructed and contained information on whether or not it contained a URL and if it mentioned one of the users in the generated network. 
 
-In each network analysis, the same set of Tweets was used. This set comprised Tweets generated from many feature combinations. Various parameters - such as $H$, the size of the user network, $U$ to be generated, and any weightings on the decision probability prediction generator - were altered in the simulations in order to affect the visibility of any correlations in the propagation patterns produced by the different structure types. As such, the \textit{volume} of retweet counts produced are not comparable across the structure analyses, but the correlation patterns are.
+In each network analysis, the same set of Tweets was used. This set comprised Tweets generated from many feature combinations. Various parameters - such as $H$, the size of the user network, $G_U$ to be generated, and any weightings on the decision probability prediction generator - were altered in the simulations in order to affect the visibility of any correlations in the propagation patterns produced by the different structure types. As such, the \textit{volume} of retweet counts produced are not comparable across the structure analyses, but the correlation patterns are.
 
 
 \subsection{Network Analyses}
@@ -159,7 +159,7 @@ In this section, three network structures are assessed in terms of the differenc
 \subsubsection{Path Network}
 The first assessment involved illustrating the propagation pattern observed in the most basic social network structure; a path network. Albeit non-realistic in practice, these graphs represent the fundamental structure of a connected `world' of users.
 
-A linear directional path network consists of the graph of users, $U = \left\{V,E\right\}$, of size $n = |V(U)| = |E(U) + 1$, where $\exists \overleftarrow{u_i u_{i+1}} \in E(U) \forall 1 \leq i < n$. As a result, each $u \in V$ has precisely one follower and one friend, except the users $u_n$ and $u_1$ respectively. $n$ is the only parameter necessary in the construction of this user graph.
+A linear directional path network consists of the graph of users, $G_U$, of size $n = |V(G_U)| = |E(G_U) + 1$, where $\exists \overleftarrow{u_i u_{i+1}} \in E(G_U) \forall 1 \leq i < n$. As a result, each $u \in V$ has precisely one follower and one friend, except the users $u_n$ and $u_1$ respectively. $n$ is the only parameter necessary in the construction of this user graph.
 
 \begin{figure}[h]
 \centering
@@ -207,7 +207,7 @@ As might be expected, the frequency distribution of retweet group sizes in Figur
 
 The random network was the next user structure to be analysed. Although it is certainly more similar to a real-life social graph than a path network, it is much more basic and uniform and does not consider user communities and clusters or different levels of influence in users in terms of differences in follower and friend counts.
 
-A random social network is in this case based on the Erd\H{o}s-R\'{e}nyi model \cite{erdos60} and defined as a graph, $U = \left\{V,E\right\}$, where $n = |V(U)|$, consists of each user, $u \in V(U)$, having the connection probability $P_c$ of following each other $u_i \in V(U) \forall 0 \leq i \leq n$ and where $u_i \neq u$. Thus, as $P_c$ is increased, then so does the likelihood of $u$ following a $u_i$, causing the network to have a greater overall edge density. In general, therefore, the average number of followers and friends of a user is proportional to $P_c.n$. The only parameters needed for constructing such a graph are $n$ and $P_c$.
+A random social network is in this case based on the Erd\H{o}s-R\'{e}nyi model \cite{erdos60} and defined as a graph, $G_U$, where $n = |V(G_U)|$, consists of each user, $u \in V(G_U)$, having the connection probability $P_c$ of following each other $u_i \in V(G_U) \forall 0 \leq i \leq n$ and where $u_i \neq u$. Thus, as $P_c$ is increased, then so does the likelihood of $u$ following a $u_i$, causing the network to have a greater overall edge density. In general, therefore, the average number of followers and friends of a user is proportional to $P_c.n$. The only parameters needed for constructing such a graph are $n$ and $P_c$.
 
 \begin{figure}[h]
 \centering
