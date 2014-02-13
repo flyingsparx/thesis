@@ -32,7 +32,7 @@ A person who follows a set of other users can generally be said to find that set
 
 Noise is a common problem in Twitter, and is the uninteresting information one might receive that conveys little interest. It is likely that most of the information received on Twitter \textit{is} uninteresting \cite{alonso10}, and this makes it very hard to distinguish the interesting information from the uninteresting.
 
-Since people tend to use Twitter most in short sporadic moments, looking for a quick news fix, they do not have time to filter out noisy information. Thus, the presence of noise can dampen the experience of the user, making it much more difficult to find interesting information.
+Since people tend to use Twitter most in short and sporadic moments, looking for a quick news or information fix, they do not have time to filter out noisy Tweets. Thus, the presence of noise can dampen the user's experience, making it much more difficult to find the interesting information.
 
 In addition, Twitter users typically exist within an information `bubble'. This is similar to the notion of the Google search bubble, in which the search engine uses previous results and search terms to only return information to a user based on what \textit{it thinks} the user would find the most interesting and useful. This results in the users not knowing which information exists beyond the confines of their bubble, and if they do not know it exists, they cannot know if it is of interest to them. Similarly, a Twitter user cannot follow all of the users he/she may find interesting, since he/she will not \textit{know} of all the interesting users existing on the social graph.
 
@@ -40,12 +40,26 @@ Although not directly answered in this thesis, the key question and motivation b
 \centerline{\textbf{How can users be exposed to \textit{interesting} and \textit{relevant} information,}}
 \centerline{\textbf{but without them having to know about it or look for it first?}}
 
-\section{Main Contributions}
-This thesis focuses on understanding information propagation, and how this combined with knowledge of the social structure of Twitter can assist towards solving the problem of identifying interesting and relevant information and determining it from the noise on Twitter. Whilst other work in the area has also looked into the notions of relevance and interest in online social networks, and Twitter in particular, none has addressed the problem with such rigor or have attempted to validate findings so thoroughly.
 
-The thesis provides an in-depth survey of relevant research in the area, following onto a thorough understanding of retweet behaviour and its ties to the properties of the underlying Twitter social graph. 
+\section{Main Contributions and Hypotheses}
+This thesis aims to go some way to answering this question through a focus on understanding information propagation, and how combining this with knowledge of the social structure of Twitter can assist towards solving the problem of identifying interesting and relevant information and determining it from the noise surrounding it on Twitter. Whilst other work in the area has also looked into the notions of relevance and interest in online social networks, and Twitter in particular, none has addressed the problem with such rigor or have attempted to validate findings so thoroughly.
 
-Part of the outcome of this research are methods for effectively inferring interesting information and, indeed, paving ways to support the of ranking information in a more useful way than simply by time. The methods are validated in various ways to help highlight their strengths and weaknesses in performing inferences and in appropriate use-cases. The work addresses the problem area in that it helps towards solving the goal of identifying \textit{globally} interesting information in Twitter, and the ways in which users are able to identify interesting information from noise. In addition, certain measures are taken in an attempt to address the idea of information relevance in terms of validations being made on the methods by users assessing Tweets from users they have a previously-declared interest in.
+\subsection{Contributions}
+The thesis provides an in-depth survey of relevant research in the area, following onto a thorough understanding of retweet behaviour and its ties to the properties of the underlying Twitter social graph. Various terms are defined in order to facilitate the explanations of key concepts through observation and example. 
+
+Part of the research outcome consists of methods for effectively inferring interesting information and, indeed, paving ways to support the of ranking information in a more useful way than simply by time. The methods are validated to help highlight their strengths and weaknesses in performing inferences in appropriate use-cases. The work addresses the aforementioned problem area in that it helps towards solving the goal of identifying \textit{globally} interesting information in Twitter, and the ways in which users are able to identify this interesting information from noise. In addition, certain measures are taken in an attempt to address the idea of information relevance in terms of validations being made on the methods by users assessing Tweets from users they have a previously-declared interest in.
+
+Whilst the following chapter will make it clear that there is a large amount of research into Twitter for the purposes of
+
+\subsection{Research Questions}
+More formally, the research in this thesis is aimed towards answering the following questions.
+\begin{itemize}
+    \item \textit{Does Tweet popularity, measured in terms of retweets, \textbf{define} interesting (or non-`noisy') information?}
+    \item \textit{Can Tweet popularity, measured in terms of retweets, \textbf{be an indicator} of interesting information?}
+    \item \textit{Can Tweet interestingness be inferred \textbf{non-semantically}?}
+    \item \textit{Is the arrangement of Twitter's social graph an important factor in retweet propagation, and thus perceived popularity?}
+\end{itemize} 
+
 
 
 \section{Thesis Structure}
