@@ -185,7 +185,7 @@ The retweet groups were finally stored along with relevant metadata in order to 
 
 
 \subsection{Exploring Retweet Group Path-Lengths}
-The path-lengths of each chain in a retweet group can be calculated by identifying the members involved in retweet activity down that chain; from the original Tweet to the final retweet. The \textit{maximum} path-length of a particular retweet group is the longest path-length observed in the group.
+The path-lengths of each chain in a retweet group can be calculated by identifying the members involved in retweet activity down that chain; from the original Tweet to the final retweet. The \textit{maximum} path-length of a particular retweet group is the longest path-length observed in the group's tree.
 
 Identification of path-lengths can be carried out through parsing the text of a retweet, and following the citations. Although it cannot be guaranteed that all users will be properly cited in a chain, and there is no realistic method to verify this, it is felt that correct citations will be made enough times to make these cases relatively insignificant.
 
@@ -220,7 +220,7 @@ The longest maximum path-length observed was 9.
     \label{fig:pathlength-distribution}
 \end{figure}
 
-Also of interest is the relationship in terms of the social ties between the different user members of a retweet group's Tweets. In cases where a retweet group's maximum path-length is precisely one, i.e. the situation where a user (or set of) has retweeted a particular Tweet only once, the retweeters at the leaves of this group's retweet tree follow the original author around 90\% of the time.
+Also of interest is the relationship in terms of the social ties between the different authors of the Tweets in a retweet group. In cases where a retweet group's maximum path-length is precisely one, i.e. the situation where a user (or set of) has retweeted a particular Tweet only once, the retweeting authors of the leaf Tweets of this group's retweet tree follow the original author around 90\% of the time.
 
 This implies, therefore, that in the remaining 10\% of cases, a retweeter has retweeted a Tweet from outside of their home timeline and has instead seen a Tweet whilst browsing through another user, who isn't a friend, timeline that the retweeter regards as sufficiently interesting. This helps to demonstrate that the more followers a particular user has, the greater the chance that another user somewhere has of viewing the user's Tweets and then having the opportunity to retweet them. The fact that 90\% of retweets of a particular user are created by direct followers reinforces this further.
 
@@ -251,7 +251,7 @@ Further to this, in situations in which the maximum path-length of a retweet gro
 
 
 \subsection{Size of Retweet Groups}
-The distribution of $|\rg{t}|$ across all of the original Tweets $t \in T$ collected from Twitter was found to follow a power-law type distribution, with a relatively large $p$-value of around $0.87$. Figure \ref{fig:retweet-distribution} represents the complementary distribution function demonstrating the changing probability of a randomly generated $X$ being greater than or equal to $x$, the `current' value of $|\rg{t}|$, at each stage. The techniques used in this analysis are adapted from the methods and code provided by \cite{clauset07}.
+The distribution of retweet group sizes across all of the original Tweets in the set collected from Twitter was found to follow a power-law type distribution, with a relatively large $p$-value of around $0.87$. Figure \ref{fig:retweet-distribution} represents the complementary distribution function demonstrating the changing probability of a randomly generated $X$ being greater than or equal to $x$, the `current' value of $|\rg{t}|$, at each stage. The techniques used in this analysis are adapted from the methods and code provided by \cite{clauset07}.
 
 \begin{figure}[h]
 \centering
@@ -302,7 +302,7 @@ The distribution of $|\rg{t}|$ across all of the original Tweets $t \in T$ colle
 
 The mean group size from this dataset was found to be just below six, and the largest size was 284. The smallest $|\rg{t}|$ were the cases in which $\rc{t} = 1$, and which were significantly the most common occurrences.
 
-Of interest also is the relationship between a group's size and its maximum path-length. Generally, the maximum path-length of a group, $\rg{t}$, increases with $|\rg{t}|$, indicating a mostly uniform growth in the retweet trees representing these groups - as might be expected. Figure \ref{fig:totalretweets-pathlength} demonstrates this trend, which this illustrates that as the retweet count of $t$ increases, then the longer the retweet chains in $\rg{t}$ are likely become. This would increase its penetrative dissemination away from the source and further facilitate its spread between communities, increasing its potential \textit{audience size}.
+Of interest also is the relationship between a group's size and its maximum path-length. Generally, the maximum path-length of a group, $\rg{t}$, increases with $|\rg{t}|$, indicating a mostly uniform growth in the retweet trees representing these groups - as might be expected. Figure \ref{fig:totalretweets-pathlength} demonstrates this trend, which this illustrates that as the retweet count of $t$ increases, then the longer the retweet chains in $\rg{t}$ are likely to become. This would increase its penetrative dissemination away from the source and further facilitate its spread between communities, increasing its potential \textit{audience size}.
 
 \begin{figure}[h]
 \centering
@@ -328,7 +328,7 @@ $\rg{t}$'s (immediate) audience size refers to the number of Twitter users that 
 
 The term `immediate' is used to signify the distinction between those users who passively receive the Tweet, due to following the original author or a retweeter, and those who see the Tweet whilst actively browsing through other user timelines or the public timeline. Users in the latter group are therefore not direct followers of $\aut{t}{O}$ or $\aut{r}{R} \forall r \in \rt{t}$ and thus cannot be tracked as members of $t$'s audience.
 
-Let $ r_1,...,r_n $ be the members of $\rt{t}$. The size of the audience of $\rg{t}$ can then be denoted by (assuming $\rc{t} \geq 1$);
+Let $ r_1,...,r_n $ be the members of $\rt{t}$. The size of the audience of $\rg{t}$ can then be calculated thus (assuming $\rc{t} \geq 1$);
 \[
 	|\raa{\rg{t}}| = |\fos{\aut{t}{O}}| + |\fos{\aut{t}{r^1}}| + ... + |\fos{\aut{t}{r^n}}| 
 \]
