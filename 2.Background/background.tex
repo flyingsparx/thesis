@@ -125,6 +125,23 @@ Alonso et al. \cite{alonso10} also use `scoring' to address interestingness, foc
 An interesting study is described by \cite{lauw10}, in which a clustering algorithm is used, taking into account the retweet count of a Tweet and how this is related to the popularity of the source user, to determine information quality. Although this work is more similar to the research discussed later in this thesis than others, the scoring is quite simple and the author's use-case seems limited to that of identifying the most important Tweets surrounding a particular event (such as the death of Michael Jackson). Additionally, the authors do not make any effort to verify their results in any way, aside from comparing the Tweets determined to have a high quality by each of their two assessed methodologies.
 
 
+
+\subsection{Twitter is a `Memepool'}
+A large amount of research in this field, particularly in the case of the work involving machine learning and classification, as discussed above, rely on feature selection and extraction. By choosing an appropriate set of features that are able to represent the entity more accurately, then this enables the model produced from the features to have a greater classification performance.  
+
+In 1976, Richard Dawkins coined the term `meme' to be defined as a ``unit of cultural transmission'' \cite{dawkins76}. The general idea behind memetics is as an analogy to biological genetics except, unlike genes, memes are entirely non-physical and represent a cultural idea or aspect or another human-based behaviour. The rise of social networks on the Internet has allowed the spread of memes to grow to the extent that they are sometimes now even represented by `physical' constructs, such as images.
+
+In genetics, a gene is a physical entity containing information and instructions. It is a unit of genetic inheritance, in that they are passed from parent to offspring through the act of reproduction, and the result of an organism having a gene is that the organism will express the features represented by that particular gene. These genes contain instructions that make up the features of an individual, such as physical characteristics like eye colour and height, and non-physical characteristics, including various aspects of personality.
+
+Organisms exist in an evironment that also has features, such as humidity, altitude, temperature, relationships to other organisms, and so on. If the genes of an organism are such that they cause the individual to be well-suited to its environment, then that organism has a better chance of survival and, therefore, a better chance of achieving reproduction.
+
+Memes are similar in that they are effectively made up of a set of features, or a `memome', such as the wordings of a particular phrase, or their relevance to other cultural aspects. These enable the meme to be less or more likely to be replicated in different environments, which is made up of the humans exposed to it and the interactions between them. For example, an Internet meme relating to the Star Wars movies would likely have a greater chance of being reproduced, through discussion and reposting, in an environment comprising a set of science-fiction fans than when amongst more mixed-interest groups.
+
+The meme is also a useful analogy in this thesis when describing the way in which Tweets undergo replication within Twitter and for feature selection. Like a meme, a Tweet has a specific set of features, such as the text it contains, the inclusion of any mentions or a URL, and so on, and it exists within an environment consisting of a set of interconnected users on the Twitter social graph. A particular Tweet would generally have a greater chance of `surviving' and being replicated, through the act of retweeting, amongst a certain subset of users intereconnected in a particular way than in other environments.
+
+As such, the Tweet features are analogous to the \textit{genes} of a genome, and the arrangement and type of users on the social graph that receive the Tweet and have an opportunity to assist in its propagation comprise the Tweet's \textit{environment}. Both of these aspects are of importance and are considered as part of feature selection in the relevant parts of this thesis.
+
+
 \subsection{Precision and Recall}
 Precision and recall are two metrics that are often used simultaneously to verify the performance of a method or procedure for information retrieval, with the usual goal being to maximise both. The metrics are used for validating \textit{accuracy} in different ways, yet they can be applied to other purposes also and are useful in describing the notion of interestingness in Twitter.
 
@@ -201,6 +218,10 @@ where \textit{received} means that the Tweet has arrived on the user's home time
 Therefore, a user following many other users will receive lots of interesting information onto their home timeline in amongst lots of noise; resulting in a reduced precision and higher recall. Another user might follow a very select few other users who are of direct interest, and thus will experience high precision, but low recall. These metrics are therefore useful in describing the concepts of noise and interestingness, and are consistent with their respective definitions in that users will achieve an optimum Twitter experience if both precision and recall are maximised.
 
 Zadeh et al. \cite{zadeh13} defined bespoke definitions of precision and recall, yet also in the domain of interesting information on Twitter. Although the authors identify the need for users to be able to discover other users of interest and declare that Twitter does, in fact, have a `high precision' of interesting information, they admit to using a very coarse set of possible interest categories and is only based on \textit{overlapping} interests rather than addressing the interest-noise ratio more concerning the research in this thesis. Additionally, clicks on URLs by users are the only means by which to measure this interestingness, and Tweets with URLs are usually the most interesting type of information \cite{alonso10}.
+
+
+
+
 
 \section{Collecting Twitter Data}
 Most of the analytical work in this thesis relies on various data being collected from Twitter. Twitter provides an API for developers in order to facilitate the production of applications for its platform, but also for research purposes. It permits interfacing with many components of Twitter's service, such as posting and retrieving Tweets, interacting with other users (e.g. creating new friendships), and most of the features that Twitter's service itself provides to its users. The API encourages use of the OAuth\footnote{http://oauth.net} authorisation framework to handle access\footnote{https://dev.twitter.com/docs/auth}, allowing Twitter to keep track of applications and each application's access privileges and rate limits\footnote{https://dev.twitter.com/docs/rate-limiting/1.1}.

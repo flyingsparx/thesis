@@ -110,13 +110,39 @@ In order to train the model on a set of Tweets and then use it to make predictio
 
 Since, in this case, it was necessary to collect the Tweet data along with each Tweet's numeric retweet count, rather than the binary nominal yes/no required in the previous chapter, only the retweets of a particular Tweet that had been created using the button method could be considered. This is because a Tweet's retweets executed using the manual copy and paste method do not contribute to the Tweet's official, and observable, retweet count that is returned from Twitter's API. This is not considered to be a limitation, however, since this factor is considered consistently through the training and later evaluation of the trained model.
 
-In March 2013, a random walk was conducted through Twitter's social graph using v1.1 of Twitter's REST API. Although this date was before the mandatory transfer to this version of the API, the crawler method was used in preference over collecting from the public API, which was deprecated and removed in v1.1, so that user data could be collected to account for the importance of the social graph in information propagation.
+In March 2013, a random walk was conducted through Twitter's social graph using v1.1 of Twitter's REST API. Although this date was before the mandatory transfer to this version of the API, the crawler method was used in preference to collecting from the public timeline, which was deprecated and removed in v1.1, so that user data could be collected to account for the importance of the social graph in information propagation.
 
-Each stage of the walk consisted of focusing on a user, $u$. As such, the crawler is very similar to that used in the latter sections of the previous chapter. At each stage of the crawl, a set of recent Tweets, $T_u$, where $\aut{t}{O} = u \forall t \in T_u$ were collected. The size of $T_u$ had various dependencies, such as the $u$'s Tweet-posting frequency and the number of Tweets in total authored by $u$. Usually, several hundred Tweets from each user were yielded. In addition to the Tweet data, information on $u$ itself was collected as well as on a sample subset of up to 100, if they exist, of each of $\fos{u}$ and $\frs{u}$. The next stage involved focussing on a new user selected randomly from $\fos{u}$. Where `dead-ends' occurred (in cases where $\foc{u} = 0$ or the potential case of all $\fos{u}$ having already been collected), the crawler back-tracked to the most recently-collected user from which to select a valid follower to continue the crawl.
+Each stage of the walk consisted of focusing on and collecting information on a user, $u$. As such, the crawler is very similar to that used in the latter sections of the previous chapter. At each stage of the crawl, a set of recent Tweets, $T_u$, where $\aut{t}{O} = u \forall t \in T_u$ were collected. The size of $T_u$ had various dependencies, such as the $u$'s Tweet-posting frequency and the number of Tweets in total authored by $u$. Usually, several hundred Tweets from each user were yielded. In addition to the Tweet data, information on $u$ itself was collected as well as on a sample subset of up to 100, if they exist, of each of $\fos{u}$ and $\frs{u}$. The next stage involved focussing on a new user selected randomly from $\fos{u}$. Where `dead-ends' occurred (in cases where $\foc{u} = 0$ or the case where all $\fos{u}$ having already been collected), the crawler back-tracked to the most recently-collected user from which to select a valid follower to continue the crawl.
 
-A sample subset of friends and followers was used instead of the complete set for the purposes of efficiency and to address the associated limitation in the previous interestingness inference methodology, yet it still provides an example snapshot of up to an additional 200 users in the author's neighbourhood in order to provide some idea of the activity within the local network both upstream and downstream from the author user. Around ten API calls were required to obtain this information for each user, giving it immediate advantages over the older method. 
+The sample subset of friends and followers of each user was collected instead of the complete set for the purposes of efficiency and to address the associated limitation in the previous interestingness inference methodology. However,t the samples still provide an example snapshot of up to an additional 200 users in the author's neighbourhood in order to provide some idea of the activity within the local network both upstream and downstream from the author user. Around ten API calls were required to obtain this information for each user, giving it immediate advantages over the older method, which required several hundred or thousand depending on the particular user, as described earlier. 
 
-Importantly, Tweets from many different types of user were collected; from less-active users with very few followers and friends to influential users and celebrities with millions of followers and achieving many thousand retweets. The collection of this range of users will help demonstrate if this new methodology is able to correctly assess a wider range of users and Tweets.
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+    symbolic x coords={{[0,$10^1$)},{[$10^1$,$10^2$)},{[$10^2$,$10^3$)},{[$10^3$,$10^4$)},{[$10^4$,$10^5$)},{[$10^5$,$10^6$)},{[$10^6$,$10^7$)},{[$10^7$,$10^8$)}},
+        ylabel=Frequency,
+        x tick label style={rotate=45, anchor=east},
+        x label style={at={(axis description cs:0.5,-0.2)},anchor=north},
+		xlabel=Count,
+        ymin=0,
+        ybar,
+        bar width=7pt,
+        width=15cm,
+        height=7cm,
+        legend entries={Follower count, Friend count}
+        ]
+   \addplot[plot 0,bar group size={0}{1}]
+        coordinates { ({[0,$10^1$)},9) ({[$10^1$,$10^2$)},70) ({[$10^2$,$10^3$)},144) ({[$10^3$,$10^4$)},50) ({[$10^4$,$10^5$)},34) ({[$10^5$,$10^6$)},22) ({[$10^6$,$10^7$)},23) ({[$10^7$,$10^8$)},9)};
+   \addplot[plot 1,bar group size={1}{1}]
+        coordinates { ({[0,$10^1$)},7) ({[$10^1$,$10^2$)},40) ({[$10^2$,$10^3$)},196) ({[$10^3$,$10^4$)},96) ({[$10^4$,$10^5$)},24) ({[$10^5$,$10^6$)},7) ({[$10^6$,$10^7$)},0) ({[$10^7$,$10^8$)},0)};
+\end{axis}
+\end{tikzpicture}
+\caption{Distribution of follower and friend counts of authors of Tweets in dataset $T$.}
+\label{fig:follower-friend-count_distribution}
+\end{figure}
+
+Importantly, Tweets from many different types of user were collected; from less-active users with very few followers and friends to influential users and celebrities with millions of followers and achieving many thousand retweets. The distribution of the follower and friend counts of the authors of Tweets in $T$ is displayed in Figure \ref{fig:follower-friend-count_distribution} and the collection of this wide range of users will help demonstrate if the new methodology is able to assess a larger variety of users and Tweets.
 
 % dataset size, |T| = 240717
 The data collection resulted in a set of Tweets, $T = T_u^1 \cup T_u^2 \cup ... \cup T_u^n$, where $|T| = 240,717$ and where $n = 370$. Of $T$, around 90,000 were Tweets with a retweet count of greater than zero. While the data was being collected, parts of the complete set were used in analyses of classifiers and Tweet categorisation methods to be used in the forthcoming experiments. $T_{p1} \subset T$, where $|T_p1| \approx 57,000$, represents the Tweets in $T$ part way through the data collection and is used in Section \ref{section:classification_performance}, and $T_{p2} \subset T$, where $|T_p2| \approx 67,000$, is used for the analyses in Section \ref{section:effects_of_varying_bin_sizes}.
@@ -129,11 +155,7 @@ Thus, in order to help improve the accuracy of $\ec{t}$ predictions, it was deci
 
 The values for $\score{t}$ would then be determined through the ratio of $\rc{t}$ to the \textit{upper} limit of the category containing $\ec{t}$.
 
-
-\subsection{Binning the Retweet Counts}
 Generally, trained classifiers are only able to make predictions on features and values it has prior knowledge of. Therefore, the bin ranges for each category must be equal in both the training feature data and the testing feature data. If the available nominal values for an instance feature representing a Tweet has a different set of category ranges to that in the trained classifier model, then it is likely that a prediction cannot be generated for this instance. This is an important factor to consider when determining a method for binning the retweet counts.
-
-%There are various ways in which the counts could be binned, and all begin with a decision on the number of bins to use. The varying performance of this factor is considered later.
 
 One method to create bins based on a set of contiguous values is to do so in a \textit{linear} fashion. Given a set of retweet counts, $A$, where $A = \left\{\rc{t_1}, ..., \rc{t_n}\right\}$, then the range of retweet counts, $c_r = \max{A} - \min{A}$. The linear approach then determines the range-size of each bin to be $\frac{c_r}{B}$, where $B$ is the desired number of bins, and can then assign a retweet count, $\rc{t_i}$ to the bin, $b$, such that $b.\textrm{lower} <= \rc{t_i} < b.\textrm{upper}$. Therefore, each bin represents an interval, for example $b = [x,y)$ where $x = b.\textrm{lower}$ and $y = b.\textrm{higher}$, and the list of bins produced by the methodology represent the available nominal categories that each Tweet's retweet count can be assigned to.
 
@@ -144,11 +166,12 @@ In cases where $\min{A} \neq 0$, the interval $[0,\min{A})$ is pre-pended to the
     [0,1), [1,6), [6,11), [11,16), [16,21), [21,\infty)
 \]
 
+
 \begin{figure}[h]
 \centering
 \begin{tikzpicture}
 \begin{semilogyaxis}[
-    symbolic x coords={ ,[0-8109),[8109-16218),[16218-24327),[24327-32436),[32436-40545),[40545-48054),[48054-56763),[56763-64872),[64872-72981),[72981-81090),[81090-89199),[89199-97308),[97308-810917),[810917-infinity)},
+    symbolic x coords={{ },{[0, 8109)},{[8109, 16218)},{[16218, 24327)},{[24327, 32436)},{[32436, 40545)},{[40545, 48054)},{[48054, 56763)},{[56763, 64872)},{[64872, 72981)},{[72981, 81090)},{[81090, 89199)},{[89199, 97308)},{[97308, 810917)},{[810917, $\infty$)}},
         ylabel=No. Tweets assigned to bin,
         x tick label style={rotate=45, anchor=east},
         x label style={at={(axis description cs:0.5,-0.4)},anchor=north},
@@ -160,7 +183,7 @@ In cases where $\min{A} \neq 0$, the interval $[0,\min{A})$ is pre-pended to the
         height=7cm
         ]
    \addplot[plot 0,bar group size={0}{1}]
-        coordinates {( ,0) ([0-8109),236985) ([8109-16218),1367) ([16218-24327),718) ([24327-32436),530) ([32436-40545),347) ([40545-48054),229) ([48054-56763),165) ([56763-64872),106) ([64872-72981),69) ([72981-81090),67) ([81090-89199),33) ([89199-97308),28) ([97308-810917),73) ([810917-infinity),0)};
+        coordinates {({ },0) ({[0, 8109)},236985) ({[8109, 16218)},1367) ({[16218, 24327)},718) ({[24327, 32436)},530) ({[32436, 40545)},347) ({[40545, 48054)},229) ({[48054, 56763)},165) ({[56763, 64872)},106) ({[64872, 72981)},69) ({[72981, 81090)},67) ({[81090, 89199)},33) ({[89199, 97308)},28) ({[97308, 810917)},73) ({[810917, $\infty$)},0)};
         
 \end{semilogyaxis}
 \end{tikzpicture}
@@ -168,15 +191,37 @@ In cases where $\min{A} \neq 0$, the interval $[0,\min{A})$ is pre-pended to the
 \label{fig:bin_distribution_linear}
 \end{figure}
 
-Since the distribution of retweet counts (expressed through retweet group sizes) is known \cite{webberley11}, then it is clear that this binning methodology would produce bins containing a very non-uniform distribution of Tweets, where the lower bin ranges would contain many Tweets and the cardinality of each category would decrease exponentially as the cateogories become higher. Figure \ref{fig:bin_distribution_linear} illustrates the resultant bin sizes for the set of Tweets, $T$, linearly binned with an exaggerated $B = 30$. The latter intervals are combined in the Figure for readability. The result of this means that there are significantly fewer feature instances representing Tweets with larger retweet counts.
+Since the distribution of retweet counts (expressed through retweet group sizes) is known \cite{webberley11}, then it is clear that this binning methodology would produce bins containing a very non-uniform distribution of Tweets, where the lower bin ranges would contain many Tweets and the cardinality of each category would decrease exponentially as the cateogories become higher. Figure \ref{fig:bin_distribution_linear} illustrates the non-uniformity of the resultant bin sizes for the set of Tweets, $T$, linearly binned even with an exaggerated $B = 30$. The latter intervals are combined in the Figure for readability. The result of this means that there are significantly fewer feature instances representing Tweets with larger retweet counts.
 
- Indeed, when training classifiers and running cross-validations on these, this binning scheme demonstrated a high accuracy of predictions on Tweets with lower values for $\rc{t}$ and a low accuracy for Tweets with higher counts. It would be more appropriate, and better address the desire for more universal use-cases expressed earlier in this and the previous chapter, if the accuracy of predictions could be more uniform across the bin ranges.
+Indeed, when training a Bayesian Network classifier and using it to run cross-validations on the retweet counts of Tweets in $T$, this binning scheme demonstrated a high accuracy of predictions on Tweets with lower values for $\rc{t}$ and a low accuracy for Tweets with higher counts. Table \ref{table:linear_bin_performance} shows this high precision and recall for the bin containing the majority of the Tweets, along with the very poor performance of the subsequent bins. Only the first ten bins are shown, since the remaining 20 bins produced precision and recall values of 0. It would be more appropriate, and better address the desire for more universal use-cases expressed earlier in this and the previous chapter, if the accuracy of predictions could be more uniform across the bin ranges.
 
-Various other methodologies were implemented, which eventually evolved into a histogram-based responsive binning algorithm. Essentially, this algorithm is based around the initial calculation for the projected size of each bin, which is obtained from the total number of Tweets to be categorised and the target number of bins. Each bin was then filled according to the interval range specifying the bounds of that bin, and in such a way as to ensure that each retweet count frequency would only be present in one bin. For example, all of the retweets achieving one retweet would be placed in the single bin encompassing this value.
+% Data from linear-distributed_comparison.txt
+\begin{table}[h]\footnotesize
+\begin{center}
+\begin{tabular}{ l | l | l }
+	Retweet count bin interval	& Precision & Recall \\
+	\hline
+	\hline 
+    {[0, 8109)}        &   1.0     &   0.956\\
+    {[8109, 16218)}    &   0.083   &   0.355\\
+    {[16218, 24327)}  &   0.134   &   0.315\\
+    {[24327, 32436)}  &   0.233   &   0.072\\
+    {[32436, 40545)}  &   0.0       &   0.0\\ 
+    {[40545, 48654)}  &   0.008   &   0.004\\
+    {[48654, 56763)}  &   0.105   &   0.109\\
+    {[56763, 64872)}  &   0.03    &   0.038\\
+    {[64872, 72981)}  &   0.008   &   0.174\\
+    {[72981, 81090)}  &   0.009   &   0.343\\
+    \hline  
+\end{tabular}
+\end{center}
+\caption{Cross-validation performance results for the first 10 bins produced through the linear binning method on retweet counts in $T$ with $B=30$}
+\label{table:linear_bin_performance}
+\end{table}
+
+A responsive approach dependent on the range and distribution of retweet counts would help in producing more evenly-filled bins and therefore increase the prediction performance across the different bins. A new methodlogy is proposed, following a retweet count distribution based approach, which uses the size of the Tweet set to be categorised and the bin count $B$ for dynamically generating interval ranges such that the cardinalities of each bin are as even as possible. Each bin can then be filled according to the bounds of its interval, and in such a way as to ensure that each retweet count frequency would only be present in one bin. For example, all of the retweets achieving one retweet would be placed in the single bin encompassing this value. Algorithm \ref{algo2} demonstrates this dynamic approach in more detail.
 
 As such, after the intervals representing the bin bounds have been produced, then these represent the nominal categories for the retweet count feature in each instance for training and testing against the classifier.
-
-
 
 \newfloat{algorithm}{H}{lop}
 \begin{algorithm}
@@ -184,25 +229,25 @@ As such, after the intervals representing the bin bounds have been produced, the
 \begin{algorithmic}[1]
 \Procedure{generate\_intervals}{set of Tweets $T$, number of bins $B$}
     \State $C\gets$ empty list \Comment{To hold ordered retweet counts}
-    \State $I\gets$ empty list \Comment{To hold bin range intervals}
+    \State $I\gets$ empty list \Comment{To represent bin range intervals}
     \ForAll{$t \in T$}
         \State Add $\rc{t}$ to $C$
     \EndFor
     \State Sort $C$ into ascending order 
     \State $M\gets\max(C)$ \Comment{Highest instance of $\rc{t}$}
-    \State $T\textrm{Sum}\gets\frac{|C|}{B}$ \Comment{Number of Tweets in each bin}
-    \State $H\gets$ empty dictionary \Comment{Histogram of retweet count distribution}
+    \State $T\textrm{Sum}\gets\lceil\frac{|C|}{B}\rceil$ \Comment{Number of Tweets to be held by each bin}
+    \State $H\gets$ empty dictionary \Comment{To represent the distribution of retweet counts}
     \Statex
     \ForAll{$c \in C$}
         \If{$c \in H$}
             \State Increment $H_c$
         \Else
-            \State $H_c\gets0$
+            \State $H_c\gets1$
         \EndIf
     \EndFor
-    \ForAll{$i$ in range $M+1$}
+    \ForAll{$i$ in range $1, ..., M+1$}
         \If{$i \in H$}
-            \State $s = s + H_i$
+            \State $s\gets s + H_i$
         \EndIf
         \If{$s \geq T\textrm{Sum}$}
             \State Add $i$ to $I$
@@ -214,76 +259,115 @@ As such, after the intervals representing the bin bounds have been produced, the
 \label{algo2}
 \end{algorithm}
  
-This new responsive method readily supports more uniform bin sizes, and copes with this by exhibiting exponentially larger bin \textit{ranges}. As such, the distribution of bin sizes is generally described by a distribution simular to that shown in Figure \ref{fig:bin-hist}. As with the linear method, the interval $[0,l)$ is pre-pended, where necessary, and $[m+1,\infty)$ is always appended in addition to the intervals produced by the algorithm.
+This method readily supports more uniform bin sizes, and copes with this by exhibiting exponentially larger bin \textit{ranges}. As with the linear method, the interval $[0,\min{A})$ is pre-pended, where the dataset requires it, and $[\max{A}+1,\infty)$ is always appended in addition to the intervals produced by the algorithm. The distribution of bins for the retweet counts for the Tweets in $T$ when binned through this method is illustrated by Figure \ref{fig:bin_distribution_distributed}. The same logarithmic scale is used as in Figure \ref{fig:bin_distribution_distributed} to help illustrate the greater uniformity in this dynamic method.
+
+%\begin{figure}[h]
+%\centering
+%\begin{tikzpicture}
+%\begin{semilogyaxis}[
+%    symbolic x coords={[0-1), [1-2), [2-3), [3-4), [4-5), [5-100)},
+%        ylabel=Cardinality of bin,
+%		xlabel=Bins,
+%        ybar,
+%        bar width=7pt,
+%        yticklabels={,,},
+%        xticklabels={,,}
+%        ]
+%   \addplot[plot 0,bar group size={0}{1}]
+%        coordinates {([0-1),100) ([1-2),50)  ([2-3),50) ([3-4), 50) ([4-5), 50) ([5-100), 25)};
+%\end{semilogyaxis}
+%\end{tikzpicture}
+%\caption{Example distribution of retweet count bin cardinalities under the responsive binning algorithm}
+%\label{fig:bin-hist}
+%\end{figure}
 
 \begin{figure}[h]
 \centering
 \begin{tikzpicture}
 \begin{semilogyaxis}[
-    symbolic x coords={[0-1), [1-2), [2-3), [3-4), [4-5), [5-100)},
-        ylabel=Cardinality of bin,
-		xlabel=Bins,
+    symbolic x coords={{[0,1)},{[1,3)},{[3,8)},{[8,16)},{[16,29)},{[29,58)},{[58,147)},{[147,512)},{[512,3301)},{[3301,810917)},{[810917,$\infty$)}},
+        ylabel=No. Tweets assigned to bin,
+        x tick label style={rotate=45, anchor=east},
+        x label style={at={(axis description cs:0.5,-0.4)},anchor=north},
+		xlabel=Bin intervals,
+        ymin=10e0,
         ybar,
         bar width=7pt,
-        yticklabels={,,},
-        xticklabels={,,}
+        width=15cm,
+        height=7cm
         ]
    \addplot[plot 0,bar group size={0}{1}]
-        coordinates {([0-1),100) ([1-2),50)  ([2-3),50) ([3-4), 50) ([4-5), 50) ([5-100), 25)};
-        
+        coordinates {({[0,1)},150609) ({[1,3)},21834) ({[3,8)},11462) ({[8,16)},8926) ({[16,29)},8487) ({[29,58)},8499) ({[58,147)},8136) ({[147,512)},8070) ({[512,3301)},8039) ({[3301,810917)},6655) ({[810917,$\infty$)},0)};
+   \draw [red] ({rel axis cs:0,0}|-{axis cs:{[0,1)},8023.9}) -- ({rel axis cs:1,0}|-{axis cs:{[810917,$\infty$)},8023.9}) node [pos=0.95, above] {$\lceil\frac{|C|}{B}\rceil$}; 
 \end{semilogyaxis}
 \end{tikzpicture}
-\caption{Visual example distribution of retweet count bin cardinalities under the responsive binning algorithm}
-\label{fig:bin-hist}
+\caption{Bin intervals and cardinalities for the retweet counts of Tweets in $T$ dynamically binned with $B=15$}
+\label{fig:bin_distribution_distributed}
 \end{figure}
 
-This method is responsive in that the bin ranges adapt to the variety and number of retweet counts available, and it always attempts to produce a similar number of bins to the target count. However, due to the disproportinately large number of small retweet groups, the bin sizes cannot be entirely uniform and this means that the number of bins returned will generally be smaller than the target number.
+The responsiveness stems from the fact that the bin ranges adapt to the variety and number of retweet counts present, and the method always attempts to produce a similar number of bins to the target count. However, due to the disproportinately large number of small retweet groups, the bin sizes cannot be entirely uniform and this means that the number of bins returned will generally be smaller than the target number. Furthermore, a single Tweet cannot exist in more than one bin concurrently. In the case of Figure \ref{fig:bin_distribution_distributed}, the number of Tweets with retweet count in the interval $[0,1)$ is greater than $\lceil\frac{|C|}{B}\rceil$, where $C$ is the ordered list of retweet counts of Tweets in $T$, resulting in a significantly larger first bin and a bin count of less than $B$. Without this particular feature, training Tweets with equal observed retweet count may be categorised into multiple bins, which may cause complications with the training and eventual testing of the model. 
 
-This also stems from the fact that a single retweet count cannot exist in more than one bin concurrently; for example, if the interval $[0,2)$ existed in a scenario, and the number of Tweets with retweet count equal to 0 or 1 is greater than the value for $T\textrm{Sum}$, which is often the case, then this will result in a larger bin. Without this particular feature, training Tweets with equal observed retweet count may be categorised into multiple bins, causing the eventual prediction accuracy to be reduced. 
+The performance given by cross validations of a Bayesian Network classifier on the retweet counts of Tweets in $T$ is given by Table \ref{table:distributed_bin_performance}. It is clear that the precision and recall accuracy is much more evenly balanced across the bin intervals generated by the dynamic method than those by the linear method, the latter of which are reported in Table \ref{table:linear_bin_performance}.
 
-Due to this dynamicity, the bin ranges and cardinalities produced by the algorithm vary across different datasets. As a result, the nominal bin categories generated for producing the value for $\uscore{t}$ from the user model trained from the complete set of collected Tweets posted by $\aut{t}{O}$ would be different from those categories generated for a different user. The intervals in each bin category are therefore reflective of the various numbers of retweets that each author's Tweets are likely to receive. 
+% Data from linear-distributed_comparison.txt
+\begin{table}[h]\footnotesize
+\begin{center}
+\begin{tabular}{ l | l | l }
+	Retweet count bin interval	& Precision & Recall \\
+	\hline
+	\hline 
+    {[0, 1)}           &    0.935   &   0.741\\
+    {[1,3)}             &   0.218   &   0.324\\
+    {[3,8)}             &   0.190    &   0.394\\
+    {[8,16)}            &   0.240   &   0.233\\
+    {[16,29)}           &   0.291   &   0.298\\
+    {[29,58)}           &   0.265   &   0.338\\
+    {[58,147)}          &   0.232   &   0.201\\
+    {[147,512)}         &   0.256   &   0.418\\
+    {[512,3301)}        &   0.527   &   0.508\\
+    {[3301,810917)}     &   0.519   &   0.709\\
+    \hline  
+\end{tabular}
+\end{center}
+\caption{Cross-validation performance results for the first 10 bins produced through the dynamic binning method on retweet counts in $T$ with $B=15$}
+\label{table:distributed_bin_performance}
+\end{table}
 
+Due to this dynamicity, the bin ranges and cardinalities produced by the algorithm vary across different datasets. As a result, the nominal bin categories generated for producing the value for $\ecg{t}$ from the user model trained from the complete set of collected Tweets posted by $\aut{t}{O}$ would be different from those categories generated for a different user. The intervals in each bin category are therefore reflective of the various numbers of retweets that each author's Tweets are likely to receive. 
 
-\section{`Twitter is a Memepool'}
-In 1976, Richard Dawkins coined the term `meme' to be defined as a ``unit of cultural transmission'' \cite{dawkins76}. The general idea behind memetics is as an analogy to biological genetics except, unlike genes, memes are entirely non-physical and represent a cultural idea or aspect or another human-based behaviour. The rise of social networks on the Internet has allowed the spread of memes to grow to the extent that they are sometimes now even represented by `physical' constructs, such as images.
+Thus, when testing against either the global or user models, the Tweets' retweet counts are predicted as \textit{nominal} counts equal to the upper bound of the bin category the Tweets are classified as. For example, consider a Tweet, $t$, to be tested against a classifier that was trained by a training set of Tweets that produced the bin intervals shown in Table \ref{table:distributed_bin_performance}. This Tweet has $\rc{t} = 20$, but is, in this example, classified as $\ec{t} =  {[8,16)}$, and therefore receives a score of $\score{t} = \frac{20}{16} = 1.25$.
 
-In genetics, a gene is a physical entity containing information and instructions. It is a unit of genetic inheritance, in that they are passed from parent to offspring through the act of reproduction, and the result of an organism having a gene is that the organism will express the features represented by that particular gene. These genes contain instructions that make up the features of an individual, such as physical characteristics like eye colour and height, and non-physical characteristics, including various aspects of personality.
+Similarly, when training, the bin intervals are first generated from the training set's retweet counts. Each Tweet then has its retweet count transformed into the generated nominal bin interval that surrounds the Tweet's retweet count before the model is trained. If the same training set is used as in the previous example and one of the Tweets in the set has a retweet count of 48, then this Tweet has its count transformed into the nominal {[29,58)} for training with.
+ 
 
-Organisms exist in an evironment that also has features, such as humidity, altitude, temperature, relationships to other organisms, and so on. If the genes of an organism are such that they cause the individual to be well-suited to its environment, then that organism has a better chance of survival and, therefore, a better chance of achieving reproduction.
-
-Memes are similar in that they are effectively made up of a set of features, or a `memome', such as the wordings of a particular phrase, or their relevance to other cultural aspects. These enable the meme to be less or more likely to be replicated in different environments, which is made up of the humans exposed to it and the interactions between them. For example, an Internet meme relating to the Star Wars movies would likely have a greater chance of being reproduced, through discussion and reposting, in an environment comprising a set of science-fiction fans than when amongst more mixed-interest groups.
-
-The meme is also a useful analogy in this thesis when describing the way in which Tweets undergo replication within Twitter. Like a meme, a Tweet has a specific set of features, such as the text it contains, the inclusion of any mentions or a URL, and so on, and it exists within an environment consisting of a set of interconnected users on the Twitter social graph. A particular Tweet would generally have a greater chance of `surviving' and being replicated, through the act of retweeting, amongst a certain subset of users intereconnected in a particular way than in other environments.
-
-As such, the Tweet features are analogous to the \textit{genes} of a genome, and the arrangement and type of users on the social graph that receive the Tweet and have an opportunity to assist in its propagation comprise the Tweet's \textit{environment}. Since the environment has previously been found to have a large effect on propagation, then these features are useful aspects to include as part of the improved methodology covered in this chapter.
-
-
-\section{Generating Values for $\ec{t}$}
-In order to generate the estimated retweet counts, a trained machine learning classifier is needed to make predictions on a set of feature instances. This section covers an overview of the classifier used for this purpose, including a justification in terms of an analysis of its performance.
+\section{Predicting Estimated Retweet Counts}
+Since the environment has previously been found to have a large effect on propagation, then the features describing a Tweet's author's relationships and local network activity  are a useful aid in feature selection, as described by references to memetics in the Background chapter. 
+ 
+In order to generate the estimated retweet counts, a trained machine learning classifier is used to make predictions on a set of instances made up from both environmental and Tweet features. This section covers the process of selecting a classifier and justifying its use in terms of analysing its performance.
 
 
 \subsection{The Classifier}
 An overview of machine learning classifiers and their processes was provided in the previous chapter. In that case, a logistic regression was used to generate a prediction on a binary retweet decision based on a small number of features. If the retweet count for the Tweet being trained or tested was greater than zero, then the retweet decision would be positive (\textsc{True}). Otherwise, the decision was negative (\textsc{False}).
 
-Presently, the new methodology involves the prediction of a retweet count category from a set of nominal values of cardinality greater than one. As mentioned, the instances of a particular Tweet and its evironment are categorised based on the value of the retweet count of the Tweet. Although this means that a degree of accuracy is sacrificed when training the classifier, it does mean that there are fewer categories for predictions on test Tweet feature instances, providing a higher confidence for each prediction made.
+The improved methodology proposed in this chapter involves the prediction of a retweet count category from a set of nominal values of cardinality greater than one. As mentioned, the instances of a particular Tweet and its evironment are categorised based on the value of the retweet count of the Tweet. Although this means that a degree of accuracy is sacrificed when training the classifier, it does mean that there are fewer categories for predictions on test Tweet feature instances, providing a higher confidence for each prediction made.
 
-The Bayesian network machine learning classifier was elected for use for the purposes required in this chapter. Use of this classifier in the social media domain is more rare than other classifiers, such as those involving a regression or a decision tree, but was selected for the various reasons highlighted later in this section.
+A Bayesian network machine learning classifier was elected for use for the purposes required in this chapter. Use of this classifier in the social media domain is more rare than other classifiers, such as those involving a regression or a decision tree, but was selected due to its performance and efficiency shown in Table \ref{table:classifierperformance}.  
 
 The Bayesian network is an unsupervised classifier since its learning algorithms do not simply determine the class of the outcome, the retweet count, from the attribute features alone \cite{friedman97}. Instead, a probabilistic graph is constructed based on the dependencies between the variables. The variable attributes form the nodes of the graph and edges between the nodes denote the dependencies (or lack thereof) between them.
 
-Thus, in the case of this research, the various Tweet and envirnomental features, including the nominal retweet count, form the nodes in the Bayesian Network. When forming the network through training, the dependencies and their probabilistic weightings are adjusted so that an expected value for the retweet count can then be `predicted' from the values of all the other variable attributes.
+In the case of this research, the various Tweet and envirnomental features, including the nominal retweet count, form the nodes in the Bayesian Network. When forming the network through training, the dependencies and their probabilistic weightings are adjusted so that an expected value for the retweet count can then be `predicted' from the values of all the other variable attributes.
 
 
 \subsection{Classification Performance}
 \label{section:classification_performance}
-When selecting classifiers, the Weka\footnote{http://www.cs.waikato.ac.nz/ml/weka} machine learning and data mining toolkit was used to evaluate the relative performance of various types of appropriate classifiers for the task. The classifiers were selected to cover a sample of the range of available classifier categories. Whilst some types may work inefficiently in this scenario, it is likely that they are more efficient when employed in different use-cases.
+In order to study and evaluate the relative performance of appropriate classifiers for selection for this task, the Weka\footnote{http://www.cs.waikato.ac.nz/ml/weka} machine learning and data mining toolkit was used. The classifiers were selected to cover a sample of the range of available classifier categories. Whilst some types may work inefficiently in this scenario, it is likely that they are more efficient when employed in different use-cases.
 
 Although the accuracy of prediction was important, it would also be useful for the classifier to be \textit{efficient} in training its model and when testing future instances against it. This is so that this method could be used to produce interestingness inferences with a more on-demand policy and to further improve on the methodologies used in the previous chapter.
 
 \begin{table}[h]\footnotesize
 \begin{center}
 \begin{tabular}{ l | c | c | c }
-	Classifier	& Precision & Accuracy (recall) &  training time (secs.) \\
+	Classifier	& Weighted average precision & Weighted average recall &  Training time (secs.) \\
 	\hline
 	\hline 
 	Simple logistic & 52\% &  56\% & 528\\
@@ -294,23 +378,23 @@ Although the accuracy of prediction was important, it would also be useful for t
     \hline  
 \end{tabular}
 \end{center}
-\caption{The training performance of different machine learning classifiers.}
+\caption{The performance of different machine learning classifiers in cross-validations on dataset $T_{p1}$.}
 \label{table:classifierperformance}
 \end{table}
 
-The Bayesian network was found to be accurate and time efficient when evaluating the performance of the set of evaluated classifiers. A dataset, obtained as part of the general data collection (please see the relevant section below) and which contains a set of over 57,000 Tweets, was identically used in each of the analyses. For each Tweet instance the same retweet count binning scheme was used, and each classifier performed the same number of cross-validations against the same dataset in order to obtain the precision and recall values.
+Table \ref{table:classifierperformance} shows the Bayesian network to be accurate and time efficient when evaluating the performance of the set of evaluated classifiers when running cross-validations on the dataset $T_{p1}$, which is a subset of $T$ and contains around 57,000 Tweets.  For each Tweet instance the same retweet count binning scheme was used, and each classifier performed the same number of cross-validations against the same dataset in order to obtain the precision and recall values.
 
 Although the dataset used in this analysis is not the complete set used in practice, the cardinality of the dataset was sufficient to cause the outputs to be indicative of the Bayesian network's relative advantages over the other assessed classifiers.
 
 
 \subsection{Effects of varying the Cardinality of Nominal Retweet Counts}
 \label{section:effects_of_varying_bin_sizes}
-Applying the continuous retweet count values to produce a set of nominal categories representing interval ranges of the retweet counts requires a certain balance. By reducing the number of target category bins then the classification accuracy increases, but the level of applicability of the eventual interestingness score for the wide range of retweet counts observed would be reduced. Inversely, with more bins, the classification accuracy reduces, as there would be fewer instances in each category, yet the scores would be apliccable to a wider range of retweet counts.
+Applying the continuous retweet count values to produce a set of nominal categories representing interval ranges of the retweet counts requires a certain balance. By reducing the number of target category bins then the classification accuracy increases, but the level of applicability of the eventual interestingness score for the wide range of retweet counts observed would be reduced since the \textit{granularity} of the predicted counts would also decrease. Conversely, with more bins, the classification accuracy reduces, as there would be fewer instances in each category, yet the scores would be apliccable to a wider range of retweet counts.
 
 \begin{table}[h]\footnotesize
 \begin{center}
 \begin{tabular}{ c | c | c | c }
-	Target bin count	& Resultant bin count & Precision &  Accuracy (recall) \\
+	Target bin count ($B$)	& Resultant bin count & Weighted average precision &  Weighted average recall \\
 	\hline
 	\hline 
     1 & 1 & 100\% & 100\% \\
@@ -326,40 +410,29 @@ Applying the continuous retweet count values to produce a set of nominal categor
     \hline  
 \end{tabular}
 \end{center}
-\caption{The effect of varying the number of nominal categories representing the retweet counts on the classification performance using a Bayesian network classifier}
+\caption{The effect of varying $B$ on the cross-validation performance using a Bayesian network classifier on dataset $T_{p2}$.}
 \label{table:binperformance}
 \end{table}
 
-Clearly, by increasing the number of nominal categories used, then the relative number of feature instances in each eventual interval decreases. These bins represent the nominal categories that each feature instance is classified as in relation to the predicted retweet count of the instance. Table \ref{table:binperformance} outlines the decrease in classification accuracy observed with increases in target bin count. The dataset used consisted of nearly 67,000 Tweets, also as part of the ongoing general data collection discussed in later sections, and the classifier used to conduct the analysis was a Bayesian network undergoing cross-validations on the same dataset.
+Clearly, by increasing the number of nominal categories used, then the relative number of feature instances in each eventual interval decreases. These bins represent the nominal categories that each feature instance is classified as in relation to the predicted retweet count of the instance. Table \ref{table:binperformance} outlines the decrease in classification accuracy observed with increases in target bin count using the dataset $T_{p2}$.
 
-It has already been discussed that the resultant bin count is usually likely to be less than that requested of the binning algorithm. This is due to the long-tail distribution of retweet counts referred to previously. In the upcoming experimentations the algorithm tried to produce, where possible, about ten nominal bins for use with training and testing against the general global dataset for the purposes of generating the global expected retweet count. Since each user's own retweet count ranges were different, the number of categories were calculated individually for producing the user-centric expected retweet counts as part of calculating values for $\uscore{t}$.
+In the upcoming experiments a value of $B = 10$ was used, which yielded ten nominal retweet count categories for use in training and testing against the general global dataset for the purposes of generating the global expected retweet count. Since each user's own retweet count ranges were different, the number of categories were calculated individually for producing the user-centric expected retweet counts as part of calculating values for $\uscore{t}$.
 
 
 \section{Training and Testing Against the Classifier}
-This section discusses the processes used behind the calculation of interestingness scores for Tweets through the generation of expected retweet counts using the methodologies outlined in the previous sections. Particular focus is lended to the data collection and the features extracted from the resultant data corpora.
-
-% TIDY THIS SECTION
-
-%\subsection{Collecting the Training and Testing Data}
-%In order to train the model on a set of Tweets and then use it to make predictions, data was required for collection from Twitter. This data could then be divided up when required, as described below.
-
-%Since, in this case, it was necessary to collect the Tweet data along with each Tweet's numeric retweet count, rather than the binary nominal yes/no required in the previous chapter, only the retweets of a particular Tweet that had been created using the button method could be considered. This is because a Tweet's retweets executed using the manual copy and paste method do not contribute to the Tweet's official, and observable, retweet count that is returned from Twitter's API. This is not considered to be a limitation, however, since this factor is considered consistently through the training and later evaluation of the trained model.
-
-%In March 2013, a random walk was conducted through Twitter's social graph using v1.1 of Twitter's REST API. Although this date was before the mandatory transfer to this version of the API, the crawler method was used in preference over collecting from the public API, which was deprecated and removed in v1.1, so that user data could be collected, as described, for the environmental training features.
-
-%The walk originated with one Twitter user, and each stage consisted of focusing on one user before selecting another one from the followers of the currently focused user. As such, the crawler is very similar to that used in the latter sections of the previous chapter. At each step of the crawl, a set of the most recent Tweets authored by the current user were collected. The number of Tweets obtained for each user had various dependencies, such as the user's Tweet-posting frequency and the number of Tweets in total posted by the user. Usually, several hundredf Tweets from each user were yielded. In addition to the Tweet data, information on the user itself was collected as well as on a sample subset of up to 100, if they exist, of each of its friends and followers.
-
-%A sample subset of friends and followers was used instead of the complete set for the purposes of efficiency and to address the associated limitation in the previous interestingness inference methodology, yet it still provides an example snapshot of up to an additional 200 users in the author user's local network in order to provide some idea of the activity within the local network both upstream and downstream from the author user. Around ten API calls were required to obtain this information for each user, giving it immediate advantages over the older method. 
-
-%The data collection crawl resulted in a dataset containing around 241,000 Tweets authored by 370 unique Twitter users. Of those Tweets, around 90,000 were cases in which the retweet count was greater than zero. The partial datasets as subsets of the complete set, obtained up until various intermediate points of the entire collection, were those used by the classifier and binning performance analyses in the previous section. Importantly, Tweets from many different types of user were collected; from less-active users with very few followers and friends to influential users and celebrities with millions of followers and achieving many thousand retweets. The collection of this range of users will help demonstrate if this new methodology is able to correctly assess a wider range of users and Tweets.
+This section discusses the processes used to calculate interestingness scores for Tweets through the generation of expected retweet counts using the methodologies outlined in the previous sections. Particular focus is lended to the managing of the data corpora and feature extraction.
 
 
 \subsection{Data Corpora}
-After collection, the complete data was divided into two datasets; a training set, consisting of 90\% of the entire set, and a testing dataset, consisting of the remaining 10\%. The original set was divided in such a way as to ensure that all of the Tweets authored by one particular user existed in only one of the two resultant datasets. After being used to train the Bayesian network model, the larger dataset was then discarded from use for the rest of the experimentation.
+The dataset $T$ was collected, as described earlier, and is used for training the model and for validity testing. As such, $T$  was divided into two datasets; a training set, denoted \trainset{} and consisting of 90\% of the entire set, and a testing dataset, denoted by \testset{} and consisting of the remaining 10\%. $T$ was divided in such a way as to ensure that all of the Tweets authored by one particular user existed in only one of the two resultant datasets. After being used to train the Bayesian network model, \trainset{} was then discarded from use for the rest of the experimentation.
 
-As has been previously mentioned, of interest is the generation of \textit{two} interestingness scores for each Tweet, $t$; one based on a comparison between $\rc{t}$ and an $\ec{t}$ produced from the global model, and the other between $\rc{t}$ and an $\ec{t}$ produced from $\aut{t}{O}$'s user model. As such, each Tweet requires the two models in order to provide the predicted values for $\ec{t}$. To assist with this, individual user datasets were extracted from the testing dataset, each containing information only on that particular user and its local network and its Tweets, from which individual user Bayesian network models could be trained.
+In order to support the user scores, in addition to the global scores, further datasets are required to be extracted from \testset{} to produce an individual \userset{u} for each $t \in $\testset{} where $\aut{t}{O} = u$. Each of these subsets contains the Tweets written by and information about that particular user, and can be used to train an individual Bayesian network classifier specific to the user. \testset{} is therefore referred to as the `global' Tweet corpous for testing against the global model to generate global Tweet scores, and \userset{u} is referred to as the `user' Tweet corpus for user $u$ in order to train that author's user model and for testing the Tweets it posts to generate \textit{user} Tweet scores. Each Tweet, $t$, therefore, can be evaluated against both the global model and its author's user model in order to respesctively produce values for $\ecg{t}$ and $\ecu{t}$.
 
-The complete testing dataset is referred to as the `global' corpus of Tweets, and each individual user dataset is known as a `user' corpus.
+It should be noted that the same user corpus is used for both training the model and for testing against in the validations of the user scores. This is due to the relatively low number of Tweets available for training each individual user model, and so re-use of the Tweets is necessary for the research in this chapter. The process for generating the global scores still maintains distinct datasets for training (\trainset{}) and testing (\testset{}).
+
+%As has been previously mentioned, of interest is the generation of \textit{two} interestingness scores for each Tweet, $t$; one based on a comparison between $\rc{t}$ and an $\ec{t}$ produced from the global model, and the other between $\rc{t}$ and an $\ec{t}$ produced from $\aut{t}{O}$'s user model. As such, each Tweet requires the two models in order to provide the predicted values for $\ec{t}$. To assist with this, individual user datasets were extracted from the testing dataset, each containing information only on that particular user and its local network and its Tweets, from which individual user Bayesian network models could be trained.
+
+%The complete testing dataset is referred to as the `global' corpus of Tweets, and each individual user dataset is known as a `user' corpus.
 
 
 
@@ -417,20 +490,20 @@ The network features listed apply to both samples of the followers and friends r
 
 It should be noted that although the Tweet features, aside from the retweet count as has already been discussed, are permanent after the Tweet has been created and posted, the author and network features are more dynamic due to the continuous mutations in the social graph as edges representing followships are constantly being formed and broken between the user nodes. In this thesis, it is assumed that changes to the features representing these factors were not significant over the period of posted Tweets for each user, and the effect is minimised through consideration only of the recent Tweets of each author user.
 
+After training the classifier with these features, each Tweet, $t \in$ \testset{} was tested against the model in order to assign it a numeric global score, $\gscore{t}$.
+
 
 \subsubsection{Features for individual user models}
-Since the author and network features have identical values in the instances representing all of the Tweets from one particular user, then these features were not considered when training and testing using the user models.
+Since the author and network features have identical values in the instances representing all of the Tweets from one particular user, then these features were not considered when training and testing using the user models. As such, the 10 Tweet features were those used in the feature instances in training, and testing against, each user model.
 
-As such, the 10 Tweet features were those used in the feature instances in training, and testing against, each user model.
+After training each user classifier with the features representing that particular user and its Tweets, each Tweet $t \in$ \testset{} was tested against the classifier model representing the features of $\aut{t}{O}$ in order to assign it a numeric user score, $\uscore{t}$.  
 
- 
-
-\subsection{Testing Against the Trained Classifier}
-Once the feature extraction was completed and the instances were built for the global training dataset and each individual user set, the models were trained as described above.
-
-In order to produce the expected \textit{global} retweet counts, each Tweet $t \in T$, where $T$ represents the entire \textit{test} dataset, had its features extracted and was evaluated against the global model. This classified each Tweet into one of the categories given by that Tweet's predicted retweet count, and the top interval of the expected retweet outcome category became the \textit{expected} retweet count for that particular Tweet. Similarly, the expected \textit{user} retweet counts were produced in the same way, but instead each Tweet was classified by the user model associated with that Tweet's author.
-
-In each case, the two interestingness scores for each Tweet could be calculated, based on the process described earier, using the ratio between the Tweet's two expected retweet counts and its \textit{observed} retweet count stored as part of the data collection from Twitter. This meant that each Tweet $t \in T$ then had two numeric scores, $\uscore{t}$ and $\gscore{t}$, assigned to it. 
+%\subsection{Testing Against the Trained Classifier}
+%Once the feature extraction was completed and the instances were built for the global training dataset and each individual user set, the models were trained as described above.
+%
+%In order to produce the expected \textit{global} retweet counts, each Tweet $t \in $\testset{} had its features extracted and was evaluated against the global model trained from \trainset{}. This classified each Tweet into one of the categories given by that Tweet's predicted retweet count, and the top interval of the expected retweet outcome category became the \textit{expected} retweet count for that particular Tweet. Similarly, the expected \textit{user} retweet counts were produced in the same way, but instead each Tweet was classified by the user model associated with that Tweet's author.
+%
+%In each case, the two interestingness scores for each Tweet could be calculated, based on the process described earier, using the ratio between the Tweet's two expected retweet counts and its \textit{observed} retweet count stored as part of the data collection from Twitter. This meant that each Tweet $t \in T$ then had two numeric scores, $\uscore{t}$ and $\gscore{t}$, assigned to it. 
 
 
 
