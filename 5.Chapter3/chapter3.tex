@@ -490,7 +490,7 @@ The network features listed apply to both samples of the followers and friends r
 
 It should be noted that although the Tweet features, aside from the retweet count as has already been discussed, are permanent after the Tweet has been created and posted, the author and network features are more dynamic due to the continuous mutations in the social graph as edges representing followships are constantly being formed and broken between the user nodes. In this thesis, it is assumed that changes to the features representing these factors were not significant over the period of posted Tweets for each user, and the effect is minimised through consideration only of the recent Tweets of each author user.
 
-After training the classifier with these features, each Tweet, $t \in$ \testset{} was tested against the model in order to assign it a numeric global score, $\gscore{t}$.
+After training the classifier with these features from the set \trainset{}, each Tweet, $t \in$ \testset{} was tested against the model in order to classify it into a retweet outcome category, as described above. The upper bound of this category interval is then used, along with $\rc{t}$ to assign $t$ a numeric global score, $\gscore{t}$.
 
 
 \subsubsection{Features for individual user models}
@@ -508,30 +508,40 @@ After training each user classifier with the features representing that particul
 
 
 \section{Initial Validations of the Scoring Methodologies}
-In a way similar to in the previous chapter, tests are required in order to ensure the validity of the interestingness scores applied to each of the Tweets in the testing dataset. By running these validations, the relative performance of the scoring mechanism can be assessed, and the comparative performance of the two scores, $\uscore{t}$ and $\gscore{t}$ can be evaluated.
+In order to verify the accuracy of the assignment of both of the scores to each Tweet in \testset{}, validation tests by human participants was required. Through running these validations, the relative performance of the scoring mechanism can be assessed, and the comparative performance of the two scores, $\uscore{t}$ and $\gscore{t}$ can be evaluated.
+
+Mechanical Turk was again used to crowdsource inputs from MTWs, as this would facilitate the obtaining of interestingness evaluations from a wider range of human opinion.
 
 
 \subsection{Planning the Validations}
-It was decided that crowdsourcing through Crowdflower and Mechanical Turk, again, would be used to validate the new scoring mechanism, as this would facilitate interestingness evaluations from a wider range of human input. The MTWs taking part would not be associated with the collected Tweets in any way, and thus this assists in the identification of the non-noisy Tweets that are `globally' interesting and are those that the scores have theoretically determined as `interesting'.
+The MTWs taking part would not be associated with the collected Tweets in any way, and thus this assists in the identification of the non-noisy Tweets that are `globally' interesting and are those that the scores have theoretically determined as `interesting'.
 
-Certain Tweets and users were removed, at this stage, from the dataset of Tweets to be assessd by the MTWs. Since the Tweet data was collected through a random crawl through Twitter and no checks were placed on the crawler at that stage, there was no governance over the content of the text in each Tweet of the data. Thefore, users who frequently used offensive phrases or wrote Tweets in non-English had their Tweets removed. The reasoning behind the latter point is based on the fact that the Mechanical Turk microtasks were submitted to be completed by people living in the USA. As before, individual Tweets that were `@-replies' were also stripped so that only Tweets intended to be broadcasts were included in the final MTW test set.
+At this stage, certain Tweets and users were removed from \testset{}. Since the Tweet and user data was collected as part of a random crawl, there was no governance over the content of the Tweets collected. As such, users who frequently used offensive phrases or did not write Tweets in English had their Tweets removed from \testset{} for the validations, since the Mechanical Turk microtasks were submitted to be assessed by MTWs from the USA. As before, individual Tweets that were `@-replies' were also removed so that only Tweets intended for broadcast were included in the final set to be evaluated.
+
+%Certain Tweets and users were removed, at this stage, from the dataset of Tweets to be assessd by the MTWs. Since the Tweet data was collected through a random crawl through Twitter and no checks were placed on the crawler at that stage, there was no governance over the content of the text in each Tweet of the data. Thefore, users who frequently used offensive phrases or wrote Tweets in non-English had their Tweets removed. The reasoning behind the latter point is based on the fact that the Mechanical Turk microtasks were submitted to be completed by people living in the USA. As before, individual Tweets that were `@-replies' were also stripped so that only Tweets intended to be broadcasts were included in the final MTW test set.
 
 
-\subsection{Validating the Methodology Outcomes}
-In the context of this validation scheme, the MTWs were random Amazon account-holders on Mechanical Turk, had no connection to the Tweets they were evaluating, and were not required to hold an acticve Twitter account. By not determining the humans to make the assessments, a more diverse opinion on the interestingness can be achieved, as the different users will have varying considerations on what contstitutes `noise' and will therefore form a more diverse opinion and further reinforce a decision when multiple MTWs form agreements on what is interesting. 
+\subsection{Carrying Out the Validations}
+In the context of this validation scheme, MTWs were not required to hold an active Twitter account. By not determining the humans to make the assessments, a more diverse opinion on the interestingness can be achieved, as the different users will have varying considerations on what contstitutes `noise' and will therefore reinforce a decision when multiple MTWs form agreements on what is interesting. 
 
-The validations were carried out such that the MTWs were presented with a series of questions, each of which consisting of five different Tweets from \textit{one} specific author. As such, Tweets were assessed against others than had been posted by the same user. In each question, the MTWs were asked to select the Tweets that they consider to be the most interesting of the group, and that they must select at least one Tweet for each question. For each judgment, where a judgment is one question answered with one or more Tweets selected, MTWs were paid \$0.05.
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.7]{5.Chapter3/Media/questions1.png} 
+\caption{An example validation question.}
+\label{fig:example_question1}
+\end{figure}
+
+The validations were carried out such that the MTWs were presented with a series of questions, each of which consisting of five different Tweets from \textit{one} specific author. An example question is shown in Figure \ref{fig:example_question1} and, as such, Tweets were assessed against others that had been posted by the same user. In each question, the MTWs were asked to select the Tweets that they consider to be the most interesting of the group, and that they must select at least one Tweet for each question. For each judgment, where a judgment is one question answered with one or more Tweets selected, MTWs were paid \$0.05. Given the relative shortness of each Tweet, each judgment was expected to take less than 30 seconds to complete (including quickly visiting URLs in those Tweets that contained them), meaning that MTWs would be paid an average of at least \$6.00 per hour if completed continuously. This rate is generally acceptable for workers completing this type of easier, multiple-choice task and for newer workers\footnote{http://blog.echen.me/2012/04/25/making-the-most-of-mechanical-turk-tips-and-best-practices}.
 
 The test was conducted under the condtitions of a randomised controlled trial. To this end, each Tweet was assessed in three different contexts, in that it would appear in three different questions alongisde four other randomly chosen Tweets, and that each question would then be judged by three different MTWs.
 
-From the stripped testing dataset, 750 Tweets were selected, at random, to be divided by the author user into the questions to be assessed on Mechanical Turk. Since each Tweet was to appear in three different questions and since each question consisted of five unique Tweets, then this resulted in a total of 450 distinct questions. Each of these questions was then judged by three different MTWs.
+From the stripped testing dataset, 750 Tweets were selected, at random, to be divided by user into the questions to be assessed on Mechanical Turk. Since each Tweet was to appear in three different questions and since each question consisted of five unique Tweets, then this resulted in a total of 450 distinct questions. Each Tweet was assessed as part of a question nine times in total. 
 
 
 \subsection{Outcomes From the Validations}
-The validation test involved contributions from 91 different MTWs, demonstrating the wide diversity of human input attainable in validations employing crowdsourcing in this way. From these MTWs, 325 of the 450 questions in total asked had responses where a Tweet was selected with a confidence of two-thirds or greater. Since the MTWs had the opportunity to select more than one Tweet of each question to be the most interesting, there were 349 Tweets of the original 750 Tweets, denoted as $T' : T' \subset T$, that were selected as sufficiently interesting by the MTWs. Tweets selected from individual questions that did not have sufficient confidence were discarded.
+The validation test involved contributions from 91 different MTWs in total, and 325 of the 450 questions in total asked had responses where a Tweet was selected \textit{confidently}. A confidently-answered question is defined as the case when at least two of the three respondent MTWs answering that question selected the same Tweet. Since the MTWs had the opportunity to select more than one Tweet of each question to be the most interesting, there were 349 Tweets of the original 750 Tweets, denoted as $T' : T' \subset$\testset{}, that were selected as sufficiently interesting by the MTWs. Tweets selected from individual questions that did not have sufficient confidence were discarded.
 
-The remainder of this section analyses the validation data in various ways to demonstrate the strengths and weakenesses of the interestingness score inferences. Of immediate notice was the comparitive difference between the two different scoring mechanisms for each Tweet $t$; $\gscore{t}$ and $\uscore{t}$. The inference validation results are not significant between the use of the two scores in any of the analyses conducted. As such, the following analyses concern only the use of $\gscore{t} \forall t \in T'$.
-
+The remainder of this section analyses the validation data in various ways to demonstrate the strengths and weakenesses of the interestingness score inferences. Of immediate notice was the comparitive difference between the two different scoring mechanisms for each Tweet $t$; $\gscore{t}$ and $\uscore{t}$. The inference validation results are not significant between the use of the two scores in any of the analyses conducted. 
 
 \subsubsection{General Performance}
 
@@ -547,7 +557,7 @@ The remainder of this section analyses the validation data in various ways to de
         legend style={nodes=right},
         ybar,
         bar width=7pt,
-        legend entries={ Chosen Tweets ($T'$),  All Tested Tweets ($T$)}
+        legend entries={$T'$,  \testset{}}
         ]
    \addplot[plot 0,bar group size={0}{2}]
         coordinates {({[0,1)},76.30057803) ({[1,2)},7.514450867)  ({[2,3)},4.335260116) ({[3,4)}, 1.445086705) ({[4,5)}, 2.023121387) ({[5,100)}, 6.936416185)};
@@ -556,13 +566,21 @@ The remainder of this section analyses the validation data in various ways to de
         
 \end{semilogyaxis}
 \end{tikzpicture}
-\caption{Proportionate frequency distribution of $\gscore{t} \forall t \in T$ compared to only those $\gscore{t} \forall t \in T'$}
+\caption{Proportionate frequency distribution of $\gscore{t} \forall t \in$\testset{} compared to only those $\gscore{t} \forall t \in T'$}
 \label{fig:hist}
 \end{figure}
 
-Of the subset $T'$, the scoring mechanism found 140 of the Tweets to have a value of $\gscore{t} > 1$, and thus inferred as interesting. Of these, 65\% were agreed on as interesting by the MTWs. The performance of the $\uscore{t}$ was worse in providing a 55\% agreement, resulting in a general of 60\% agreement on the mean of the two scoring schemes. It is also demonstrable that the proportionate frequency of Tweets with higher values of $\gscore{t}$ is greater in the subset $T'$ than in $T$. This implies that, on average, the MTWs were selecting and agreeing on Tweets being interesting that had a higher score than those that were \textit{not} selected. Further to this, there is a greater proportion of Tweets with lower scores ($0 \leq \gscore{t} < 1$) in $T$ than in $T'$, and a greater proportion of higher values for $\gscore{t}$ in $T'$ than in $T$.
+Of the subset $T'$, the scoring mechanism found 140 of the Tweets to have a value of $\gscore{t} > 1$, and thus inferred as \textit{more} interesting than the remaining Tweets. Of these, 65\% were agreed on as interesting by the MTWs. The performance of the $\uscore{t}$ was worse in providing a 55\% agreement, resulting in a general of 60\% agreement on the mean of the two scoring schemes.
 
-This means that, in general, the humans were marking a greater number of Tweets as interesting that were inferred as interesting by the scores than ones that \textit{weren't} inferred as interesting. Although this demonstrates a clear advantage on the binary inference of interestingness over the methodologies in the previous chapter, this analysis does not consider how well the scheme is able to \textit{rank} Tweets in order of interestingness.
+\begin{myobservation}
+    Although not significant, the general performance accuracy is demonstrably greater when using the \textbf{global} scoring scheme than the \textbf{user} scores.
+\end{myobservation}
+
+It is also the case that the proportionate frequency of Tweets with higher values of $\gscore{t}$ is greater in the subset $T'$ than in $T$. This implies that, on average, Tweets selected by MTWs have a higher score than those not selected, as is shown in Figure \ref{fig:hist}. Additionally, a greater proportion of Tweets with $\gscore{t} < 1$ were in \testset{} than in $T'$ and a greater proportion of Tweets with $\gscore{t} > 1$ were in $T'$ than in \testset{}.
+
+\begin{myobservation}
+    MTWs select, on average, more Tweets with an `interesting score' ($\gscore{t} > 1$) than Tweets with a `non-interesting score' ($\gscore{t} < 1$).
+\end{myobservation}
 
 
 \subsubsection{Ranking Performance}
@@ -573,15 +591,15 @@ In order to assess the ability of the scores to effectively rank Tweets in order
 \centering
 \begin{tikzpicture}
  \begin{axis}[
-        xlabel=Chosen Tweet in top \textit{n} of ranked Tweets in question,
-        ylabel=Likelihood of occurrence (\%),
+        xlabel=$n$,
+        ylabel=Likelihood of selection (\%),
         grid = major,
         legend entries={where $\gscore{t^q_1} \geq 0$, where $\gscore{t^q_1} \geq 1$, where $\gscore{t^q_1} \geq 2$, where $\gscore{t^q_1} \geq 6$, random performance},
-		legend style={at={(2,0.5)}},
+		legend style={at={(1.7,0.5)}},
 		xmin=0, xmax=5,
 		ymin=0, ymax=100
 		]
-	\addplot[mark=+,black] plot coordinates {
+	\addplot[mark=*,black] plot coordinates {
         (0,0) (1,50.8) (2,85.3) (3,94.3) (4,98) (5,100)
         };
         
@@ -599,25 +617,37 @@ In order to assess the ability of the scores to effectively rank Tweets in order
     };
 \end{axis}
 \end{tikzpicture}
-\caption{The probability of a selected Tweet's $\score{t}$ being in the top \textit{n} of \textit{ranked} Tweets for that question. Also illustrating the effect of raising the minimum allowed $\gscore{t^q_1} \forall q \in Q$}
+\caption{Likelihood of MTWs selecting one of the top $n$ Tweets ranked by $\gscore{t}$ in each $q \in Q$. Also illustrating the effect of raising the minimum allowed $\gscore{t^q_1}$}
 \label{fig:score-dist}
 \end{figure}
 
-These questions are those that were assessed by the MTWs and where a particular question, $q \in Q$, where $Q$ is the set of all 450 questions, is comprised of a set of Tweets such that $|q| = 5 \forall q \in Q$. In order to conduct this analysis, each question $q$ had its five Tweets $t \in q$ ranked in order of ascending $\gscore{t}$, such that;
+Let $q$, which represents a particular question containing five Tweets, $t^q_i \forall 1 \leq i \leq 5$, be ranked in order of ascending interestingness score such that;
 \[
     q = (t^q_1, t^q_2, t^q_3, t^q_4, t^q_5)
 \]
-and where; 
+where; 
 \[
     \gscore{t^q_1} \geq \gscore{t^q_2} \geq ... \geq \gscore{t^q_5}
 \]
-In cases where $\sum\limits_{i=1}^5 \gscore{t^q_i} = 0$, then that $q$ was removed from $Q$ and discarded from the analysis.
 
-Calculations were then made on the number of times the MTWs selected a Tweet as interesting that appeared in the top $n$ of the ranked list Tweets for each $q \in Q$. For example, in the case of $n=2$ with a set of ten questions, if the MTWs selected one of the top two of Tweets in five of ten cases, then the chance of this occurring is 0.5. Figure \ref{fig:score-dist} illustrates the relationship between increasing values of $n$ and this calculation on likelihood of selection. Although the `random' performance represents the relative likelihoods of a random selection being made when only one Tweet is selected from each question, the vast majority of questions were actually answered with only one Tweet selected. Further analysis to cover the consideration of this particular point is conducted later on in this chapter.
+Let $Q$ be the set of 450 such ordered questions asked of the MTWs, such that;
+\[
+    Q = \left\{q_1, q_2, ..., q_{450}\right\}
+\]
+
+In cases where $\sum\limits_{j=1}^5 \gscore{t^{q_i}_j} = 0$, $q_i$ is removed from $Q$ as none of $t^{q_i}_1,..., t^{q_i}_5$ have been ranked as more interesting than one another. 
+
+Given that the Tweets in each question, $q \in Q$, have been ranked in order of inferred interestingness, of relevance is the likelihood of MTWs selecting one of the first $n$ of the Tweets in $q$. For example, consider the case of $n=2$ with a set of ten questions, $Q'$. If the MTWs selected Tweet $t^{q}_1$ or $t^{q}_2$ in five instances of $q \in Q'$, then the average likelihood of selecting one of the top $n=2$ Tweets for all $q \in Q'$ is 0.5.
+
+Figure \ref{fig:score-dist} illustrates the relationship between increasing values of $n$ and this calculation on likelihood of selection. Although the `random' performance represents the relative likelihoods of a random selection being made when only one Tweet is selected from each question, the vast majority of questions were actually answered with only one Tweet selected. Further analysis to cover the consideration of this particular point is conducted later on in this chapter.
 
 %Further to this, the minimum allowed value of $\gscore{t^q_1}$, which represents the highest score of all $t \in q$, was varied with the aim of demonstrating that the detection of more interesting Tweets can be more accurate when the relative score \textit{range} of a particular question is more disparate.
 
 When considering cases where the most interesting Tweet in a particular question is, indeed, inferred as interesting ($\gscore{t} \geq 1$), then the MTWs selected one of the \textit{top two} Tweets in around 66\% of cases, and they selected one of the \textit{top three} ranked Tweets in 87\% of the questions. This demonstrates the method's ability of being able to effective rank Tweets in agreement with humans in identifying information from the noise around them.
+
+\begin{myobservation}
+    MTWs select one of the top two highest-scoring Tweets in 66\% of the questions in $Q$ that contain at least one interesting Tweet ($\gscore{t^q_1} \geq 1$).  
+\end{myobservation}
 
 
 \subsubsection{Probability of Selection}
