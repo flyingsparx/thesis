@@ -1,58 +1,61 @@
 \chapter{Analysis of Twitter's Social Structure}
 
-Research so far has focussed on the propagation of information through Twitter's social graph as a result of retweeting. In particular, the research provided an understanding of the patterns produced through retweets and how their properties relate to the users that relay the Tweets.
+Research so far has focussed on the propagation of information through Twitter's social graph as a result of retweeting. In particular, this research provided an understanding of the patterns produced through retweets and how their properties relate to the users that relay the Tweets.
 
-Of particular interest is the social graph underlying Twitter, which describes how users are interconnected and which fundamentally dictates the information flow. It has been discussed that users with a higher follower count are more likely to have their Tweets retweeted, due to there being more users available to \textit{see} each Tweet, and that some users can have their Tweets forwarded through many hops indeed, so that information may be passed between different communities of users.
+Of specific interest is the social graph underlying Twitter, which describes how users are interconnected and which fundamentally dictates the information flow. It has been discussed that users with a higher follower count are more likely to have their Tweets retweeted, due to there being more users available to \textit{see} each Tweet, and that some users can have their Tweets forwarded through many hops indeed, so that information may be passed between different communities of users.
 
-In addition to the effects of user influence,  several other factors also influence an individual retweet decision of a given user for a particular Tweet. These include its properties, such as whether, or not, it contains a URL, whether it mentions a particular user, whether the user even has an opportunity to \textit{view} the Tweet, and so on. These factors account for the individual user's retweet decision and the almagamation of every user's retweet decision on the Tweet describes its overall retweetability, which essentially determines how far it can propagate.
+In addition to the effects of user influence,  several other factors also influence an individual retweet decision of a given user for a particular Tweet. These include its properties, such as whether, or not, it contains a URL, whether it mentions a particular user, whether the user even has an opportunity to \textit{view} the Tweet, and so on. These factors account for the individual user's retweet decision and the almagamation of every user's retweet decision on the Tweet describes its overall retweetability, which determines how far it can propagate.
 
 However, it is believed that the topology of the network, below the level of user influence and other factors, can play an important role in facilitating (or inhibiting) Tweet propagation by constraining the available retweet pathways between users and communities. Whilst retweet decisions based on Tweet features alone, such as its actual text or the contents of a document a URL it contains refers to, may imply a level of interest in the Tweet, clearly the influence of users can have a very large impact on how many retweets a certain Tweet receives. Thus, abstracting the concepts away from user influence may help in discovering methods for deducing which information is actually interesting.
 
-Twitter's social structure has earlier been described as being built from users creating edges between themselves through the act of \textit{following}. A followship defines the direction of travel of information from the friend to the follower, and this illustrates how users with many followers immediately have their Tweets made available to many more users before any retweeting even takes place. As more edges are constructed between users, the initial audience in terms of the number of users directly receiving the Tweets is increased, and, when the addition of retweets is considered, this effect is amplified. Although other intervening factors have been mentioned earlier, such as the notion of a user's network awareness and of user influence, the organisation of users on the graph and the differences in observed propagation pattern is a promising route for research towards uncovering the properties surrounding interestingness.
+Twitter's social structure has earlier been described as being built from users creating edges between themselves through the act of \textit{following}. A followship defines the direction of travel of information from the friend to the follower, and this illustrates how users with many followers immediately have their Tweets made available to many more users before any retweeting even takes place. As more edges are constructed between users, the initial audience in terms of the number of users directly receiving the Tweets is increased, and, when the addition of retweets is considered, this effect is amplified. Although other intervening factors have been mentioned in earlier chapters, such as the notion of a user's network awareness and of user influence, the organisation of users on the graph and the differences in observed propagation pattern is a promising route for research towards uncovering the properties surrounding interestingness.
 
-In this chapter, various social network structures are constructed in order to simulate retweet behaviour between users on Twitter. The behaviours are studied with the aim of researching the propagation patterns observed in different network structure types. Non-realistic and realistic graphs are built in order to highlight the low-level propagation characteristics in these networks and the similarities between more realistic simulated networks and Twitter's own social graph. This research is then used to generate a methodology for estimating Tweet interestingness based on an \textit{expected} Tweet popularity, as is discussed further later in the chapter.
+In this chapter, various social network structures are constructed in order to simulate retweet behaviour between users on Twitter. The behaviours are studied with the aim of researching the propagation patterns observed in different network structure types. Non-realistic and realistic graphs are built in order to highlight the low-level propagation characteristics in these networks and the similarities between more realistic simulated networks and Twitter's own social graph. 
+
+This research forms a basis for simulations of Tweets through Twitter's social graph as part of the development of a methodology  for estimating Tweet interestingness from an \textit{expected} level of Tweet popularity. 
+ 
 
 \section{Propagation Patterns Exhibited by Different Graph Structures}
-In the previous chapters it has been realised that certain Tweets with particular properties may imply a certain quality that affects a user's retweet decision on the Tweet. However, in addition to Tweet quality, of interest also is the potential presence of a graph `quality', in that particular network structures may possess benefits for propagation, or at least have an effect on how Tweets are spread.
+Although it has been found that Tweets with particular properties may imply a certain quality that affects a user's retweet decision on the Tweet, of interest also is the effect of the  potential presence of a graph `quality', in that particular network structures may have an effect on how Tweets are spread.
 
 
 In this section, to help in addressing this research area, simulations are carried out in three different network topologies - a path (or `linear') network, a random network, and a scale-free network. In the experiments, individual user \textit{decisions} are used as the bases for demonstrating retweet behaviour.  
 
-The simulation algorithm and ideas behind the model used for generating the simulated users' retweet decisions are adapted from the work carried out in \cite{zhu11} and \cite{peng11}, which introduces methodologies for illustrating Tweet spread through a given network of users, and the simulations can be used to produce a retweet group for a given Tweet. From the analyses of the simulation experiments, of interest is whether, and how, changing the network structure does affect retweet propagation patterns, and whether a simulation can mimic Twitter's own behaviour in terms of retweet spread.
+The simulation algorithm and ideas behind the model used for generating the simulated users' retweet decisions are adapted from the work carried out in \cite{zhu11} and \cite{peng11}, which introduces methodologies for illustrating Tweet spread through a given network of users, and the simulations can be used to produce a retweet group for a given Tweet. From the analyses of the simulation experiments, of interest is whether, and how, changing the network structure does affect retweet propagation patterns, and whether a simulation can mimic Twitter's own behaviour in terms of retweet spread. If it is the case that the user structure does have a large impact on propagation, and since an individual retweet decision implies that user's interest in a Tweet, then this feature may be used as a basis for estimating interestingness. 
 
 Measuring retweet behaviour is carried out through studying the distribution of retweet group sizes that result from running the experiments, as is described in later sections.
 
 \subsection{Overview of the Simulation Algorithm}
 The algorithm covers the simulation of Tweet propagation through a given set of connected users by emulating retweet decisions of each user who receives the Tweet, as is described below. The retweet decision is made using a prediction based on a logistic regression classifier, which is discussed in more detail in Section \ref{section:logistic_regression}.
 
-\cite{zhu11} developed a simulation algorithm which was found to be capable of accurately predicting retweet decisions using a logistic regression. These methods were modified and adapted to fit the purposes of the simulation algorithm used in this section. In essence, the simulation is initialised with a graph of connected users, $G_U$, and a Tweet, $t$, which will be introduced to the graph and retweeted between the users. $G_U = (V,E)$ is the social graph of the vertices and edges representing the users who may receive $t$ and the followships between them.
+\cite{zhu11} developed a simulation algorithm which was found to be capable of accurately predicting retweet decisions using a logistic regression. These methods were modified and adapted to fit the purposes of the analyses in this section. The simulation is initialised with a graph of connected users, $G_U$, and a Tweet, $t$, which is introduced to the graph and retweeted between the users as described below. $G_U = (V,E)$ is the social graph of the vertices and edges representing the users who may receive $t$ and the followships between them.
 
-It begins by initialising a set of users, $S$, to contain the followers of $\aut{t}{O}$. As such, users in $S$ form the set of users to have $t$ or a member of $\rt{t}$ currently on their home timelines and available to retweet. 
-
-The procedure iterates over timesteps, at each generating a retweet probability, $P(u,t)$ for each $u \in S$. If $P(u,t)$ is greater than a randomly-generated $0 \leq r < 1$ then $u$ creates a new retweet of $t$, which is added to $\rt{t}$. $u$ is then removed from $S$ and the followers of $u$ are added to $S$, since these users now also hold $t$ and have the chance to make the retweet decision. $u$ is now unable to retweet $t$ again.
+The method begins by initialising a set of users, $S$, to contain the followers of $\aut{t}{O}$. At each time interval, users in $S$ form the set of users to have $t$ or a member of $\rt{t}$ currently on their home timelines and available to retweet. The procedure iterates over timesteps, at each generating a retweet probability on $t$, $P(u,t)$ for each $u \in S$. If $P(u,t)$ is greater than a pseudo randomly-generated $0 \leq r < 1$, then $u$ creates a new retweet of $t$, which is added to $\rt{t}$. $u$ is then removed from $S$ and the followers of $u$ are added to $S$, since these users now also hold $t$ and have the chance to make the retweet decision. $u$ is now unable to retweet $t$ again.
 
 A threshold value, $H$, is used to emulate the notion of the Tweet `decay' experienced when one uses a Twitter client or the web interface. The reasoning behind this is that as time goes by, more and more Tweets arrive onto the recipients' home timelines. This pushes the previous Tweets further down, whether they are interesting or not. Tweets may be ignored and not retweeted if the user has not viewed their home timeline for a while or if the user decides the Tweet is not of a sufficient quality to retweet it. If a Tweet is pushed down to the extent that is out of view, or out of the current page, then the chance of that user retweeting that Tweet is reduced. Thus, if a user is in $S$ for more timestep iterations than specified by $H$, then the user is removed from $S$, meaning that it can no longer have the chance to retweet the Tweet. Users who have retweeted $t$, or are unable to do so (either by having previously retweeted it or by exceeding $H$) are prohibited from being (re-)added to $S$.
 
 The algorithm terminates either when the timesteps thus far iterated exceed the maximum allowed, $T$, or when $S = \left\{\right\}$. This results in the retweet group, $\rg{t}$, which comprises the final members of $\rt{t}$ along with $t$. As in the previous chapter, $\rc{t} = |\rt{t}|$. Therfore, the additional necessary components to run the simulation are a user graph, an initial Tweet, and functionality for generating a retweet probability for each user who receives the Tweet.
+
+Although the described method is mostly the same as the one introduced by \cite{zhu11} and \cite{peng11}, the main differences lie in the selection of and reasoning behind feature selection, as explained over the coming sections.
 
 \newfloat{algorithm}{H}{lop}
 \begin{algorithm}
 \caption{Simulation of retweet decisions on $t$ in a given graph, $G_U$}
 \begin{algorithmic}[1]
 \Procedure{simulate}{graph $G_U$, Tweet $t$}
-    \State $RT\gets \left\{\right\}$
+    \State $\rt{t}\gets \left\{\right\}$
     \State $T\gets$ total timesteps
     \State $H\gets$ decay threshold \Comment{Emulate $t$ `slipping down' timeline}
     \State $S\gets \left\{u' \in V(G_U) : \exists \overleftarrow{\aut{t}{O} u'} \in E(G_U)\right\}$
     \State $u.\textrm{TIME\_HELD}\gets 0 \forall u \in V(G_U)$
     \Statex % new line
-    \ForAll{$t_i$ in range $(0,T)$}
+    \ForAll{$l$ in range $(0,T)$}
         \ForAll{$u \in S$}
             \State $P(u,t)\gets$ retweet probability of $u$ on $t$
             \State $r\gets$ random number in range $[0,1)$
             \If{$P(u,t) > r$}
                 \State $r\gets$ new retweet, where $r.\textrm{orig} = t$ \& $\aut{r}{R} = u$
-                \State $\rg{t}\gets \rg{t} \cup \left\{r\right\}$
+                \State $\rt{t}\gets \rt{t} \cup \left\{r\right\}$
                 \State $S\gets S - \left\{u\right\}$
                 \State $S\gets S \cup \left\{u' \in V(G_U) : \exists \overleftarrow{u u'} \in E(G_U)\right\}$
             \Else
@@ -63,10 +66,10 @@ The algorithm terminates either when the timesteps thus far iterated exceed the 
             \EndIf
         \EndFor
         \If{$|S| = 0$}
-            \State Return $RT$ \Comment{No more users can retweet $t$}
+            \State Return $\rt{t}$ \Comment{No more users can retweet $t$}
         \EndIf
     \EndFor
-    \State Return $RT$
+    \State Return $\rt{t}$
 \EndProcedure
 \end{algorithmic}
 \label{algo1}
@@ -100,13 +103,13 @@ Much of the research and experiments conducted in this chapter use logistic regr
 
 The aim of logistic regression analysis is to find the closest model to map correlations between an outcome and a number of input variable features \cite{hosmer13}. Examples of literature provided in the Background describe the use of logistic regression for `predicting' the probability of a binary outcome in various tests. This type of modelling is appropriate for making predictions on the positive outcome of binary retweet decisions.
 
-An implementation of the logistic regression algorithm was written in the Python programming language, which formed the basis of calculating the value for the retweet probability, $P$, based on a set of features of the Tweet and author user.
+An implementation of the logistic regression algorithm was written in the Python programming language, which formed the basis of calculating the value for the retweet probability, $P$, based on a set of features of the Tweet and its author.
 
 
 \subsection{Summary of Training Features}
-\cite{zhu11} used the approach in order to accurately model retweet decisions in Twitter. A set of around 50 different features were used to train the logistic regression, with the retweet outcome (\textsc{True} or \textsc{False}) being the predicted classification in each case. These features included Tweet-related features (such as content analysis, inclusion of URLs, etc.), and network and user features (followships, mentions, etc.).
+\cite{zhu11} used a set of around 50 different features to train the logistic regression for the purposes of simulating retweet decisions, with the retweet outcome (\textsc{True} or \textsc{False}) being the predicted classification in each case. This set included Tweet-related features (such as content analysis, inclusion of URLs, etc.), and network and user features (followships, mentions, etc.).
 
-Since the network structures themselves, and the propagation \textit{patterns}, are what are of interest in this section, the simulation is significantly simplified by using far fewer features, yet ones which are features that have been shown to have a strong influence on the retweet decision. By placing less of the retweet spread responsibility on the individual retweet decisions, and by abstracting them away more from the properties of the social graph, the importance of the structure can become more apparent. The authors of \cite{zhu11} use many features relating to the semantics and content of Tweets, which are also not taken forward here in order to further accentuate the effects of the social structure on dissemination.
+Since the network structures themselves, and the propagation \textit{patterns}, are what are of interest in this section, the simulation is purposefully and significantly simplified by using far fewer features, yet ones which are features that have been shown to have a stronger influence on the retweet decision. By placing less of the retweet spread responsibility on the individual retweet decisions, and by abstracting them away more from the properties of the social graph, the importance of the structure can become more apparent. The authors of \cite{zhu11} use many features relating to the semantics and content of Tweets, which are also not taken forward here in order to further accentuate the effects of the social structure on dissemination.
 
 As such, each instance comprised the following four features associated with each Tweet, $t$, and where $u$ is the user currently making the retweet decision, \textsc{retweet}. The default value for each feature is \textsc{False};
 
@@ -125,11 +128,11 @@ As such, each instance comprised the following four features associated with eac
     \hline
 \end{tabular}
 \end{center}
-\caption{Training features for the logistic regression.}
+\caption{Training features for the logistic regression for simulating retweet decisions.}
 \label{table:logisticregressionfeatures}
 \end{table}
 
-The \textsc{url} feature has, in the literature, often been found as a large impacting feature on retweets in Twitter, especially in \cite{alonso10}, who use it as their basis for determining .nd identifying interesting Tweets.
+The \textsc{url} feature has, in the literature, often been found as a large impacting feature on retweets in Twitter, especially in \cite{alonso10}, who use it as their basis for determining and identifying interesting Tweets.
 
 
 \subsection{Training the Model}
@@ -141,7 +144,8 @@ In cases where the collected Tweet had been retweeted, further calls were made t
 
 Where the collected Tweet had not been retweeted, there are no retweeting users to examine the relationships between. In these cases, further Tweets were retrieved for the user in order to find their retweet rate in terms of the ratio of retweets to Tweets on their user timeline and an analysis of the relationship between these and the original authors. This was used in conjunction with the user's follower and friend count to determine a probability of the `faux' followships. As mentioned, the accuracy of the retweet counts obtained through the simulations is not particularly important; of interest is the propagation patterns observed over the graph structures.
 
-After storage, the regression model was trained using features extracted from the raw data, which the simulation algorithm could then use to generate the required retweet probability, $P(u,t)$ for each user $u$ in the social graphs used in the network simulations.
+After storage, the regression model was trained using features (see Table \ref{table:logisticregressionfeatures}) extracted from the raw data, with the outcome being the binary retweet decision. The algorithm could then use the model to generate the required retweet probability, $P(u,t)$, by classifying each user's \textsc{retweet} decision outcome at each stage.
+
 
 
 \subsection{Running the Simulations}
@@ -233,7 +237,7 @@ The frequency distribution in Figure \ref{fig:random} demonstrates a very large 
 \subsubsection{Scale-Free Network}
 The final network structure examined in this section is the scale-free network. Also known as `small world', scale-free graphs are generally known to be representative of the general structure of `real-life' and online social networks \cite{mislove07} and, indeed, they are also used to describe the interconnections of real-world properties, such as friendship groups and food webs \cite{guido07} \cite{hein06}. Essentially, scale-free networks dictate that there are a small number of nodes with a high degree and many nodes with a low degree, and are usually generated through some form of preferential attachment algorithm. Thus, this type of network has support for the consideration of user communities and influential users in terms of those demonstrating a disproportionately large follower count. The other user structures studied do not have the scope for emulating this property of inconsistent interconnection between the user nodes.
 
-Scale-free networks are constructed such that the distribution of the degree of the graph's nodes follow a power-law in that the distribution of the number of vertex edges across the graph is logarithmic. For these analyses, NetworkX\footnote{http://networkx.lanl.gov}, a Python graph and networking package, was used to generate directed scale-free graphs of users, based on a graph size, $n$, and various other arguments, including $\delta$-out, as the graph construction parameters. 
+Scale-free networks are constructed such that the distribution of the degree of the graph's nodes follow a power-law in that the distribution of the number of vertex edges across the graph is logarithmic. For these analyses, NetworkX\footnote{http://networkx.lanl.gov}, a Python graph and networking package, was used to generate directed scale-free graphs of users, based on a graph size, $n$, and other arguments, including $\delta$-out, as the graph construction parameters. 
 
 For the scale-free analysis, the same graph construction and simulation parameters were used as in the previous analyses. $\delta$-out represents the bias for a node's selection for out-degree from the other available nodes, and was set to a value of 0.7 to improve the clarity of the distribution result.
 
@@ -346,7 +350,9 @@ This procedure would provide an estimated retweet group size for each Tweet, whi
 
 
 \subsection{Data Collection}
-Ideally, the entire social graph would be used, but due to the scaling properties encountered in a breadth-first traversal of Twitter's social graph, it became infeasible to collect a user's local network containing users more than two edge `hops' away from the source user under the rate limitations of Twitter's REST API. As previously described, v1 allowed 350 calls to the API each hour for each authenticated Twitter account. One call, for example, was required to obtain a list of up to 5,000 user IDs representing the followers of a particular user - the users one hop from the source user. An additional call would then be required to collect each of these user's own followers in order to provide the 2-hop representation of the local network from the source user.
+In order to simulate Tweets through Twitter's own social graph, data on its users and edges is necessary so that a copy of the graph can be built locally. This is necessary for the users' retweet decisions to be modelled and to keep track of which users are able to receive the Tweets.
+
+Ideally, the actual social graph would be used, but due to the scaling properties encountered in a breadth-first traversal of Twitter's social graph, it became infeasible to collect a user's local network containing users more than two edge `hops' away from the source user under the rate limitations of Twitter's REST API. As previously described, v1 allowed 350 calls to the API each hour for each authenticated Twitter account. One call, for example, was required to obtain a list of up to 5,000 user IDs representing the followers of a particular user - the users one hop from the source user. An additional call would then be required to collect each of these user's own followers in order to provide the 2-hop representation of the local network from the source user.
 
 For a user with a follower count of 700, a total of 701 API calls would be required to collect the user's local network within two hops - the one to retrieve the source user's immediate followers, and then one further call for each of the 700 followers. This would take over two hours of collection, and to collect the third hop would require another exponential number of API calls. If each of the 700 followers of the source user has, on average, 200 followers, then this would require  a further $700 \times 200 = 140,000$ API calls, which, in total, equates to over 402 hours of data collection time. Although some follower overlap is likely to be present among the users two hops away, when one considers that this is simply the time taken to collect the local network for \textit{one} user, then it becomes clear that this must still be an impractical approach.
 
@@ -392,7 +398,7 @@ The microtasks presented to the MTWs each consisted of a question containing fiv
 
 Figure \ref{fig:mtk_question} shows an example of a question asked of the workers. It demonstrates also how the MTWs were not provided with any additional context, such as the author's username or the post date and time, for any of the Tweets to be evaluated.
 
-Although Tweet selection was random, those whose content starts with a user's ``@'' username (i.e. `@-replies') were excluded, since these Tweets typically form part of a conversation between a small number of users and are unlikely to convey any interest to those not directly involved. The final validation set consisted of a total of around 4,300 Tweets to be assessed in the questions, and MTWs were encouraged to follow links to any websites or media included in the Tweets' contents as part of their evaluations.
+Although Tweet selection was random, those whose content starts with a user's ``@'' username (i.e. `@-replies') were excluded, since these Tweets typically form part of a conversation between a small number of users and are unlikely to convey any interest to those not directly involved. The final validation set consisted of a total of around 4,300 Tweets to be assessed in the questions, and MTWs were encouraged to follow links to any websites or media included in the Tweets' contents as part of their evaluations. For each question ansewered, MTWs were paid \$0.05. 
 
 
 \subsubsection{Inference Performance Validation Results}
