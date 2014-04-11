@@ -1,8 +1,6 @@
 \chapter{Analysis of Twitter's Social Structure}
 
-Research so far has focussed on the propagation of information through Twitter's social graph as a result of retweeting. In particular, this research provided an understanding of the patterns produced through retweets and how their properties relate to the users that relay the Tweets.
-
-Of specific interest is the social graph underlying Twitter, which describes how users are interconnected and which fundamentally dictates the information flow. It has been discussed that users with a higher follower count are more likely to have their Tweets retweeted, due to there being more users available to \textit{see} each Tweet, and that some users can have their Tweets forwarded through many hops indeed, so that information may be passed between different communities of users.
+The social graph of Twitter describes how users are interconnected and fundamentally dictates information flow as Tweets are propagated through its structure. Research so far has focussed on the propagation of information through Twitter's social graph as a result of retweeting. In particular, this research provided an understanding of the patterns produced through retweets and how their properties relate to the users that relay the Tweets. Users with a higher follower count are more likely to have their Tweets retweeted, due to there being more users available to \textit{see} each Tweet, and that some users can have their Tweets forwarded through many hops indeed, so that information may be passed between different communities of users.
 
 In addition to the effects of user influence,  several other factors also influence an individual retweet decision of a given user for a particular Tweet. These include its properties, such as whether, or not, it contains a URL, whether it mentions a particular user, whether the user even has an opportunity to \textit{view} the Tweet, and so on. These factors account for the individual user's retweet decision and the almagamation of every user's retweet decision on the Tweet describes its overall retweetability, which determines how far it can propagate.
 
@@ -46,8 +44,8 @@ Although the described method is mostly the same as the one introduced by \cite{
     \State $\rt{t}\gets \left\{\right\}$
     \State $T\gets$ total timesteps
     \State $H\gets$ decay threshold \Comment{Emulate $t$ `slipping down' timeline}
-    \State $S\gets \left\{u' \in V(G_U) : \exists \overleftarrow{\aut{t}{O} u'} \in E(G_U)\right\}$
-    \State $u.\textrm{TIME\_HELD}\gets 0 \forall u \in V(G_U)$
+    \State $S\gets \left\{u' \in V(G_U) : \exists \quad \overleftarrow{\aut{t}{O} \quad u'} \in E(G_U)\right\}$
+    \State $u.\textrm{TIME\_HELD}\gets 0 \quad \forall u \in V(G_U)$
     \Statex % new line
     \ForAll{$l$ in range $(0,T)$}
         \ForAll{$u \in S$}
@@ -92,7 +90,7 @@ For example, consider three attribute variables, $A$, $B$, and $C$, each of whic
 \end{itemize}
 Although training of predictive models nearly always involves using more than two instances, the history of these example instances indicate that $C$ is more strongly associated with $A$ than with $B$. As more instances are added showing similar patterns, then the association becomes stronger, to the extent that the classifier will predict $C\gets$ \textsc{True} in instances where $A\gets$ \textsc{True} (and vice versa) with higher confidence.
 
-In this case, $A$, $B$, and $C$ are known as the `features', and a set of such feature values forms the `instance'. Once a trained model has been constructed, the machine learning algorithm will only be able to make predictions using instance features it has knowledge of. For example, if the example classifier was now given an instance containing a feature $D$, then it will not `know' how changes in $D$ will affect $C$'s outcome.
+In this case, $A$, $B$, and $C$ are known as the `features', and a set of such feature values forms the `instance'. Once a trained model has been constructed, the machine learning algorithm will only be able to make predictions using instance features it has knowledge of. For example, if the example classifier was now given an instance containing a feature $D$, then it will not have knowledge of how changes in $D$ will affect $C$'s outcome.
 
 If there is not a strong correlation between the features in a dataset, then the confidence of the classification of a particular feature will be weaker. Although this example has focussed on boolean (nominal) data types, many machine learning classifiers are able to work with features that are higher dimensional nominal values, contunuous reals, and so on, and will apply weights to the different features based on their level of influence over other features in the instance.
 
@@ -101,9 +99,8 @@ If there is not a strong correlation between the features in a dataset, then the
 \label{section:logistic_regression}
 Much of the research and experiments conducted in this chapter use logistic regression classification techniques in order to classify Tweets and other information. The Background chapter discussed other literature also using logistic regression for social network and retweet analysis \cite{castillo11} \cite{zhu11} \cite{peng11} \cite{naveed11} \cite{hong11}.
 
-The aim of logistic regression analysis is to find the closest model to map correlations between an outcome and a number of input variable features \cite{hosmer13}. Examples of literature provided in the Background describe the use of logistic regression for `predicting' the probability of a binary outcome in various tests. This type of modelling is appropriate for making predictions on the positive outcome of binary retweet decisions.
+The aim of logistic regression analysis is to find the closest model to map correlations between an outcome and a number of input variable features \cite{hosmer13}. Examples of literature already discussed describe the use of logistic regression for `predicting' the probability of a binary outcome in various tests. This type of modelling is appropriate for making predictions on the positive outcome of binary retweet decisions.
 
-An implementation of the logistic regression algorithm was written in the Python programming language, which formed the basis of calculating the value for the retweet probability, $P$, based on a set of features of the Tweet and its author.
 
 
 \subsection{Summary of Training Features}
@@ -121,14 +118,14 @@ As such, each instance comprised the following four features associated with eac
 	\hline 
 	\textsc{follows}    & \{\textsc{True, False}\} & \textsc{True} if $u \in \fos{\aut{t}{O}}$\\
     \textsc{followed}   & \{\textsc{True, False}\} & \textsc{True} if $u \in \frs{\aut{t}{O}}$\\
-    \textsc{mentioned}  & \{\textsc{True, False}\} & \textsc{True} if $u$ is mentioned in $t$'s content\\
-    \textsc{url}        & \{\textsc{True, False}\} & \textsc{True} if \texttt{http://} or \texttt{https://} in $t$'s content\\
+    \textsc{mentioned}  & \{\textsc{True, False}\} & \textsc{True} if $u$ is mentioned in $t.\textrm{text}$\\
+    \textsc{url}        & \{\textsc{True, False}\} & \textsc{True} if \texttt{http://} or \texttt{https://} in $t.\textrm{text}$\\
     \hline 
     \textsc{retweet}    & \{\textsc{True, False}\} & \textsc{True} if $u \in \rt{t}$\\ 
     \hline
 \end{tabular}
 \end{center}
-\caption{Training features for the logistic regression for simulating retweet decisions.}
+\caption{Training features for the logistic regression for simulating retweet decisions}
 \label{table:logisticregressionfeatures}
 \end{table}
 
@@ -149,7 +146,7 @@ After storage, the regression model was trained using features (see Table \ref{t
 
 
 \subsection{Running the Simulations}
-The logistic regression model, having been trained with the features collected for the training dataset, could then be tested against newly-generated Tweet features ($t$) in order to output the probability, $P(u,t)$, indicating $u$'s retweet decision likelihood on $t$. The simulation method only produces probabilities for those $u \in V(G_U)$ that actually receive $t$ and have a chance to retweet it. Since some of the features used rely on the relationships of the current $u$ to $\aut{t}{O}$, not every user in the graph will have the same value for $P(u,t)$.
+The logistic regression model, having been trained with the features collected for the training dataset, could then be tested against newly-generated Tweet features in order to output the probability, $P(u,t)$, indicating $u$'s retweet decision likelihood on $t$. The simulation method only produces probabilities for those $u \in V(G_U)$ that actually receive $t$ and have a chance to retweet it. Since some of the features used rely on the relationships of the current $u$ to $\aut{t}{O}$, not every user in the graph will have the same value for $P(u,t)$.
 
 For each simulation experiment, a network of users was generated according to a structured model, as described in the next section. A Tweet object was then constructed and contained information on whether or not it contained a URL and if it mentioned one of the users in the generated network. 
 
@@ -163,7 +160,15 @@ In this section, three network structures are assessed in terms of the differenc
 \subsubsection{Path Network}
 The first assessment involved illustrating the propagation pattern observed in the most basic social network structure; a path network. Albeit non-realistic in practice, these graphs represent the fundamental structure of a connected `world' of users.
 
-A linear directional path network consists of the graph of users, $G_U$, of size $n = |V(G_U)| = |E(G_U) + 1$, where $\exists \overleftarrow{u_i u_{i+1}} \in E(G_U) \forall 1 \leq i < n$. As a result, each $u \in V$ has precisely one follower and one friend, except the users $u_n$ and $u_1$ respectively. $n$ is the only parameter necessary in the construction of this user graph.
+A linear directional path network consists of the graph of users, $G_U$, of size $n$;
+\[
+    n = |V(G_U)| = |E(G_U)| + 1
+\]
+where; 
+\[
+    \exists \quad \overleftarrow{u_i \quad  u_{i+1}} \in E(G_U) \quad \forall \quad 1 \leq i < n
+\]
+As a result, each $u \in V(G_U)$ has precisely one follower and one friend, except the users $u_n$ and $u_1$ respectively. $n$ is the only parameter necessary in the construction of this user graph.
 
 \begin{figure}[h]
 \centering
@@ -193,7 +198,7 @@ Since each internal user has only one follower, the likelihood of each progressi
 \label{fig:linear}
 \end{figure}
 
-The likelihood of a particular user achieving the opportunity to receive the Tweet, in order to then retweet it, becomes the product of the probability function the further it travels through the graph, in which user $u_i$ requires each user from $u_1$ to $u_{i-1}$ to first receive it and then make a positive retweet decision. For example, if each user has probability $p$ of retweeting the Tweet, then each user's chance of receiving the Tweet is $\frac{1}{p^i}$, where $i$ is the position of the user in the graph. A user can only make a retweet decision on $t$ once it has been received.
+The likelihood of a particular user achieving the opportunity to receive the Tweet, in order to then retweet it, becomes the product of the probability function the further it travels through the graph, in which user $u_i$ requires each user from $u_1$ to $u_{i-1}$ to first receive it and then make a positive retweet decision. For example, if each user has probability $p$ of retweeting the Tweet, then each user's chance of receiving the Tweet is $p^{i-1}$, where $i$ is the position of the user in the graph. A user can only make a retweet decision on $t$ once it has been received.
 
 The path network analyses involved 50 repeat simulations of the set of Tweets on a graph of size $n = 1000$. A timeline threshold ($H$) of 30 was used to represent the maximum time a Tweet is permitted on a user's timeline before it is no longer retweetable, for reasons discussed earlier. 
 
@@ -250,13 +255,13 @@ For the scale-free analysis, the same graph construction and simulation paramete
         grid = major,
          legend style={at={(0.5,-0.27)},anchor=north,legend cell align=left},
         legend entries={Twitter data, Generated scale-free data}]
-    \addplot[only marks,mark=*,red]
+    \addplot[only marks,mark=+,red]
        file {4.Chapter2/data/comparison-real.dat};
-    \addplot[only marks,mark=*,blue]
+    \addplot[only marks,mark=+,blue]
        file {4.Chapter2/data/comparison-scale-free.dat};
 \end{loglogaxis}
 \end{tikzpicture}
-\caption{Comparison of retweet group size distributions from scale-free graph simulations and data from Twitter's own social graph.}
+\caption{Comparison of retweet group size distributions from scale-free graph simulations and data from Twitter's own social graph}
 \label{fig:real-scalefree}
 \end{figure}
 
@@ -350,7 +355,7 @@ This procedure would provide an estimated retweet group size for each Tweet, whi
 
 
 \subsection{Data Collection}
-In order to simulate Tweets through Twitter's own social graph, data on its users and edges is necessary so that a copy of the graph can be built locally. This is necessary for the users' retweet decisions to be modelled and to keep track of which users are able to receive the Tweets.
+In order to simulate Tweets through Twitter's own social graph, data on its users and edges is required so that a copy of the graph can be built locally. This is necessary for the users' retweet decisions to be modelled and to keep track of which users are able to receive the Tweets.
 
 Ideally, the actual social graph would be used, but due to the scaling properties encountered in a breadth-first traversal of Twitter's social graph, it became infeasible to collect a user's local network containing users more than two edge `hops' away from the source user under the rate limitations of Twitter's REST API. As previously described, v1 allowed 350 calls to the API each hour for each authenticated Twitter account. One call, for example, was required to obtain a list of up to 5,000 user IDs representing the followers of a particular user - the users one hop from the source user. An additional call would then be required to collect each of these user's own followers in order to provide the 2-hop representation of the local network from the source user.
 
@@ -371,17 +376,17 @@ In order to test the validity of the results, it was necessary to use human ases
 
 
 \subsubsection{Crowdsourcing Validations}
-Crowdsourcing is a technique that has grown in popularity over many domains in recent years, including  media, reviews services, sensor networks, and others. Essentially, crowdsourcing involves the use of many people (or, in some cases, devices) providing input or results on a given task. Services such as Google Maps\footnote{http://maps.google.com}, TripAdvisor\footnote{http://tripadvisor.co.uk}, and Stack Overflow\footnote{http://stackoverflow.com} respectively use crowdsourcing for obtaining information (such as photos) on geographic locations, service reviews, and programming assistance. Its use means that the crowdsourcers can easily receive lots of input with very little additional work, since the load is spread amongst many people.
+Crowdsourcing is a technique that has grown in popularity over many domains in recent years, including in the media, reviews services, sensor networks, and others. Essentially, crowdsourcing involves the use of many people (or, in some cases, devices) providing input or results on a given task. Services such as Google Maps\footnote{http://maps.google.com}, TripAdvisor\footnote{http://tripadvisor.co.uk}, and Stack Overflow\footnote{http://stackoverflow.com} respectively use crowdsourcing for obtaining information (such as photos) on geographic locations, service reviews, and programming assistance. Its use means that the crowdsourcers can easily receive lots of input with very little additional work, since the load is spread amongst many people.
 
 Crowdsourcing has also proved to be a useful asset in research as it facilitates the harvesting of many inputs, from diverse opinions and views, much more quickly than without it, and it is a useful tool for validating data. Many crowdsourcing services are active on the Internet to cater for different use-cases.
 
 Amazon's Mechanical Turk\footnote{http://mturk.com} allows crowdsourcers to create small jobs (known as `microtasks') to be completed by crowdsourcees, known as Mechanical Turk Workers (MTWs), who have an account on the website. The crowdsourcer describes the particular microtask in terms of what is expected of the MTWs and also determines the amount paid for the task. A single microtask completed by a particular MTW is known as a `judgment', and MTWs are paid for each judgment he/she completes. The crowdsourcer can define certain criteria on the microtasks, such as allowing each MTW to only complete one microtask.
 
-Due, at this time, to Mechanical Turk's availability to only US credit card holders, a third-party service, Crowdflower\footnote{http://crowdflower.com}, was used instead to submit the microtasks to Amazon's system in order to be completed by the workers. 
+Due, at this time, to Mechanical Turk's availability to only US credit card holders, a third-party service, CrowdFlower\footnote{http://crowdflower.com}, was used instead to submit the microtasks to Amazon's system in order to be completed by the workers. 
 
 
 \subsubsection{Aims of the Validations}
-The purpose of the use of crowdsourcing was for evaluating the effectiveness of the interestingness inferences made through the aforementioned comparison between an expected and observed popularity of a given Tweet. In particular, of concern was the correlation between those Tweets that the algorithm denoted as interesting and the Tweets that humans found interesting.
+The purpose of the use of crowdsourcing was for evaluating the effectiveness of the interestingness inferences made through the comparison between an expected and observed popularity of a given Tweet. Of particular concern was the correlation between those Tweets that the algorithm denoted as interesting and the Tweets that humans found interesting.
 
 Since the accuracy of the various components of the technique could not be known until they were properly validated, it was decided that the crowdsourcing would initially be run as a pilot test in order to identify the presence of any correlations. If this was sufficiently successful, then a further and more rigorous test would take place, involving more workers.
 
@@ -403,7 +408,7 @@ Although Tweet selection was random, those whose content starts with a user's ``
 
 \subsubsection{Inference Performance Validation Results}
 \label{section:initial_inference_results}
-The Mechanical Turk validation take place between the 7th and 11th December 2012. Table \ref{table:mtk_data_1} provides further information about the validation tests. An assessment is defined as a MTW answering a particular question with his/her opinion on the most interesting and least interesting Tweet. Since there were 856 questions, there were 2568 assessments in total.
+The Mechanical Turk validation took place between the 7th and 11th December 2012. Table \ref{table:mtk_data_1} provides further information about the validation tests. An assessment is defined as a MTW answering a particular question with his/her opinion on the most interesting and least interesting Tweet. Since there were 856 questions, there were 2568 assessments in total.
 
 \begin{table}[h]\footnotesize
 \begin{center}
@@ -440,7 +445,7 @@ As such, further investigation would be required to address the method with the 
 \subsection{Improving The Interestingness Inference Performance}
 Proposition \ref{proposition:1} is still considered to be a viable way of addressing the problem of identifying interesting information for the reasons discussed earlier. However, a more convenient and accurate method is clearly required for acquiring the \textit{expected} retweet value.
 
-The issue with the current method is two-fold; as mentioned, lots of data is required in order to reconstruct the Tweets' authors' local networks in which to simulate the Tweets, which leads to the second problem of only being able to simulate Tweets from authors in sparser local networks. Under the current scheme, only users with a small enough local network (i.e. users that have lower folower counts) can realistically be evaluated, due to the collection criteria discussed previously, meaning that the methodology cannot be used in the general case. Although a high accuracy was achieved in predicting the \textit{correct} retweet counts for the Tweets assessed in this section, most of these Tweets only actually had an observed retweet count of 0 or 1. This is the by-product of the previous issue in that only users with fewer followers could have their Tweets simulated, and these users will therefore typically receive few retweets per Tweet. Ideally, the methodology should have the capabilities to be applied to any type of user and any Tweet on Twitter.
+The issue with the current method is two-fold; a large volume of data is required in order to reconstruct the Tweets' authors' local networks in which to simulate the Tweets, which leads to the second problem of only being able to simulate Tweets from authors in sparser local networks. Under the current scheme, only users with a small enough local network (i.e. users that have lower folower counts) can realistically be evaluated, due to the collection criteria discussed previously, meaning that the methodology cannot be used in the general case. Although a high accuracy was achieved in predicting the \textit{correct} retweet counts for the Tweets assessed in this section, most of these Tweets only actually had an observed retweet count of 0 or 1. This is the by-product of the previous issue in that only users with fewer followers could have their Tweets simulated, and these users will therefore typically receive few retweets per Tweet. Ideally, the methodology should have the capabilities to be applied to any type of user and any Tweet on Twitter.
 
 Additionally, this method alone does not make efforts towards evaluating the \textit{level} of Tweet interestingness. Instead of the binary interesting / non-interesting decision, it would be more useful to award each Tweet a score denoting the estimated interestingness of the Tweet. The further importance and usefulness of this is explained in further detail in the following chapter.
 
@@ -452,7 +457,7 @@ In this chapter, an analysis of propagation through differing structures of user
 \subsection{Network Structure Analysis}
 A logistic regression model was built as part of a simulation algorithm in order to anaylse the propagation characteristics of three different network structures; a path network, a random network, and a scale-free network. 
 
-Although the actual retweet counts of simulated Tweets in each network structure are not comparable due to the parameter alterations that were required in order to amplify visible results, the actual \textit{pattern} of propation in terms of the distribution of retweet group sizes was found to be different in each structure and for differing reasons. In addition, the scale-free network was found to express a similar pattern to that observed from the data on retweet group sizes discussed in the previous chapter.
+Although the actual retweet counts of simulated Tweets in each network structure are not comparable due to the parameter alterations that were required in order to amplify visible results, the actual \textit{pattern} of propagation in terms of the distribution of retweet group sizes was found to be different in each structure and for differing reasons. In addition, the scale-free network was found to express a similar pattern to that observed from the data on retweet group sizes discussed in the previous chapter.
 
 
 \subsection{Interestingness Inference Methodology}
@@ -460,4 +465,4 @@ The model and techniques behind the network structure analyses were then applied
 
 Validating the methodology showed that the technique is not particularly useful in determining interesting information, and its other drawbacks, such as its application only realistically being available to Tweets from non-influential users, mean that the technique cannot be used in the general case. Further to this, the data collection required is not suitable for quick evaluations and may not remain accurate over time even after collection due to the continuous changing nature of the edges in online social networks as users create and destroy followships. This is particularly impactful in this case as there are many users involved even in a user's 2-hop local network.
 
-In the next chapter, the methodology for generating expected retweet counts is adapted with the aim of improving its validation performance, the ease of preparation through data collection, and of addressing the methodologies current restrictions on the types of users it is suitable for. It is known from work in this chapter that the network structure plays an important role in information propagation, so this and more environmental features are taken on as part of the improvements. This research then leads to the production of a technique for measuring \textit{how} interesting a particular Tweet is, including the way in which this can be calculated and the different validations performed against it to assess its performance.
+In the next chapter, the methodology for generating expected retweet counts is adapted with the aim of improving its validation performance, the ease of preparation through data collection, and of addressing the methodology's current restrictions on the types of users it is suitable for. It is known from work in this chapter that the network structure plays an important role in information propagation, so this and more environmental features are taken forward as part of the improvements. 
