@@ -12,11 +12,11 @@ Another component that helped in the dawn of Web 2.0 was the rise of \textit{blo
 \section{Twitter as a Social Network}
 Twitter\footnote{http://twitter.com} is an online social network, which launched in the summer of 2006 \cite{krishnamurthy08}. Since then, it has rapidly gained in popularity amongst several different user groups - teens and young people, casual users, celebrities, reporters, and so on - and within eight months had around 94,000 registered users \cite{java07}. Although Twitter has never been a direct competitor with Facebook, users tend to use the two sites concurrently for different purposes: whilst Facebook's focus is on providing many services at once (such as photo-sharing, commenting/endorsing of information, messaging, pages for businesses, groups, events, etc.), Twitter's is more on simplicity.
 
-More specifically than just being an online social network, Twitter is a microblogging website. Whilst a blog, as mentioned, typically contains long posts, Twitter only allows its users to post short pieces of text, up to 140 characters in length \cite{krishnamurthy08} \cite{huberman08}, called `Tweets'. Thus, Twitter is a hybrid social network and blogging service and whilst each Tweet may only realistically be able to hold a couple of sentences, this system facilitates quick, timely, and `real-time' \textit{live} information-sharing amongst its millions of users \cite{zhao09}. Its idea is that short pieces of news will `travel' faster and will be seen by more people more quickly than traditional news stories.
+More specifically than just being an online social network, Twitter is a microblogging website. Whilst a blog, as mentioned, typically contains long posts, Twitter only allows its users to post short pieces of text, up to 140 characters in length \cite{krishnamurthy08, huberman08}, called `Tweets'. Thus, Twitter is a hybrid social network and blogging service and whilst each Tweet may only realistically be able to hold a couple of sentences, this system facilitates quick, timely, and `real-time' \textit{live} information-sharing amongst its millions of users \cite{zhao09}. Its idea is that short pieces of news will `travel' faster and will be seen by more people more quickly than traditional news stories.
 
 Although Tweets are limited to 140 characters in length, the inclusion of URLs is allowed. This enables further extension of Tweets through external websites, and supports the inclusion of links to images and videos. Twitter has encouraged this use-case by providing `share' buttons for developers to embed in websites, and direct support for photo and video applications, such as TwitPic\footnote{http://twitpic.com} and Vine\footnote{http://vine.com}.
 
-Its simplicity has also helped its growth into the mobile domain, in which smartphone users are able to very quickly post updates about their lives, a piece of information they want to share, or a photo or video, and be able to post it \textit{as it happens} directly from the news source or geographical location \cite{castillo11}. This has been especially useful in emergency situations worldwide, including the Haiti earthquake in 2010 \cite{muralidharan11}, and 2011's Egyptian protests \cite{wilson11} and Thai flood \cite{kongthon12}. Indeed, \cite{sakaki10} used Twitter to build an earthquake-reporting system for Japan that outperforms the Japan Meteorological Agency in terms of its promptness of notification.
+Its simplicity has also helped its growth into the mobile domain, in which smartphone users are able to very quickly post updates about their lives, a piece of information they want to share, or a photo or video, and be able to post it \textit{as it happens} directly from the news source or geographical location \cite{castillo11}. This has been especially useful in emergency situations worldwide, including the Haiti earthquake in 2010 \cite{muralidharan11}, and 2011's Egyptian protests \cite{wilson11} and Thai flood \cite{kongthon12}. Indeed, \citet{sakaki10} used Twitter to build an earthquake-reporting system for Japan that outperforms the Japan Meteorological Agency in terms of its promptness of notification.
 
 Use of Twitter is based around `timelines' of Tweets, to which new Tweets are pre-pended as they are posted by users. The \textit{home} timeline is the default view, in which Tweets from all of a person's subscribed-to users are placed. Timelines of an individual user contain only Tweets from that user, and are known as a `user' timeline. Customisation of timelines is also possible through the use of Twitter lists, in which different users can be placed to categorise streams of Tweets from different sets of users.
 
@@ -42,30 +42,32 @@ Although not directly answered in this thesis, the key question and motivation b
 
 
 \section{Main Contributions and Hypotheses}
-This thesis aims to go some way to answering this question through a focus on understanding information propagation, and how combining this with knowledge of the social structure of Twitter can assist towards solving the problem of identifying interesting and relevant information and determining it from the noise surrounding it on Twitter. Whilst other work in the area has also looked into the notions of relevance and interest in online social networks, and Twitter in particular, none has addressed the problem with such rigor or have attempted to validate findings so thoroughly.
+The remaining chapters are aimed to go some way to answering this question through a focus on understanding information propagation, and how combining this with knowledge of the social structure of Twitter can assist towards solving the problem of identifying interesting and relevant information and determining it from the noise surrounding it. Whilst other work in the area has also researched into the notions of relevance and interest in online social networks, and Twitter in particular, none has addressed the problem with such rigor or have attempted to validate findings so thoroughly.
 
 \subsection{Contributions}
 The thesis provides an in-depth survey of relevant research in the area, following onto a thorough understanding of retweet behaviour and its ties to the properties of the underlying Twitter social graph. Various terms are defined in order to facilitate the explanations of key concepts through observation and example. 
 
-Part of the research outcome consists of methods for effectively inferring interesting information and, indeed, paving ways to support the of ranking information in a more useful way than simply by time. The methods are validated to help highlight their strengths and weaknesses in performing inferences in appropriate use-cases. The work addresses the aforementioned problem area in that it helps towards solving the goal of identifying \textit{globally} interesting information in Twitter, and the ways in which users are able to identify this interesting information from noise. In addition, certain measures are taken in an attempt to address the idea of information relevance in terms of validations being made on the methods by users assessing Tweets from users they have a previously-declared interest in.
+Part of the research outcome consists of methods for effectively inferring interesting information and paving ways to support the ranking of information more usefully than simply by time. The methods are validated to help highlight their strengths and weaknesses in performing inferences in appropriate use-cases. The work addresses the described problem area in that it helps towards reaching the goal of identifying \textit{globally} interesting information in Twitter, and the ways in which users are able to identify this interesting information from noise. In addition, certain measures are taken in an attempt to address the idea of information relevance in terms of validations being made on the methods by users assessing Tweets from users they have a previously-declared interest in.
 
 
 \subsection{Research Questions}
-More formally, the research in this thesis is aimed towards answering the following questions.
+\label{section:research_questions}
+More formally, the research and hypotheses considered in this thesis can be illustrated by asking the following questions.
 \begin{itemize}
-    \item \textit{Does Tweet popularity, measured in terms of retweets, \textbf{define} interesting (or non-`noisy') information?}
-    \item \textit{Can Tweet popularity, measured in terms of retweets, \textbf{be an indicator} of interesting information?}
-    \item \textit{Can Tweet interestingness be inferred \textbf{non-semantically}?}
-    \item \textit{Is the arrangement of Twitter's social graph an important factor in retweet propagation, and thus perceived popularity?}
+    \item \textbf{RQ1} \textit{Does Tweet popularity, measured in terms of retweets, \textbf{define} interesting (or non-`noisy') information?}
+    \item \textbf{RQ2} \textit{Can Tweet popularity, measured in terms of retweets, \textbf{be an indicator} of interesting information?}
+    \item \textbf{RQ3} \textit{Is the arrangement of Twitter's social graph an important factor in retweet propagation, and thus perceived popularity?}
+    \item \textbf{RQ4} \textit{Can Tweet interestingness be inferred \textbf{non-semantically}?}
 \end{itemize} 
 
 
-
 \section{Thesis Structure}
-The rest of this thesis is structured as follows.
+The chapters containing the remainder of this thesis are laid out as follows.
 
-A background is provided as an introduction to some of the ideas behind the main research, which immediately follows this chapter, and includes a review of relevant literature across the range of topics addressed in the thesis.
-
-Following this are chapters that contain research on Twitter's information propagation characteristics and its interesting and useful behaviours, the social structure of Twitter and the ways in which this is important for understanding the spread of information, and then on the research of the methodologies themselves, including validation and analysis of the results of this work.
-
-The thesis ends with a general analysis and conclusion, and a discussion of potential future work in this area and leading on from this research.
+\begin{itemize}
+    \item \textbf{Background and Research Domain} - A chapter providing an introduction to key concepts and the ideas behind the main research. Also included is a review of relevant literature across the range of topics addressed in the thesis.
+    \item \textbf{Understanding the Behaviour of Retweeting on Twitter} - Initial research into the problem areas identified, including studies into the propagation characteristics exhibited by Twitter and its useful and interesting properties. This is in order to provide an understanding of the mechanics of retweets.
+    \item \textbf{Analysis of Twitter's Social Structure} - An in-depth analysis into the layout of Twitter's social graph and the ways in which it helps govern the potential spread of retweets. From this graph analysis, an initial method for inferring Tweet interestingness emerges.
+    \item \textbf{Inferring Interestingness} - Improvements to the inference methodology are introduced, and deeper validations and analyses are conducted into the relative strengths of the new method. Different types of assessments are conducted in order to investigate the performance on a general scale as well as moving towards addressing information relevance.
+    \item \textbf{Assessment and Conclusions} - The thesis ends with a general analysis and conclusion, and a discussion of potential future work in this area and leading on from this research. The contributions are summarised and the research questions answered more formally.
+\end{itemize}
