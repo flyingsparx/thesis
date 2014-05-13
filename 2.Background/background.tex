@@ -4,7 +4,7 @@
 One of the most widely-used features of Twitter is its inbuilt function for easily facilitating the spread of information through its social structure. This phenomenon is the basis for much of the research in this thesis and, when combined with the characteristics of Twitter's user graph, has many interesting attributes and behaviours associated with it.
 
 \section{Key Concepts}
-Although the main important concepts are described briefly in the Glossary of this thesis, In order to more clearly understand the research and components of Twitter they are explain in more depth in this section.
+Although the main important concepts are described briefly in the Glossary of this thesis, in order to more clearly understand the research and components of Twitter they are explained in more depth in this section.
 
 \subsubsection{Tweet}
 A Tweet is a singular message on Twitter that cannot exceed 140 characters in length. It is written and sent by a user, who is the Tweet's author. Figure \ref{retweet_button} shows a Tweet written by a user, which is pre-pended to the author user's user timeline and to all of the author's followers' home timelines. Tweets can be retweeted, as explained later in this chapter, in order to create a retweet. The term `Tweet' can also be a verb defining the act of sending a Tweet.
@@ -28,7 +28,7 @@ A Tweet is a singular message on Twitter that cannot exceed 140 characters in le
 \end{figure}
 
 \subsubsection{User Timeline}
-The user timeline of user $u$ is a set containing the Tweets written by $u$ and any retweets made by $u$ and is ordered by time with the most recent Tweets at the top. As such, a user timeline may contain Tweets that were not written by $u$. Figure \ref{fig:user_timeline} illustrates this through the example of BBC Breaking News' user timeline.
+The user timeline of user $u$ is a set containing the Tweets written by $u$ and any retweets made by $u$ and is ordered by time with the most recent Tweets at the top.  Figure \ref{fig:user_timeline} illustrates this through the example of BBC Breaking News' user timeline. Since user timelines also contain retweets, not all Tweets on $u$'s user timeline are necessarily authored by $u$..
 
 \subsubsection{Home Timelime}
 The home timeline of user $u$ is a set containing the Tweets written and retweeted by $u$ as well as all of the Tweets and retweets made by his/her friends, where a friend of $u$ is another user that $u$ follows. \ref{fig:home_timeline} shows an example of a home timeline. As such, a home timeline is the union of the user timelines of $u$ and all of $u$'s friends, again with the most recent Tweets nearer the top.
@@ -117,6 +117,15 @@ In Twitter, these communities are typically small to begin with and are based on
 
 \begin{figure}[h]
 \centering
+\includegraphics[scale=0.75]{2.Background/Media/tesco_mobile.png} 
+\caption{Phatic Tweets from Tesco Mobile's official Twitter account.}
+\label{fig:tesco_mobile}
+\end{figure}
+
+Some users try and build communities through \textit{phatic} communication, in which the Tweets being broadcast are `non-dialogic' or `non-informational', as defined by \citet{miller08}. This is often done with the aim of providing a relaxed environment, and could be useful for cases similar to an internal Twitter account for an organisation's employees. Additionally, some commercial organisations may use phatic language in order to engage more with the community for the purposes of appearing more approachable, such as Tweets from Tesco Mobile's official Twitter account, as demonstrated by Figure \ref{fig:tesco_mobile}. 
+
+\begin{figure}[h]
+\centering
 \includegraphics[scale=0.7]{2.Background/Media/communities.png} 
 \caption{A hypothetical group of user communities.}
 \label{fig:communities}
@@ -141,7 +150,7 @@ Although influence level is partly derived from the follower count of the user, 
 Klout\footnote{http://klout.com} is a web service that attempts to review a user's social media influence by assigning users a Klout Score. Their website declares that this score, which ranges from 0 to a maximum of 100 and whose generation algorithm is kept private and unpublished \cite{edwards13}, is determined from a variety of over 400 `signals' taken from eight different social media platforms. These signals are derived from various attributes including the volume of information shared, the reaction to the shared information, and the relative scores of the users who interact with the information. They \textit{also} take interactivity between users as one of the primary indicators \cite{anger11}. Additionally, the service indicates the topics a user is influential about, with the general idea being for organisations to check up on which users are influential for marketing purposes, but also to highlight the users that should be replied-to at a higher priority.
 
 
-\subsection{Twitter as an Information Retrieval System}
+\subsection{Twitter as an Information-Retrieval System}
 At a high level, Twitter can be considered a type of information-retrieval system, which people can utilise to produce and consume information when required. In traditional information-retrieval systems, such as search engines and library systems, keywords and search terms are common ways for describing the type of information the user would like to receive. The system would then search a database or archive for what it believes is relevant information, \textit{based} on these `retrieval parameters', and return results to the user ordered usually by the estimated relevance of the articles \cite{arvola10}.
 
 Information quality is also reliant on the expected reading effort of the returned documents. The character precision-recall metric was introduced by \citet{arvola10} by way of demonstrating the tolerance-to-irrelevance ratio. The general mechanism for this ratio is to do with users reading a document passage; the point at which this ratio is reached is when the user stops reading the particular passage and moves to the next whole document, since they assume the rest of the document is also irrelevant to them. Therefore, the more effective the information retrieval system is in displaying high-quality information, the lower the chance that this ratio is reached by the user. This is comparable to the event in which a Twitter user viewing Tweets from someone they are following gets to the point where he or she reaches this ratio (i.e. is beginning to get bored or find the Tweets irrelevant) and decides to unfollow the friend. Similarly, the more effective the user is when selecting people to follow in the hope of receiving interesting information, the less likely it is that the user will remove these friends.
@@ -150,17 +159,31 @@ Whilst Twitter does not support the use of keyword searching for its primary inf
 
 Despite this control, it is still unlikely that users will achieve a perfect Twitter experience due to the presence of \textit{noise} \cite{alonso10}. As discussed in the Introduction, this problem stems from that although a person follows users they consider to be interesting, it is often the case that not \textit{all} information produced by interesting users will be interesting itself. For example, a user may follow a news source in order to receive breaking news but is not interested in viewing the information about politics or celebrity updates that the news source also Tweets about.
 
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.75]{2.Background/Media/eso.png} 
+\caption{Example of a Tweet from a `dynamic' Twitter account.}
+\label{fig:eso}
+\end{figure}
+
+Twitter's information-retrieval characteristics are also very valuable in highly dynamic scenarios, where status updates regarding rapidly-changing circumstances are very useful. There are some Twitter users that might use the service in this way very often, for example a user who may post updates on server availability for an online game, as shown in Figure \ref{fig:eso}, or a user who broadcasts Tweets on the state of transport links, such as the London Tube.
+
+In addition to `permanent' dynamic behaviour, environments of uprising and political tensions, such as the `Green Revolution' during the 2009 Iranian elections \cite{burns09}, clearly demonstrate Twitter's important role in the live updating of information and news in difficult situations. The examples nearer the start of the Introduction chapter also help illustrate this.
+
+
 
 \subsection{Information Quality, Popularity and `Interestingness'}
-The concept of interestingness in online social networks is based around information that conveys some \textit{affective stimulation} to the viewer, as is described in further detail in Section \ref{section:affective_stimulation}. Generally, interestingness is subjective as it takes into account features such as a person's interest in the topic of the information and how \textit{relevant} the information is to the viewer. However, in this thesis, interestingness is used to describe information that is not noise, and contains some amount of interesting information. As such, this research is aimed towards the identification of information from the noise surrounding it that might be of relevance to viewers.
+Generally, interestingness is almost impossible to define, since it is affective, subjective, depends on relevance, and often relies on the context of surrounding information. In addition, `interesting' content is not simply that which someone enjoys reading, since an article that conveys anger or frustration is also of interest.
 
-Information-retrieval systems typically use some measure of information \textit{quality} when determining which documents to return to a user and also when deciding on the \textit{order} the documents should be displayed in. This `quality' is subjective in that different systems use a variety of different algorithms for deducing quality, usually based on the level of \textit{interest} in each of the available documents (such as Google's Page Rank algorithm and Amazon's recommendation algorithms), but also in that the level of quality itself depends on the user him/herself requesting the information. 
+As such, in this thesis, interestingness is the term used to describe information that is `not noise', and contains some amount of generally (or `globally') interesting content in that it is \textit{generally} interesting, relevant, and conveys `affective stimulation' to people and is identifiable from the noise surrounding it. More detail on affective stimulation within the context of information searching is described in Section \ref{section:affective_stimulation}. 
+
+Information-retrieval systems typically use some measure of information quality when determining which documents to return to a user and also when deciding on the order the documents should be displayed in. This `quality' is subjective in that different systems use a variety of different algorithms for deducing quality, usually based on the level of interest in each of the available documents (such as Google's Page Rank algorithm and Amazon's recommendation algorithms), but also in that the level of quality itself depends on the user him/herself requesting the information. 
 
 In the case of Google's Page-Rank, the algorithm uses multiple cues to determine who the user is, their interests, past searching habits, links clicked, and so on, to return \textit{relevant} information, which is incidentally one of the causes of the aforementioned Google search bubble. Amazon's recommendation algorithms analyse a user's past item views and purchases and cross-matches these against trends based from users who also looked or bought similar items. Amazon is then able to accurately determine the type of items a customer are interested in purchasing, and can send emails to that customer with personalised recommendations. In these cases, information quality is essentially a function of information interestingness and information relevance.
 
 Twitter uses no such metrics to deliver information to its users, relying on the users themselves to implicitly `choose' the information they want to receive. Additionally, information is always displayed in chronologically-ordered timelines, with new Tweets being continuously inserted at the top as they occur. Twitter does not try to indicate interesting Tweets on the timeline which means that the interesting information is shown at equal value alongside the `noisy' Tweets, causing the difficulties in identifying the interesting information as has been mentioned previously. Indeed, the recent TechCrunch article from October 2013, ``Twitter Quitters And The Unfiltered Feed Problem''\footnote{http://techcrunch.com/2013/10/05/sorry-my-feed-is-full} talks at more length about this particular phenomenon, and helps highlight the problem area of this work more clearly from a layperson's perspective.
 
-The retweet count of a given Tweet is a useful metric in inferring its \textit{popularity}. If a Tweet is retweeted 10 times, then ten people have taken the time to read that Tweet, decide it is worth sharing, and then actually retweet it \cite{uysal11}. This user (and the other nine retweeters) may have found the Tweet interesting, yet it should be noted that although the count can be used as a measure of popularity, as a function of the influence of the Tweet's author, the retweet count alone cannot be used as a measure of how interesting the Tweet actually is \cite{naveed11}. For example, it is inappropriate to say that the first Tweet in Figure \ref{fig:tweet_comparison} is so significantly more \textit{interesting} than the second, although it is clearly more popular since Justin Bieber is an extremely influential Twitter user.
+The retweet count of a given Tweet is a useful metric in inferring its \textit{popularity}. If a Tweet is retweeted 10 times, then ten people have taken the time to read that Tweet, decide it is worth sharing, and then actually retweet it \cite{uysal11}. This user (and the other nine retweeters) may have found the Tweet interesting, yet it should be noted that although the count can be used as a measure of popularity, as a function of the influence of the Tweet's author, the retweet count alone cannot be used as a measure of how interesting the Tweet actually is \cite{naveed11}. For example, it is inappropriate to say that the first Tweet in Figure \ref{fig:tweet_comparison} is so significantly more \textit{interesting} than the second, although it is clearly more popular since Justin Bieber is an extremely influential Twitter user. Indeed, although Justin Bieber's Tweet is clearly of `interest' to his fans, it is not necessarily the general case. 
 
 \begin{figure}[h]
 \centering

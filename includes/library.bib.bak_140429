@@ -18,6 +18,7 @@
 	Number = {4},
 	Pages = {387-400},
 	Title = {{New Media, Networking and Phatic Culture}},
+	Url = {http://con.sagepub.com/content/14/4/387.abstract},
 	Volume = {14},
 	Year = {2008},
 	Bdsk-Url-1 = {http://con.sagepub.com/content/14/4/387.abstract},
@@ -32,6 +33,7 @@
 	Month = {November},
 	Pages = {322--334},
 	Title = {{Twitter Free Iran: an Evaluation of Twitter's Role in Public Diplomacy and Information Operations in Iran's 2009 Election Crisis}},
+	Url = {http://vuir.vu.edu.au/15230/},
 	Year = {2009},
 	Bdsk-Url-1 = {http://vuir.vu.edu.au/15230/}}
 
@@ -45,7 +47,7 @@
 	Pages = {575-580},
 	Title = {{Inferring the Interesting Tweets in Your Network}},
 	Year = {2013},
-	organization={IEEE},
+	organization={IEEE}
 	Bdsk-Url-1 = {http://dx.doi.org/10.1109/CGC.2013.100}}
 
 @inproceedings{balinsky11,
@@ -59,7 +61,7 @@
 	Year = {2011}}
 
 @article{erdos60,
-	Author = {Erd{\H o}s, Paul and Alfr{\'e}d R{\'e}nyi},
+	Author = {Erd{\H o}s, Paul and A. R{\'e}nyi},
 	Date-Added = {2014-01-31 11:43:09 +0000},
 	Date-Modified = {2014-01-31 11:44:14 +0000},
 	Journal = {Publications of tke Matkemafical Insfifufe of the Hungarian Academy of Sciences},
@@ -80,10 +82,16 @@
 	Pages = {131-163},
 	Publisher = {Kluwer Academic Publishers},
 	Title = {{Bayesian Network Classifiers}},
+	Url = {http://dx.doi.org/10.1023/A%3A1007465528199},
 	Volume = {29},
 	Year = 1997,
 	Bdsk-Url-1 = {http://dx.doi.org/10.1023/A%3A1007465528199},
 	Bdsk-Url-2 = {http://dx.doi.org/10.1023/A:1007465528199}}
+
+@url{:fk,
+	Date-Added = {2013-12-04 14:52:04 +0000},
+	Date-Modified = {2013-12-04 14:52:04 +0000},
+	Bdsk-File-1 = {YnBsaXN0MDDUAQIDBAUGJCVYJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoKgHCBMUFRYaIVUkbnVsbNMJCgsMDxJXTlMua2V5c1pOUy5vYmplY3RzViRjbGFzc6INDoACgAOiEBGABIAFgAdccmVsYXRpdmVQYXRoWWFsaWFzRGF0YV8QLy4uLy4uL0Rvd25sb2Fkcy8xMC4xMDIzJTJGQSUzQTEwMDc0NjU1MjgxOTkuYmli0hcLGBlXTlMuZGF0YU8RAdIAAAAAAdIAAgAADE1hY2ludG9zaCBIRAAAAAAAAAAAAAAAAAAAAMgGxCtIKwAAAAhKHx8xMC4xMDIzJTJGQSUzQTEwMDc0NjU1MjgxOTkuYmliAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD5Dr6zsTyBQAAAAAAAAAAAAIAAgAACSAAAAAAAAAAAAAAAAAAAAAJRG93bmxvYWRzAAAQAAgAAMgGthsAAAARAAgAAM7E8gUAAAABAAwACEofAAhKDwAAkj8AAgBNTWFjaW50b3NoIEhEOlVzZXJzOgB3aWxsd2ViYmVybGV5OgBEb3dubG9hZHM6ADEwLjEwMjMlMkZBJTNBMTAwNzQ2NTUyODE5OS5iaWIAAA4AQAAfADEAMAAuADEAMAAyADMAJQAyAEYAQQAlADMAQQAxADAAMAA3ADQANgA1ADUAMgA4ADEAOQA5AC4AYgBpAGIADwAaAAwATQBhAGMAaQBuAHQAbwBzAGgAIABIAEQAEgA9VXNlcnMvd2lsbHdlYmJlcmxleS9Eb3dubG9hZHMvMTAuMTAyMyUyRkElM0ExMDA3NDY1NTI4MTk5LmJpYgAAEwABLwAAFQACABT//wAAgAbSGxwdHlokY2xhc3NuYW1lWCRjbGFzc2VzXU5TTXV0YWJsZURhdGGjHR8gVk5TRGF0YVhOU09iamVjdNIbHCIjXE5TRGljdGlvbmFyeaIiIF8QD05TS2V5ZWRBcmNoaXZlctEmJ1Ryb290gAEACAARABoAIwAtADIANwBAAEYATQBVAGAAZwBqAGwAbgBxAHMAdQB3AIQAjgDAAMUAzQKjAqUCqgK1Ar4CzALQAtcC4ALlAvIC9QMHAwoDDwAAAAAAAAIBAAAAAAAAACgAAAAAAAAAAAAAAAAAAAMR}}
 
 @book{guido07,
 	Author = {Caldarelli, Guido},
@@ -92,6 +100,7 @@
 	Publisher = {Oxford University Press},
 	Series = {OUP Catalogue},
 	Title = {{Scale-Free Networks: Complex Webs in Nature and Technology}},
+	Url = {http://ideas.repec.org/b/oxp/obooks/9780199211517.html},
 	Year = 2007,
 	Bdsk-Url-1 = {http://ideas.repec.org/b/oxp/obooks/9780199211517.html}}
 
@@ -110,6 +119,7 @@
 	Publisher = {ACM},
 	Series = {IMC '07},
 	Title = {{Measurement and Analysis of Online Social Networks}},
+	Url = {http://doi.acm.org/10.1145/1298306.1298311},
 	Year = {2007},
 	Bdsk-Url-1 = {http://doi.acm.org/10.1145/1298306.1298311},
 	Bdsk-Url-2 = {http://dx.doi.org/10.1145/1298306.1298311}}
@@ -119,14 +129,12 @@
 	Date-Added = {2013-11-14 15:03:31 +0000},
 	Date-Modified = {2013-11-14 15:03:41 +0000},
 	Publisher = {Wiley},
-	Edition = {3},
-	ISBN = {978-1-11854-839-4},
 	Title = {{Applied Logistic Regression}},
 	Year = {2013}}
 
 @inproceedings{lauw10,
 	Author = {Lauw, Hady W. and Ntoulas, Alexandros and Kenthapadi, Krishnaram},
-	Booktitle = {Proceedings of the 2010 SSM Conference},
+	Booktitle = {Proceedings of the 2010 SSM conference},
 	Date-Added = {2013-10-16 09:53:11 +0000},
 	Date-Modified = {2013-10-16 09:53:19 +0000},
 	Title = {{Estimating the Quality of Postings in the Real-Time Web}},
@@ -136,7 +144,7 @@
 	Acmid = {1772777},
 	Address = {New York, NY, USA},
 	Author = {Sakaki, Takeshi and Okazaki, Makoto and Matsuo, Yutaka},
-	Booktitle = {Proceedings of the 19th International Conference on World Wide Web},
+	Booktitle = {Proceedings of the 19th international conference on World Wide Web},
 	Date-Added = {2013-10-16 09:49:11 +0000},
 	Date-Modified = {2013-10-16 09:49:20 +0000},
 	Isbn = {978-1-60558-799-8},
@@ -147,20 +155,21 @@
 	Publisher = {ACM},
 	Series = {WWW '10},
 	Title = {{Earthquake Shakes Twitter Users: Real-Time Event Detection by Social Sensors}},
+	Url = {http://doi.acm.org/10.1145/1772690.1772777},
 	Year = {2010},
 	Bdsk-Url-1 = {http://doi.acm.org/10.1145/1772690.1772777},
 	Bdsk-Url-2 = {http://dx.doi.org/10.1145/1772690.1772777}}
 
 @misc{yu11,
-	Author = {Yu, Aron and Hu, C. V. and Kilzer, Ann},
+	Author = {Yu, Aron and Hu, C V. and Kilzer, Ann},
 	Date-Added = {2013-10-16 09:38:45 +0000},
 	Date-Modified = {2013-10-16 09:38:50 +0000},
 	Title = {{KHYrank: Using Retweets and Mentions to Predict Influential Users}},
 	Year = {2011}}
 
 @inproceedings{alonso10,
-	Author = {Alonso, Omar and Carson, Chad and Gerster, David and Ji, Xiang and Nabar, Shubha U.},
-	Booktitle = {Proceedings of the 2010 Workshop on Crowdsourcing for Search Evaluation},
+	Author = {Alonso, Omar and Carson, Chad and Gerster, David and Ji, Xiang and Nabar, Shubha U},
+	Booktitle = {SIGIR Crowdsourcing for Search Evaluation Workshop},
 	Series = {CSE'10},
 	Publisher = {ACM},
 	Date-Added = {2013-10-16 09:32:26 +0000},
@@ -192,6 +201,7 @@
 	Number = {5},
 	Pages = {A12 - A16},
 	Title = {{How Much Klout Do you Have? A Test of System Generated Cues on Source Credibility}},
+	Url = {http://www.sciencedirect.com/science/article/pii/S0747563212003767},
 	Volume = {29},
 	Year = {2013},
 	publisher={Elsevier},
@@ -218,7 +228,7 @@
 	Year = {2009}}
 
 @inproceedings{bakshy11,
-	Author = {Bakshy, Eytan and Hofman, Jake M. and Mason, Winter A. and Watts, Duncan J.},
+	Author = {Bakshy, Eytan and Hofman, Jake M and Mason, Winter A and Watts, Duncan J},
 	Booktitle = {Fourth ACM International Conference on Web Seach and Data Mining},
 	series = {WSDM 2011},
 	Date-Added = {2013-10-14 15:37:55 +0000},
@@ -229,8 +239,7 @@
 
 @inproceedings{kongthon12,
 	Author = {Kongthon, Alisa and Haruechaiyasak, Choochart and Pailai, Jaruwat and Kongyoung, Sarawoot},
-	Booktitle = {Proceedings of Technology Management for Emerging Technologies},
-	Series = {PICMET},
+	Booktitle = {Technology Management for Emerging Technologies (PICMET), 2012 Proceedings of PICMET'12:},
 	Date-Added = {2013-10-14 09:00:50 +0000},
 	Date-Modified = {2013-10-14 09:00:59 +0000},
 	Organization = {IEEE},
@@ -258,35 +267,34 @@
 	Number = {2},
 	Pages = {175 - 177},
 	Title = {{Hope for Haiti: An analysis of Facebook and Twitter Usage During the Earthquake Relief Efforts}},
+	Url = {http://www.sciencedirect.com/science/article/pii/S0363811111000294},
 	Volume = {37},
 	Year = {2011},
 	Bdsk-Url-1 = {http://www.sciencedirect.com/science/article/pii/S0363811111000294},
 	Bdsk-Url-2 = {http://dx.doi.org/10.1016/j.pubrev.2011.01.010}}
 
-@article{gransee12,
+@url{gransee12,
 	Author = {Sean Gransee and Ryan McAfee and Alex Wilson},
 	Date-Added = {2013-10-11 15:53:54 +0000},
 	Date-Modified = {2013-10-11 15:58:28 +0000},
 	Title = {{Twitter Retweet Prediction}},
-	URL = {sites.google.com/site/learningtweetvalue/other-deliverables},
 	Year = {2012}}
 
 @inproceedings{petrovic11,
 	Author = {Petrovic, Sasa and Osborne, Miles and Lavrenko, Victor},
-	Booktitle = {Proceedings of the 2011 International Conference On Weblogs and Social Media},
-	Organisation = {AAAI},
-	Series = {ICWSM},
+	Booktitle = {ICWSM},
 	Date-Added = {2013-10-11 13:38:46 +0000},
 	Date-Modified = {2013-10-11 13:38:52 +0000},
 	Title = {{RT to Win! Predicting Message Propagation in Twitter}},
 	Year = {2011}}
 
 @inproceedings{zaman10,
-	Author = {Zaman, Tauhid R. and Herbrich, Ralf and V. Gael, Jurgen and Stern, David},
-	Booktitle = {Proceedings of the 2010 Workshop on Computational Social Science and the Wisdom of Crowds},
+	Author = {Zaman, Tauhid R and Herbrich, Ralf and V. Gael, Jurgen and Stern, David},
+	Booktitle = {Workshop on Computational Social Science and the Wisdom of Crowds},
 	Series= {NIPS},
 	Date-Added = {2013-10-11 12:44:44 +0000},
 	Date-Modified = {2013-10-11 12:44:50 +0000},
+	Number = {45},
 	Organization = {Citeseer},
 	Pages = {599--601},
 	Title = {{Predicting Information Spreading in Twitter}},
@@ -297,7 +305,7 @@
 	Acmid = {1871691},
 	Address = {New York, NY, USA},
 	Author = {Yang, Zi and Guo, Jingyi and Cai, Keke and Tang, Jie and Li, Juanzi and Zhang, Li and Su, Zhong},
-	Booktitle = {Proceedings of the 19th ACM International Conference on Information and Knowledge Management},
+	Booktitle = {Proceedings of the 19th ACM international conference on Information and knowledge management},
 	Date-Added = {2013-10-11 10:25:55 +0000},
 	Date-Modified = {2013-10-11 10:26:00 +0000},
 	Isbn = {978-1-4503-0099-5},
@@ -308,19 +316,21 @@
 	Publisher = {ACM},
 	Series = {CIKM '10},
 	Title = {{Understanding Retweeting Behaviors in Social Networks}},
+	Url = {http://doi.acm.org/10.1145/1871437.1871691},
 	Year = {2010},
 	Bdsk-Url-1 = {http://doi.acm.org/10.1145/1871437.1871691},
 	Bdsk-Url-2 = {http://dx.doi.org/10.1145/1871437.1871691}}
 
 @inproceedings{zadeh13,
-	Author = {Zadeh, Reza B. and Goel, Ashish and Munagala, Kamesh and Sharma, Aneesh},
+	Author = {Zadeh, Reza Bosagh and Goel, Ashish and Munagala, Kamesh and Sharma, Aneesh},
+	Booktitle = {COSN'13},
 	Date-Added = {2013-10-09 09:25:24 +0000},
 	Date-Modified = {2013-10-09 09:27:09 +0000},
 	Publisher = {ACM},
 	Title = {{On the Precision of Social and Information Networks}},
-	booktitle={Proceedings of the First ACM Conference on Online Social Networks},
-	Series = {COSN'13},
+	booktitle={Proceedings of the first ACM conference on Online social networks},
     pages={63--74},
+    organization={ACM},
 	Year = {2013}}
 
 @inproceedings{macskassy11,
@@ -347,6 +357,7 @@
 	Pages = {759--770},
 	Publisher = {Springer-Verlag},
 	Title = {A web-based pervasive recommendation system for mobile tourist guides},
+	Url = {http://dx.doi.org/10.1007/s00779-011-0389-x},
 	Volume = {15},
 	Year = {2011},
 	Bdsk-Url-1 = {http://dx.doi.org/10.1007/s00779-011-0389-x}}
@@ -376,8 +387,7 @@
 
 @conference{chorley12,
 	Author = {Chorley, Martin J. and Colombo, Gualtiero B. and Allen, Stuart M. and Whitaker, Roger M.},
-	booktitle={2012 International Conference on Privacy, Security, Risk and Trust and 2012 International Confernece on Social Computing},
-	Series = {PASSAT, SocialCom},
+	booktitle={Privacy, Security, Risk and Trust (PASSAT), 2012 International Conference on and 2012 International Confernece on Social Computing (SocialCom)}
 	Date-Added = {2013-05-31 08:25:00 +0000},
 	Date-Modified = {2013-05-31 08:25:00 +0000},
 	Pages = {277-282},
@@ -387,11 +397,11 @@
 
 @inproceedings{bigonha10,
 	Author = {Carolina Bigonha and Thiago N. C. Cardoso and Mirella M. Moro and Virg{\'\i}lio A. F. Almeida and Marcos A. Gon\c{c}alves},
+	Booktitle = {WebMedia},
 	Date-Added = {2013-05-31 08:25:00 +0000},
 	Date-Modified = {2013-05-31 08:25:00 +0000},
 	Title = {{Detecting Evangelists and Detractors on Twitter}},
 	booktitle={18th Brazilian Symposium on Multimedia and the Web},
-	Series = {WebMedia},
     pages={107--114},
 	Year = {2010}}
 
@@ -402,6 +412,7 @@
 	Journal = {Search},
 	Pages = {1--4},
 	Title = {Engaging Social Medias: Case Mobile Crowdsourcing},
+	Url = {http://vili.lehdonvirta.com/files/prxb1914/liu-2011-social-media-crowdsourcing.pdf},
 	Year = {2011},
 	Bdsk-Url-1 = {http://vili.lehdonvirta.com/files/prxb1914/liu-2011-social-media-crowdsourcing.pdf}}
 
@@ -411,7 +422,7 @@
 	Date-Added = {2013-05-31 08:25:00 +0000},
 	Date-Modified = {2013-05-31 08:25:00 +0000},
 	Ee = {http://arxiv.org/abs/1111.4570},
-	Journal = {Computing Research Repository (CoRR)},
+	Journal = {CoRR},
 	Title = {{Four Degrees of Separation}},
 	Volume = {abs/1111.4570},
 	Year = {2011},
@@ -424,7 +435,7 @@
 	Acmid = {1963500},
 	Address = {New York, NY, USA},
 	Author = {Castillo, Carlos and Mendoza, Marcelo and Poblete, Barbara},
-	Booktitle = {Proceedings of the 20th International Conference on World Wide Web},
+	Booktitle = {Proceedings of the 20th international conference on World wide web},
 	Date-Added = {2013-05-31 08:25:00 +0000},
 	Date-Modified = {2013-05-31 08:25:00 +0000},
 	Isbn = {978-1-4503-0632-4},
@@ -435,6 +446,7 @@
 	Publisher = {ACM},
 	Series = {WWW '11},
 	Title = {{Information Credibility on Twitter}},
+	Url = {http://doi.acm.org/10.1145/1963405.1963500},
 	Year = {2011},
 	Bdsk-Url-1 = {http://doi.acm.org/10.1145/1963405.1963500},
 	Bdsk-Url-2 = {http://dx.doi.org/10.1145/1963405.1963500}}
@@ -443,7 +455,7 @@
 	Acmid = {1963222},
 	Address = {New York, NY, USA},
 	Author = {Hong, Liangjie and Dan, Ovidiu and Davison, Brian D.},
-	Booktitle = {Proceedings of the 20th International Conference companion on World Wide Web},
+	Booktitle = {Proceedings of the 20th international conference companion on World Wide Web},
 	Date-Added = {2013-05-31 08:25:00 +0000},
 	Date-Modified = {2013-05-31 08:25:00 +0000},
 	Isbn = {978-1-4503-0637-9},
@@ -454,6 +466,7 @@
 	Publisher = {ACM},
 	Series = {WWW '11},
 	Title = {{Predicting Popular Messages in Twitter}},
+	Url = {http://doi.acm.org/10.1145/1963192.1963222},
 	Year = {2011}}
 
 @inproceedings{peng11,
@@ -494,6 +507,7 @@
 	Pages = {267-275},
 	Publisher = {Gabler Verlag},
 	Title = {{Scale-Free Networks}},
+	Url = {http://dx.doi.org/10.1007/s11576-006-0058-2},
 	Volume = {48},
 	Year = {2006},
 	Bdsk-Url-1 = {http://dx.doi.org/10.1007/s11576-006-0058-2}}
@@ -533,12 +547,12 @@
 
 @inproceedings{marcus11,
 	Author = {Adam Marcus and Michael S. Bernstein and Osama Badar and David R. Karger and Samuel Madden and Robert C. Miller},
-	booktitle={Proceedings of the SIGCHI Conference on Human Factors in Computing Systems},
+	booktitle={Proceedings of the SIGCHI conference on Human Factors in Computing Systems},
 	Date-Added = {2013-05-31 08:25:00 +0000},
 	Date-Modified = {2013-05-31 08:25:00 +0000},
 	Pages = {227-236},
 	Title = {{Twitinfo: Aggregating and Visualizing Microblogs for Event Exploration}},
-	organization={ACM},
+	organization={ACM}
 	Year = {2011}}
 
 @inproceedings{pak10,
@@ -557,8 +571,8 @@
 
 @inproceedings{uysal11,
 	Acmid = {2063941},
-	Author = {Uysal, Ibrahim and Croft, W. B.},
-	Booktitle = {Proceedings of the 20th ACM International Conference on Information and Knowledge Management},
+	Author = {Uysal, Ibrahim and Croft, W. Bruce},
+	Booktitle = {Proceedings of the 20th ACM international conference on Information and knowledge management},
 	Date-Added = {2013-05-31 08:25:00 +0000},
 	Date-Modified = {2013-05-31 08:25:00 +0000},
 	Isbn = {978-1-4503-0717-8},
@@ -569,6 +583,7 @@
 	Publisher = {ACM},
 	Series = {CIKM '11},
 	Title = {{User Oriented Tweet Ranking: a Filtering Approach to Microblogs}},
+	Url = {http://doi.acm.org/10.1145/2063576.2063941},
 	Year = {2011},
 	Bdsk-Url-1 = {http://doi.acm.org/10.1145/2063576.2063941},
 	Bdsk-Url-2 = {http://dx.doi.org/10.1145/2063576.2063941}}
@@ -597,13 +612,13 @@
 	Priority = {2},
 	Publisher = {{Oxford University Press}},
 	Title = {{The Selfish Gene}},
+	Url = {http://www.amazon.com/exec/obidos/redirect?tag=citeulike07-20\&path=ASIN/0192860925},
 	Year = {1976},
 	Bdsk-Url-1 = {http://www.amazon.com/exec/obidos/redirect?tag=citeulike07-20%5C&path=ASIN/0192860925}}
 
 @inproceedings{naveed11,
 	Author = {Naveed, Nasir and Gottron, Thomas and Kunegis, J{\'e}r{\^o}me and Alhadi, Arifah C.},
-	Booktitle = {Proceedings of the 2011 ACM Web Science Conference},
-	Series = {WebSci'11},
+	Booktitle = {In: Proceedings of the ACM WebSci'11},
 	Date-Added = {2013-02-11 10:14:23 +0000},
 	Date-Modified = {2013-02-11 10:15:57 +0000},
 	Pages = {1-7},
@@ -612,7 +627,7 @@
 	Year = {2011}}
 
 @inproceedings{suh10,
-	Author = {Bongwon Suh and Lichan Hong and Pirolli, Peter and Chi, Ed H.},
+	Author = {Bongwon Suh and Lichan Hong and Pirolli, P. and Chi, E.H.},
 	Booktitle = {2010 IEEE Second International Conference on Social Computing},
 	Series = {SocialCom},
 	Date-Added = {2011-07-19 14:40:46 +0100},
@@ -628,7 +643,7 @@
 	Acmid = {1772751},
 	Address = {New York, NY, USA},
 	Author = {Kwak, Haewoon and Lee, Changhyun and Park, Hosung and Moon, Sue},
-	Booktitle = {Proceedings of the 19th International Conference on World Wide Web},
+	Booktitle = {Proceedings of the 19th international conference on World wide web},
 	Date-Added = {2011-07-19 14:39:36 +0100},
 	Date-Modified = {2011-07-19 14:39:56 +0100},
 	Isbn = {978-1-60558-799-8},
@@ -639,6 +654,7 @@
 	Publisher = {ACM},
 	Series = {WWW '10},
 	Title = {{What is Twitter, a Social Network or a News Media?}},
+	Url = {http://doi.acm.org/10.1145/1772690.1772751},
 	Year = {2010},
 	Bdsk-Url-1 = {http://doi.acm.org/10.1145/1772690.1772751}}
 
@@ -682,6 +698,7 @@
 	Number = {3},
 	Pages = {182 - 188},
 	Title = {Dissemination of health information through social networks: Twitter and antibiotics},
+	Url = {http://www.sciencedirect.com/science/article/pii/S0196655310000349},
 	Volume = {38},
 	Year = {2010},
 	Bdsk-Url-1 = {http://www.sciencedirect.com/science/article/pii/S0196655310000349},
@@ -718,17 +735,18 @@
 	Publisher = {ACM},
 	Series = {MobiOpp '10},
 	Title = {{Uttering: Social Micro-Blogging Without the Internet}},
+	Url = {http://doi.acm.org/10.1145/1755743.1755754},
 	Year = {2010},
 	Bdsk-Url-1 = {http://doi.acm.org/10.1145/1755743.1755754}}
 
-@inproceedings{quercia11,
-	Author = {Quercia, Daniele and Ellis, Jonathan and Capra, Licia and Crowroft, Jon},
+@article{quercia11,
+	Author = {Quercia, D. and Ellis, J. and Capra, L. and Croweroft, J.},
 	Date-Added = {2011-05-27 10:06:52 +0100},
 	Date-Modified = {2011-06-06 13:12:11 +0100},
 	Keywords = {Language, Social Networks, Twitter},
 	Title = {{In the Mood for Being Influential on Twitter}},
-	booktitle={2011 IEEE Third International Conference on Privacy, Security, Risk and Trust and 2011 IEEE Third international Conference on Social Computing},
-	Series = {PASSAT, SocialCom},
+	booktitle={2011 IEEE Third international conference on Privacy, security, risk and trust and 2011 IEEE Third international conference on social computing},
+	Series = {PASSAT, Socialcom},
     pages={307--314},
     organization={IEEE},
 	Year = {2011}}
@@ -740,6 +758,7 @@
 	Date-Modified = {2011-06-06 13:11:52 +0100},
 	Journal = {Artificial Intelligence},
 	Title = {Media landscape in Twitter : A world of new conventions and political diversity},
+	Url = {http://twitter.mpi-sws.org/icwsm2011_medialandscape.pdf},
 	Year = {2011},
 	Bdsk-Url-1 = {http://twitter.mpi-sws.org/icwsm2011_medialandscape.pdf}}
 
@@ -767,7 +786,7 @@
     volume={51},
     number={4},
     pages={661--703},
-    publisher={SIAM},
+    publisher={SIAM}
 	Keywords = {Physics - Data Analysis, Statistics and Probability, Condensed Matter - Disordered Systems and Neural Networks, Statistics - Applications, Statistics - Methodology},
 	Primaryclass = {physics.data-an},
 	Title = {{Power-Law Distributions in Empirical Data}},
@@ -783,6 +802,7 @@
 	Location = {http://www.scientificcommons.org/48385330},
 	Publisher = {Schoelcher, Martinique: online proceedings},
 	Title = {SPINE: Publish/Subscribe for Wireless Mesh Networks through Self-Managed Intersecting Paths},
+	Url = {http://www.informatik.uni-stuttgart.de/cgi-bin/NCSTRL/NCSTRL_view.pl?id=INPROC-2008-39&engl=1},
 	Year = {2008},
 	Bdsk-Url-1 = {http://www.informatik.uni-stuttgart.de/cgi-bin/NCSTRL/NCSTRL_view.pl?id=INPROC-2008-39&engl=1}}
 
@@ -802,6 +822,7 @@
 	Publisher = {ACM},
 	Series = {MobiSys '06},
 	Title = {Fast handoff for seamless wireless mesh networks},
+	Url = {http://doi.acm.org/10.1145/1134680.1134690},
 	Year = {2006},
 	Bdsk-Url-1 = {http://doi.acm.org/10.1145/1134680.1134690}}
 
@@ -843,6 +864,7 @@
 	Pages = {2--7},
 	Publisher = {ACM},
 	Title = {Gossiping in distributed systems},
+	Url = {http://doi.acm.org/10.1145/1317379.1317381},
 	Volume = {41},
 	Year = {2007},
 	Bdsk-Url-1 = {http://doi.acm.org/10.1145/1317379.1317381}}
@@ -862,6 +884,7 @@
 	Pages = {67--74},
 	Publisher = {ACM},
 	Title = {Gossiping on MANETs: the beauty and the beast},
+	Url = {http://doi.acm.org/10.1145/1317379.1317390},
 	Volume = {41},
 	Year = {2007},
 	Bdsk-Url-1 = {http://doi.acm.org/10.1145/1317379.1317390}}
@@ -882,6 +905,7 @@
 	Publisher = {ACM},
 	Series = {MobiHoc '08},
 	Title = {Delegation forwarding},
+	Url = {http://doi.acm.org/10.1145/1374618.1374653},
 	Year = {2008},
 	Bdsk-Url-1 = {http://doi.acm.org/10.1145/1374618.1374653}}
 
@@ -895,6 +919,7 @@
 	Location = {http://www.scientificcommons.org/16620072},
 	Publisher = {HAL - CCSD},
 	Title = {A Gossip-based Distributed News Service for Wireless Mesh Networks},
+	Url = {http://hal.inria.fr/inria-00001010/en/},
 	Year = {2006},
 	Bdsk-Url-1 = {http://hal.inria.fr/inria-00001010/en/}}
 
@@ -926,6 +951,7 @@
 	Publisher = {USENIX Association},
 	Series = {WOSN'10},
 	Title = {Distance matters: geo-social metrics for online social networks},
+	Url = {http://portal.acm.org/citation.cfm?id=1863190.1863198},
 	Year = {2010},
 	Bdsk-Url-1 = {http://portal.acm.org/citation.cfm?id=1863190.1863198}}
 
@@ -939,6 +965,7 @@
 	Number = {1},
 	Pages = {B1 - B9},
 	Title = {{Not so Fast! (and Not so Frugal!): Rethinking the Recognition Heuristic}},
+	Url = {http://www.sciencedirect.com/science/article/B6T24-49CKXYN-1/2/634c0d42754b88780217f6f46e5029d5},
 	Volume = {90},
 	Year = {2003},
 	Bdsk-Url-1 = {http://www.sciencedirect.com/science/article/B6T24-49CKXYN-1/2/634c0d42754b88780217f6f46e5029d5},
@@ -951,6 +978,7 @@
 	Institution = {Max Planck Society - eDocument Server [http://edoc.mpg.de/ac_oai.pl] (Germany)},
 	Publisher = {Oxford University Press},
 	Title = {{The Recognition Heuristic: How Ignorance Makes us Smart}},
+	Url = {http://edoc.mpg.de/192616},
 	Year = {1999},
 	Bdsk-Url-1 = {http://edoc.mpg.de/192616}}
 
@@ -964,6 +992,7 @@
 	Pages = {460-484},
 	Publisher = {Springer Netherlands},
 	Title = {{Expected reading effort in focused retrieval evaluation}},
+	Url = {http://dx.doi.org/10.1007/s10791-010-9133-9},
 	Volume = {13},
 	Year = {2010},
 	Bdsk-Url-1 = {http://dx.doi.org/10.1007/s10791-010-9133-9}}
@@ -1027,7 +1056,9 @@
 	Pages = {243--252},
 	Publisher = {ACM},
 	Series = {GROUP '09},
+	organization={ACM},
 	Title = {{How and Why People Twitter: the Role that Micro-Blogging Plays in Informal Communication at Work}},
+	Url = {http://doi.acm.org/10.1145/1531674.1531710},
 	Year = {2009},
 	Bdsk-Url-1 = {http://doi.acm.org/10.1145/1531674.1531710}}
 
@@ -1035,7 +1066,7 @@
 	Acmid = {1397741},
 	Address = {New York, NY, USA},
 	Author = {Krishnamurthy, Balachander and Gill, Phillipa and Arlitt, Martin},
-	Booktitle = {Proceedings of the First Workshop on Online Social Networks},
+	Booktitle = {Proceedings of the first workshop on Online social networks},
 	Date-Added = {2011-04-20 12:03:02 +0100},
 	Date-Modified = {2011-06-06 12:57:04 +0100},
 	Isbn = {978-1-60558-182-8},
@@ -1046,6 +1077,7 @@
 	Publisher = {ACM},
 	Series = {WOSP '08},
 	Title = {{A Few Chirps about Twitter}},
+	Url = {http://doi.acm.org/10.1145/1397735.1397741},
 	Year = {2008},
 	Bdsk-Url-1 = {http://doi.acm.org/10.1145/1397735.1397741}}
 
@@ -1053,7 +1085,7 @@
 	Acmid = {1863193},
 	Address = {Berkeley, CA, USA},
 	Author = {Galuba, Wojciech and Aberer, Karl and Chakraborty, Dipanjan and Despotovic, Zoran and Kellerer, Wolfgang},
-	Booktitle = {Proceedings of the 3rd Conference on Online Social Networks},
+	Booktitle = {Proceedings of the 3rd conference on Online social networks},
 	Date-Added = {2011-04-20 12:02:27 +0100},
 	Date-Modified = {2011-06-06 12:56:20 +0100},
 	Location = {Boston, MA},
@@ -1062,6 +1094,7 @@
 	Publisher = {USENIX Association},
 	Series = {WOSN'10},
 	Title = {{Outtweeting the Twitterers - Predicting Information Cascades in Microblogs}},
+	Url = {http://portal.acm.org/citation.cfm?id=1863190.1863193},
 	Year = {2010},
 	Bdsk-Url-1 = {http://portal.acm.org/citation.cfm?id=1863190.1863193}}
 
@@ -1079,6 +1112,7 @@
 	journal={ICWSM},
     volume={10},
     pages={10--17},
+	Url = {http://aaai.org/ocs/index.php/ICWSM/ICWSM10/paper/view/1538/0},
 	Year = {2010},
 	Bdsk-Url-1 = {http://aaai.org/ocs/index.php/ICWSM/ICWSM10/paper/view/1538/0}}
 
@@ -1100,6 +1134,7 @@
 	Posted-At = {2008-12-08 07:53:27},
 	Priority = {3},
 	Title = {{Social Networks That Matter: Twitter Under the Microscope}},
+	Url = {http://arxiv.org/abs/0812.1045},
 	Year = {2009},
 	Bdsk-Url-1 = {http://arxiv.org/abs/0812.1045}}
 
@@ -1107,7 +1142,7 @@
 	Acmid = {1348556},
 	Address = {New York, NY, USA},
 	Author = {Java, Akshay and Song, Xiaodan and Finin, Tim and Tseng, Belle},
-	Booktitle = {Proceedings of the 9th WebKDD and 1st SNA-KDD Workshop on Web Mining and Social Network Analysis},
+	Booktitle = {Proceedings of the 9th WebKDD and 1st SNA-KDD 2007 workshop on Web mining and social network analysis},
 	Date-Added = {2011-04-20 11:56:56 +0100},
 	Date-Modified = {2011-06-06 12:55:36 +0100},
 	Isbn = {978-1-59593-848-0},
@@ -1118,6 +1153,7 @@
 	Publisher = {ACM},
 	Series = {WebKDD/SNA-KDD '07},
 	Title = {{Why we Twitter: Understanding Microblogging Usage and Communities}},
+	Url = {http://doi.acm.org/10.1145/1348549.1348556},
 	Year = {2007},
 	Bdsk-Url-1 = {http://doi.acm.org/10.1145/1348549.1348556}}
 

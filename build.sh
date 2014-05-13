@@ -36,7 +36,7 @@ printf "\nDone.\n--> Counting words...\n"
 texcount -merge main.tex 2>&1 | grep 'Words\|Number'
 
 # Delete messy files (don't show error if files don't exist)
-rm main.{bbl,blg,dvi,glo,ist,lof,log,lot,out,ps,toc,loa} > /dev/null 2>&1
+rm main.{blg,dvi,glo,ist,lof,log,lot,out,ps,toc,loa} > /dev/null 2>&1
 rm texput.log > /dev/null 2>&1
 
 # Calculate time elapsement
