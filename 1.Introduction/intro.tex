@@ -2,7 +2,7 @@
 
 Online social networks have exploded into the lives of millions of people worldwide over the last decade, and their use has facilitated the interconnection of the world in ways never before perceived possible.
 
-These social networks have many characteristics that are also exhibited by `real'-world social networks. Although most such platforms each provide a different service to collaboratively satisfy an array of different use-cases, they tend to all be based around the idea of `friendships' (i.e. links between the user nodes in the social graph) and the sharing of information amongst friends.
+These social networks have many characteristics that are also exhibited by `real'-world social networks. Although most such platforms provide a different service to collaboratively satisfy an array of different use-cases, they tend to all be based around the idea of `friendships' (i.e. links between the user nodes in the social graph) and the sharing of information amongst friends.
 
 Social networks like these have been available for around ten years now (with MySpace\footnote{http://myspace.com} launching in 2003 and Bebo\footnote{http://bebo.com} in 2005), but it wasn't really until the worldwide launch of Facebook\footnote{http://facebook.com} in 2006 that social networks became the staple, ubiquitous norm that they are today. More recently, we have seen the introductions of Google's social network grown from its Buzz service, Google Plus\footnote{http://plus.google.com}, Pinterest\footnote{http://pinterest.com}, App.net\footnote{http://app.net}, and many more. They make up a large part of and contribute heavily towards the ideas behind Web 2.0, which describes the web as being primarily formed from user-generated content and encourages the sharing of such content.
 
@@ -10,7 +10,7 @@ Another component that helped in the dawn of Web 2.0 was the rise of \textit{blo
 
 
 \section{Twitter as a Social Network}
-Twitter\footnote{http://twitter.com} is an online social network, which launched in the summer of 2006 \cite{krishnamurthy08}. Since then, it has rapidly gained in popularity amongst several different user groups - teens and young people, casual users, celebrities, reporters, and so on - and within eight months had around 94,000 registered users \cite{java07}. Although Twitter has never been a direct competitor with Facebook, users tend to use the two sites concurrently for different purposes: whilst Facebook's focus is on providing many services at once (such as photo-sharing, commenting/endorsing of information, messaging, pages for businesses, groups, events, etc.), Twitter's is more on simplicity.
+Twitter\footnote{http://twitter.com} is an online social network, which launched in the summer of 2006 \cite{krishnamurthy08}. Since then, it has rapidly gained in popularity amongst several different user groups - teens and young people, casual users, celebrities, reporters, and so on - and within eight months had around 94,000 registered users \cite{java07}. Twitter has never been a direct competitor with Facebook, as users tend to use the two sites concurrently for different purposes: whilst Facebook's focus is on providing many services at once (such as photo-sharing, commenting/endorsing of information, messaging, pages for businesses, groups, events, etc.), Twitter's is more on simplicity.
 
 More specifically than just being an online social network, Twitter is a microblogging website. Whilst a blog, as mentioned, typically contains long posts, Twitter only allows its users to post short pieces of text, up to 140 characters in length \cite{krishnamurthy08, huberman08}, called `Tweets'. Thus, Twitter is a hybrid social network and blogging service and whilst each Tweet may only realistically be able to hold a couple of sentences, this system facilitates quick, timely, and `real-time' \textit{live} information-sharing amongst its millions of users \cite{zhao09}. Its idea is that short pieces of news will `travel' faster and will be seen by more people more quickly than traditional news stories.
 
@@ -21,16 +21,16 @@ Its simplicity has also helped its growth into the mobile domain, in which smart
 Use of Twitter is based around `timelines' of Tweets, to which new Tweets are pre-pended as they are posted by users. The \textit{home} timeline is the default view, in which Tweets from all of a person's subscribed-to users are placed. Timelines of an individual user contain only Tweets from that user, and are known as a `user' timeline. Customisation of timelines is also possible through the use of Twitter lists, in which different users can be placed to categorise streams of Tweets from different sets of users.
 
 
-\section{Twitter's Social Graph and Information Subscription}
+\section{The Social Graph and Information Flow}
 The structure of Twitter lies within the users and their connectivity within its social graph. However, unlike Facebook, whose social structure is made up of bi-directional `friendships' between users, Twitter's primary social graph is made up more of mono-directional links between its users \cite{edwards13}. A person using Twitter can elect to \textit{follow} another user, which subscribes the person to receive all of that user's Tweets to their home timeline. The set of users that follow a person are known as that person's \textit{followers}, and the set of users that the person follows are the person's \textit{friends}. Therefore, if two users both mutually follow each other, then the link between them is bi-directional.
 
 Whilst bi-directional links are common amongst communities of similar interests, friends, colleagues, and so on, mono-directional links are found more in situations in which less-influential users follow more-influential users, such as celebrities.
 
 
 \section{The Problem}
-A person who follows a set of other users can generally be said to find that set of users to produce more interesting information than those that the person does not follow. However, despite that, not \textit{all} information produced by an `interesting' user is likely to be interesting to the person, and yet \textit{all} information produced by a Twitter friend will be received onto the home timeline.
+A person who follows a set of other users can generally be assumed to find them to produce more interesting information than those that the person does not follow. However, despite that, not \textit{all} information produced by a followed user is likely to be interesting to the person, and yet \textit{all} information produced by a Twitter friend will be received onto the home timeline.
 
-Noise is a common problem in Twitter, and is the uninteresting information one might receive that conveys little interest. It is likely that most of the information received on Twitter \textit{is} uninteresting \cite{alonso10}, and this makes it very hard to distinguish the interesting information from the uninteresting.
+Noise is a common problem in Twitter, and is the uninteresting information one might receive that conveys little interest. It is likely that most of the information received on Twitter \textit{is} uninteresting \cite{alonso10}, and this makes it very hard to distinguish the interesting from the uninteresting.
 
 Since people tend to use Twitter most in short and sporadic moments, looking for a quick news or information fix, they do not have time to filter out noisy Tweets. Thus, the presence of noise can dampen the user's experience, making it much more difficult to find the interesting information.
 
@@ -38,11 +38,13 @@ In addition, Twitter users typically exist within an information `bubble'. This 
 
 Although not directly answered in this thesis, the key question and motivation behind the work in the thesis is;\\
 \centerline{\textbf{How can users be exposed to \textit{interesting} and \textit{relevant} information,}}
-\centerline{\textbf{but without them having to know about it or look for it first?}}
+\centerline{\textbf{but without explicit subscription or search?}}
 
 
 \section{Main Contributions and Hypotheses}
-The remaining chapters are aimed to go some way to answering this question through a focus on understanding information propagation, and how combining this with knowledge of the social structure of Twitter can assist towards solving the problem of identifying interesting and relevant information and determining it from the noise surrounding it. Whilst other work in the area has also researched into the notions of relevance and interest in online social networks, and Twitter in particular, none has addressed the problem with such rigor or have attempted to validate findings so thoroughly.
+The remaining chapters aim to go some way to answering this question through a focus on understanding information propagation, and how combining this with knowledge of the social structure of Twitter can assist towards solving the problem of identifying interesting and relevant information and determining it from the noise surrounding it. Whilst other work in the area has also researched into the notions of relevance and interest in online social networks, and Twitter in particular, none has addressed the problem with such rigor or have attempted to validate findings so thoroughly.
+
+Literature reporting on similar research areas are discussed at greater length in the Background chapter, however more up-front and novel advantages to the methods described in this thesis, such as the combination of the dynamicity of classifiaction and the `on-demand' nature of the approach, are not observed or validated as thoroughly in other work.  
 
 \subsection{Contributions}
 The thesis provides an in-depth survey of relevant research in the area, following onto a thorough understanding of retweet behaviour and its ties to the properties of the underlying Twitter social graph. Various terms are defined in order to facilitate the explanations of key concepts through observation and example. 
@@ -55,7 +57,7 @@ Despite being hard to define, as will become clear over the following chapter, a
 \label{section:research_questions}
 More formally, the research and hypotheses considered in this thesis can be illustrated by asking the following questions.
 \begin{itemize}
-    \item \textbf{RQ1} \textit{Does Tweet popularity, measured in terms of retweets, \textbf{define} interesting (or non-`noisy') information?}
+    \item \textbf{RQ1} \textit{Does Tweet popularity, measured in terms of retweets, \textbf{define} interesting information?}
     \item \textbf{RQ2} \textit{Can Tweet popularity, measured in terms of retweets, \textbf{be an indicator} of interesting information?}
     \item \textbf{RQ3} \textit{Is the arrangement of Twitter's social graph an important factor in retweet propagation, and thus perceived popularity?}
     \item \textbf{RQ4} \textit{Can Tweet interestingness be inferred \textbf{non-semantically}?}

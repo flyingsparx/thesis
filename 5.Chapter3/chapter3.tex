@@ -21,7 +21,7 @@ However, since interestingness \textit{does} have an effect on an a user's indiv
 In this chapter, the final question (\textbf{RQ4}) from the hypotheses in Section \ref{section:research_questions} is answered in order to show that Tweet global interestingness can be inferred non-semantically with some degree of accuracy. Contributions made as part of this research include an anlysis into the performance of machine learning classifiers for the purpose of social network analysis; proven enhancements to the interestingness inference method indtroduced in Chapter 4; and a thorough analysis into the performance of the methodology is made for the purposes of demonstrating its relative advantages and disadvantages, and how these relate to the social graph analyses considered earlier in this thesis. 
 
 
-\section{Interestingness Quantification through Tweet Scoring}
+\section{Interestingness through Tweet Scoring}
 A scoring scheme is introduced in order to address the notion of interestingness quantification, allowing certain interesting Tweets to be ranked as `more interesting' than other interesting Tweets. This, in itself, is an improvement over the previous method, which allowed only for Tweets to be labelled as `interesting' or `non-interesting'.
 
 As an enhancement to Proposition \ref{proposition:1}'s method of comparing the observed to expected retweet counts, the new scoring technique is based now on the \textit{distance} between the two counts. The general idea and potential use-case for this is that if a score is known for a set of Tweets, then these can be used as a basis for ordering information as part of information retrieval or an information delivery system, where Tweets can be displayed to users in a more useful way than simply chronologically. In this way, interesting Tweets could be brought forward to users who don't follow the source user or a retweeter and thus deliver information to an interested user, yet without him or her having to know about it first.
@@ -147,7 +147,7 @@ The sample subset of friends and followers of each user was collected instead of
 Importantly, Tweets from many different types of user were collected; from less-active users with very few followers and friends to influential users and celebrities with millions of followers and achieving many thousand retweets. The distribution of the follower and friend counts of the authors of Tweets in $T$ is displayed in Figure \ref{fig:follower-friend-count_distribution} and the collection of this wide range of users will help demonstrate if the new methodology is able to assess a larger variety of users and Tweets.
 
 % dataset size, |T| = 240717
-The data collection resulted in a set of Tweets, $T = T_u^1 \cup T_u^2 \cup ... \cup T_u^n$, where $|T| = 240,717$ and where $n = 370$. Of $T$, around 90,000 were Tweets with a retweet count of greater than zero. While the data was being collected, parts of the complete set were used in analyses of classifiers and Tweet categorisation methods to be used in the forthcoming experiments. $T_{p1} \subset T$, where $|T_p1| \approx 57,000$, represents the Tweets in $T$ part way through the data collection and is used in Section \ref{section:classification_performance}, and $T_{p2} \subset T$, where $|T_p2| \approx 67,000$, is used for the analyses in Section \ref{section:effects_of_varying_bin_sizes}. The entire set is used in the main validation analyses later on.
+The data collection resulted in a set of Tweets, $T = T_u^1 \cup T_u^2 \cup ... \cup T_u^n$, where $|T| = 240,717$ and where $n = 370$. Of $T$, around 90,000 were Tweets with a retweet count of greater than zero. While the data was being collected, parts of the complete set were used in analyses of classifiers and Tweet categorisation methods to be used in the forthcoming experiments. $T_{p1} \subset T$, where $|T_{p1}| \approx 57,000$, represents the Tweets in $T$ part way through the data collection and is used in Section \ref{section:classification_performance}, and $T_{p2} \subset T$, where $|T_{p2}| \approx 67,000$, is used for the analyses in Section \ref{section:effects_of_varying_bin_sizes}. The entire set is used in the main validation analyses later on.
 
 
 \section{Retweet Counts as Nominal Attributes}
@@ -596,7 +596,7 @@ In order to assess the ability of the scores to effectively rank Tweets in order
         xlabel=$n$,
         ylabel=Likelihood of selection (\%),
         grid = major,
-        legend entries={where $\gscore{t^q_1} \geq 0$, where $\gscore{t^q_1} \geq 1$, where $\gscore{t^q_1} \geq 2$, where $\gscore{t^q_1} \geq 6$, random performance},
+        legend entries={where $\gscore{t^q_1} \geq 0$, where $\gscore{t^q_1} \geq 1$, where $\gscore{t^q_1} \geq 2$, where $\gscore{t^q_1} \geq 6$, Random selection},
 		legend style={at={(1.7,0.5)}},
 		xmin=0, xmax=5,
 		ymin=0, ymax=100
@@ -733,7 +733,7 @@ Let $\sdisparity{q}$ be defined as the disparity of the global scores of the MTW
 %    \ascore{t} = \frac{\gscore{t} + \uscore{t}}{2}
 %\] 
 
-This feature is particularly observable in cases where a question consists of a few Tweets having similarly high scores amongst Tweets with collecively lower scores. Therefore, inferring the interesting Tweets is easier, demonstrated by the scores of selected Tweets being generally higher, but discerning one \textit{most} interesting Tweet is not as trivial. For example, the results show that, on average, $\sdisparity{q}$ is around 57\% of $\gdisparity{q} \; \forall \; q \in Q$.
+This feature is particularly observable in cases where a question consists of a few Tweets having similarly high scores amongst Tweets with collectively lower scores. Therefore, inferring the interesting Tweets is easier, demonstrated by the scores of selected Tweets being generally higher, but discerning one \textit{most} interesting Tweet is not as trivial. For example, the results show that, on average, $\sdisparity{q}$ is around 57\% of $\gdisparity{q} \; \forall \; q \in Q$.
 
 \begin{table}[h]\footnotesize
 \begin{center}
@@ -898,7 +898,7 @@ In this section, the patterns observed through the comparison of the Tweets infe
             xmax=20,
             ymin=0,
             ymax=1,
-            legend entries={Scoring methodology performance, Random performance},
+            legend entries={Scoring methodology performance, Random selection},
             legend style={at={(2.4,0.5)}, nodes={right}}
             ]
        \addplot[mark=+,only marks,blue] plot coordinates{
@@ -920,7 +920,7 @@ In the previous validation, the performance of the interestingness scores in ran
 
 In this case, each assessed \textit{timeline} was ranked in order of descending interestingness score in an effort to find the probability of a participant selecting a Tweet occurring in the top $n$ of Tweets. Timelines were up to 20 Tweets long, compared to the five used in the Mechanical Turk questions in the initial validation test, but Figure \ref{fig:ranked_timelines_1} demonstrates that the mechanism is still able to effectively rank the Tweets. Since the timelines are larger than the questions used before, the chance of a participant selecting multiple Tweets from a timeline was greater, as indicated by Figure \ref{fig:num_tweets_selected}. To illustrate this, the results for this analysis are demonstrated against the appropriate random performance benchmark produced by the different selection criteria.
 
-For Figure \ref{fig:rank-one}, the random performance is defined as the probability of a Tweet randomly selected from a timeline being in the top $n$ of ranked Tweets in the timeline. Figures \ref{fig:rank-two} and \ref{fig:rank-three} represent the respective probabilities of the random selection of two and three Tweets being in the top $n$ of ranked Tweets.
+For Figure \ref{fig:ranked_timelines_1}(\subref{fig:rank-one}), the random performance is defined as the probability of a Tweet randomly selected from a timeline being in the top $n$ of ranked Tweets in the timeline. In Figures \ref{fig:ranked_timelines_1}(\subref{fig:rank-two}) and \ref{fig:ranked_timelines_1}(\subref{fig:rank-three}), it represents the respective probabilities of the random selection of two and three Tweets being in the top $n$ of ranked Tweets.
 
 It is clear that the scores are able to identify interesting information from the noise around it, and so further analyses were conducted into the performance of the scores in detecting \textit{un}-interesting information. In this scenario, each timeline had its Tweets ranked in order of \textit{ascending} interestingness score and calculations were carried out into the probability of participants \textit{not} selecting the \textit{bottom} $n$ interesting Tweets in each timeline.
 
