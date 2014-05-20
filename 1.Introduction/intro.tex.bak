@@ -62,7 +62,7 @@ Although not directly answered in this thesis, the key question and motivation b
 \section{Main Contributions and Hypotheses}
 The remaining chapters aim to go some way to answering this question through a focus on understanding information propagation, and how combining this with knowledge of the social structure of Twitter can assist towards solving the problem of identifying interesting and relevant information and determining it from the noise surrounding it. Whilst other work in the area has also researched into the notions of relevance and interest in online social networks, and Twitter in particular, none has addressed the problem with such rigor or have attempted to validate findings so thoroughly.
 
-Literature reporting on similar research areas are discussed at greater length in the Background chapter, however more up-front and novel advantages to the methods described in this thesis, such as the combination of the dynamicity of classification and the `on-demand' nature of the approach, are not observed or validated as thoroughly in other work.  
+Literature reporting on similar research areas are discussed at greater length in the Background chapter, however more up-front and novel advantages to the methods described in this thesis, such as the combination of the dynamicity of classifiaction and the `on-demand' nature of the approach, are not observed or validated as thoroughly in other work.  
 
 \subsection{Contributions}
 The thesis provides an in-depth survey of relevant research in the area, following onto a thorough understanding of retweet behaviour and its ties to the properties of the underlying Twitter social graph. Various terms are defined in order to facilitate the explanations of key concepts through observation and example. 
