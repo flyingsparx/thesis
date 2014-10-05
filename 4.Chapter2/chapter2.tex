@@ -48,7 +48,7 @@ The method is similar to that introduced by \citet{zhu11} and \citet{peng11}, wi
     \State $S\gets \left\{u' \in V(G_U) : \exists \quad \overleftarrow{\aut{t}{O} \quad u'} \in E(G_U)\right\}$
     \State $u.\textrm{TIME\_HELD}\gets 0 \quad \forall u \in V(G_U)$
     \Statex % new line
-    \ForAll{$l$ in range $(0,T)$}
+    \While{$l < T$ and $|S| > 0$}
         \ForAll{$u \in S$}
             \State $P(u,t)\gets$ retweet probability of $u$ on $t$
             \State $r\gets$ random number in range $[0,1)$
@@ -64,10 +64,8 @@ The method is similar to that introduced by \citet{zhu11} and \citet{peng11}, wi
                 \EndIf
             \EndIf
         \EndFor
-        \If{$|S| = 0$}
-            \State Return $\rt{t}$ \Comment{No more users can retweet $t$}
-        \EndIf
-    \EndFor
+        \State $l\gets l + 1$
+    \EndWhile
     \State Return $\rt{t}$
 \EndProcedure
 \end{algorithmic}
