@@ -362,6 +362,10 @@ In the case of this research, the various Tweet and environmental features, incl
 
 \subsection{Classification Performance}
 \label{section:classification_performance}
+The choice of classifier stems from its combined efficiency and accuracy when working on the data relevant to this chapter. This section provides a brief overview and comparison of a subset of commonly-used (and related) classifiers in social network research.
+
+
+\subsubsection{Choosing a classifier}
 In order to study and evaluate the relative performance of appropriate classifiers for selection for this task, the Weka\footnote{http://www.cs.waikato.ac.nz/ml/weka} machine learning and data mining toolkit was used. The classifiers were selected to cover a sample of the range of available classifier categories. Whilst some types may work inefficiently in this scenario, it is likely that they are more efficient when employed in different use-cases.
 
 Although the accuracy of prediction was important, it would also be useful for the classifier to be \textit{efficient} in training its model and when testing future instances against it. This is so that this method could be used to produce interestingness inferences with a more on-demand policy and to further improve on the methodologies used in the previous chapter.
@@ -387,6 +391,25 @@ Although the accuracy of prediction was important, it would also be useful for t
 Table \ref{table:classifierperformance} shows the Bayesian network to be accurate and time efficient when evaluating the performance of the set of evaluated classifiers when running cross-validations on the dataset $T_{p1}$, which is a subset of $T$ and contains around 57,000 Tweets.  For each Tweet instance the same retweet count binning scheme was used, and each classifier performed the same number of cross-validations against the same dataset in order to obtain the precision and recall values.
 
 Although the dataset used in this analysis is not the complete set used in practice, the cardinality of the dataset was sufficient to cause the outputs to be indicative of the Bayesian network's relative advantages over the other assessed classifiers.
+
+
+\subsubsection{Evaluation of classifier performance}
+The data observed in Table \ref{table:classifierperformance} illustrate how different algorithms approach classification in various ways. In addition to the \textit{type} of the data in the instance features, the cardinality of the dataset can also impact training efficiency.
+
+\textbf{Simple logistic}\\
+Stuff
+
+\textbf{Logistic}\\
+More stuff
+
+\textbf{SMO}\\
+Smo stuff
+
+\textbf{Na\"{i}ve Bayesian}\\
+stuff
+
+\textbf{Bayesian network}\\
+ada
 
 
 \subsection{Effects of varying the Cardinality of Nominal Retweet Counts}
@@ -1152,6 +1175,7 @@ Two sets of validations were conducted into verifying the performance and accura
 In the first case, the participants shared no connection with the authors of the Tweets they were assessing (except in the case of coincidences), and were therefore assessing Tweets on a \textit{global} interest level. In particular, this largely involves determining the interesting information from the noise around it. In the second set, information \textit{relevance} came more into play, since participants were assessing Tweets from users they have already declared an interest in (through the action of following).
 
 In both test cases, the validations showed the scores to be able to appropriately label Tweets according to interestingness in a variety of different ways. The second test included an analysis demonstrating that the scores are more efficient at determining interesting Tweets than \textit{un}-interesting Tweets, the latter of which would be useful in deciding on a set of Tweets to discard from an interesting set. 
+
 
 \subsection{Improvements and Qualities}
 The newly introduced methodology presents several improvements over that described in the previous chapter. In particular, the performance of the scores have shown a large accuracy improvement in determining interesting information. The previous method also did not take into account \textit{how} interesting a particular Tweet may be, and was only able to make a binary interesting/uninteresting decision for each Tweet.
