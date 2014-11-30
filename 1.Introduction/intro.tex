@@ -46,6 +46,7 @@ Whilst bi-directional links are common amongst communities of similar interests,
 
 
 \section{The Problem}
+\label{section:research_questions}
 A person who follows a set of other users can generally be assumed to find them to produce more interesting information than those that the person does not follow. However, despite that, not \textit{all} information produced by a followed user is likely to be interesting to the person, and yet \textit{all} information produced by a Twitter friend will be received onto the home timeline.
 
 Noise is a common problem in Twitter, and is the uninteresting information one might receive that conveys little interest. It is likely that most of the information received on Twitter \textit{is} uninteresting \cite{alonso10}, and this makes it very hard to distinguish the interesting from the uninteresting.
@@ -54,32 +55,27 @@ Since people tend to use Twitter most in short and sporadic moments, looking for
 
 In addition, Twitter users typically exist within an information `bubble'. This is similar to the notion of the Google search bubble, in which the search engine uses previous results and search terms to only return information to a user based on what \textit{it thinks} the user would find the most interesting and useful. This results in the users not knowing which information exists beyond the confines of their bubble, and if they do not know it exists, they cannot know if it is of interest to them. Similarly, a Twitter user cannot follow all of the users he/she may find interesting, since he/she will not \textit{know} of all the interesting users existing on the social graph.
 
-Although not directly answered in this thesis, the key question and motivation behind the research work it contains is;\\
+Although not directly answered in this research, the key theme and motivation behind the work it involves is;\\
 \centerline{\textbf{How can users be exposed to \textit{interesting} and \textit{relevant} information,}}
 \centerline{\textbf{but without explicit subscription or search?}}
 
+The remaining chapters aim to go some way to answering this question through a focus on understanding information propagation, and how combining this with knowledge of the social structure of Twitter can assist towards solving the problem of identifying interesting and relevant information and determining it from the noise surrounding it. Whilst other work in the area, discussed further in the Background chapter, has also researched into the notions of relevance and interest in online social networks, and Twitter in particular, they do not address the problem in the same way or attempt to validate findings so thoroughly.
 
-\section{Main Contributions and Hypotheses}
-The remaining chapters aim to go some way to answering this question through a focus on understanding information propagation, and how combining this with knowledge of the social structure of Twitter can assist towards solving the problem of identifying interesting and relevant information and determining it from the noise surrounding it. Whilst other work in the area has also researched into the notions of relevance and interest in online social networks, and Twitter in particular, none has addressed the problem with such rigor or have attempted to validate findings so thoroughly.
-
-Literature reporting on similar research areas are discussed at greater length in the Background chapter, however more up-front and novel advantages to the methods described in this thesis, such as the combination of the dynamicity of classification and the `on-demand' nature of the approach, are not observed or validated as thoroughly in other work.  
-
-\subsection{Contributions}
-The thesis provides an in-depth survey of relevant research in the area, following onto a thorough understanding of retweet behaviour and its ties to the properties of the underlying Twitter social graph. Various terms are defined in order to facilitate the explanations of key concepts through observation and example. 
-
-Despite being hard to define, as will become clear over the following chapter, a mathematical `definition' of interestingness is contributed in order to allow it to be quantified. This metric is an estimation based on a Tweet's predicted popularity, but various user studies highlighting the methodology's relative strengths and weaknesses demonstrate its ability to perform well in scoring Tweets and applying ranks to them so that they can be ordered more usefully than simply by time. The work addresses the described problem area in that it helps towards reaching the goal of identifying this \textit{globally} interesting information in Twitter, and the ways in which users are able to discern it from noise. In addition, certain measures are taken in an attempt to address the idea of information relevance in terms of validations being made on the methods by users assessing Tweets from users they have a previously-declared interest in.
-
-
-
-\subsection{Research Questions}
-\label{section:research_questions}
-More formally, the research and hypotheses considered in this thesis can be illustrated by asking the following questions.
+The central thesis addressed by this research is that the interestingness of Tweets in Twitter can be non-semantically inferred through consideration of the underlying social graph model and the use of humans as proxies to the perception of interesting information. In this work, the following research questions help illustrate the steps towards realising this thesis: 
 \begin{itemize}
     \item \textbf{RQ1} \textit{Does Tweet popularity, measured in terms of retweets, \textbf{define} interesting information?}
     \item \textbf{RQ2} \textit{Can Tweet popularity, measured in terms of retweets, \textbf{be an indicator} of interesting information?}
     \item \textbf{RQ3} \textit{Is the arrangement of Twitter's social graph an important factor in retweet propagation, and thus perceived popularity?}
     \item \textbf{RQ4} \textit{Can Tweet interestingness be inferred \textbf{non-semantically}?}
 \end{itemize} 
+
+In answering these questions, the main contributions made in this research work are outlined below.
+\begin{itemize}
+    \item Tweet analysis allows for providing definitions for key concepts, such as retweet groups and propagation path-length, to form foundations for further definitions and work towards substantiating the thesis.
+    \item Social graph analysis shows how the underlying edges dictate information flow through Twitter, and that altering the network structure has a clear effect on the propagation characteristics of Tweets within it.
+    \item A mathematical `definition' of global interestingness is provided, given as a score for the purposes of quantifying and ranking Tweets by this metric. The score is an estimation based from a Tweet's predicted popularity.
+    \item Rigorous validation tests are conducted to demonstrate the score's ability to identify useful Tweets from noise and rank information by interestingness. User tests involving Tweets `local' to them on the social graph show that there is scope for the scores to also be applied locally as well as globally (for addressing information relevance). 
+\end{itemize}
 
 
 \section{Thesis Structure}

@@ -35,22 +35,6 @@ The mention of the ``general case'' is important, since the methodology is desig
 
 Two main human validation tests were conducted into the performance of the scoring mechanisms provided by the improved methods; one based on interestingness decisions from non-related participants, and another based on decisions from Twitter users to whom the Tweets assessed are more directly relevant, as denoted by the followships of the author users. These validations expressed a good performance of the scoring scheme in a variety of ways, from the ranking of Tweets in order of interestingness through to analyses into the motivation of Tweet selection from the \textit{disparity} of Tweet scores in the timeline.
 
-\subsection{Results Overview}
-Here (Table \ref{table:final_overview}) is provided an overview of the results from the final validations conducted in this thesis.
-
-\begin{table}{H}\footnotesize
-\begin{center}
-    \begin{tabular}{l | l}
-        Result & Description\\
-        \hline
-        \hline
-        \hline   
-    \end{tabular}
-\caption{Overview of final validation results.}
-\label{table:final_overview}
-\end{table}
-
-
 
 \subsection{Methodology Evaluation}
 The Background chapter of this thesis described other similar research in this area along with the strengths and weaknesses of each. Whilst this included research into retweet decision and count predictions, they are often quite similar to one another, and these goals are not the primary focus of the work in this thesis. Instead, research into information interestingness with regards to Twitter will now be evaluated against the methods outlined in this thesis.
@@ -64,6 +48,63 @@ The semantic scoring of Tweets was also considered by \citet{alonso10}, but with
 
 Finally, \citet{lauw10} presented a study that used a clustering algorithm to estimate a Tweet's \textit{quality} based on a function of a Tweet's audience size and its relation to other similar Tweets. The authors' research is based around news stories, in that Tweets `belonging' to the same event are clustered together and are assigned a quality depending on the size and `importance' of the cluster. Despite the similarities in terms of assigning a quality to clusters and Tweets, the authors do not take into consideration many of the factors discussed in this thesis (including the notion of timeline `slip' discussed in Chapter 4, which is relevant to their work) and the verifications conducted into the performance of their methods are not rigorous enough to prove that the quality level assigned to each cluster or Tweet is accurate or appropriate.
 
+Here (Table \ref{table:final_overview}) is provided an overview of the key results from the validations of the scoring method.
+
+\begin{table}[H]\footnotesize
+    \begin{tabular}{p{.5\textwidth} | p{.5\textwidth}}
+        Result & Description\\
+        \hline
+        \hline
+        Non-semantic \textbf{identification} of globally interesting information & Section 5.7 demonstrates the method's ability to determine globally interesting information from a set by indicating that Tweets with higher scores are more likely to be selected as interesting. The method involves no semantic understanding of the Tweet content.\\
+        \hline
+        \textbf{Ranking} globally interesting information & Section 5.7 demonstrates the method's ability to rank information by interestingness. For example, participants agreed that one of the two top score-ranked Tweets were interesting in groups of five in 66\% of cases.\\
+        \hline   
+        Addressing information \textbf{relevance} & Section 5.8 involved validations of Tweets `relevant' to users and shows that the method is able to rank longer timelines of Tweets. For example, participants agreed that one of the top five Tweets were interesting from timelines of 20 in 57\% of cases.\\
+        \hline
+        Identifying \textbf{non-interesting} information & Results in Section 5.8 show that the method is not as appropriate for identifying non-interesting Tweets as it is for determining interesting Tweets.\\
+        \hline
+        Effect on \textbf{precision \& recall} & Raising the score threshold that `define' interestingness does not have a large effect on precision but does reduce recall considerably.\\
+        \hline
+    \end{tabular}
+\caption{Overview of key results.}
+\label{table:final_overview}
+\end{table}
+
+\subsection{Contributions}
+Throughout the earlier chapters of this thesis, work has been conducted towards answering the hypothetical questions asked in Section \ref{section:research_questions} in the Introduction. The research has highlighted the inappropriateness of using retweet counts alone in indicating interestingness, and has shown the impact of the layout of users on the social graph on message propagation and how this can be useful for estimating Tweet interestingness. In particular, the questions are now answered more formally.
+
+\textit{\textbf{RQ1} - Does Tweet popularity, measured in terms of retweets, \textbf{define} interesting (or non-`noisy') information?}\\
+The number of retweets a particular Tweet receives cannot appropriately be used for defining interesting information. A Tweet that has been retweeted at least once is not necessarily interesting.
+
+\textit{\textbf{RQ2} - Can Tweet popularity, measured in terms of retweets, \textbf{be an indicator} of interesting information?}\\
+The number of retweets a Tweet has achieved is not alone indicative of its level of interestingness. The overall retweet count of a Tweet is produced as a function of its author's influence, and therefore Tweets written by different authors cannot have their Tweets' interestingness measured on the same scale.
+
+\textit{\textbf{RQ3} - Is the arrangement of Twitter's social graph an important factor in retweet propagation, and thus perceived popularity?}\\
+The layout of users and the edges connecting them on the social graph has been shown to strongly affect the permitted propagation of Tweets; some structures facilitate retweet spread, whilst others throttle it. The edge density also partially dictates users' influence levels, in that those users who are assigned a larger in-degree are more likely to achieve more retweets due to the magnitude of spread of the original Tweets. This importance was brought forward to the later work in identifying interesting Tweets.
+
+\textit{\textbf{RQ4} - Can Tweet interestingness be inferred \textbf{non-semantically}?}\\
+Chapter 5 showed that a Tweet's interestingness can be determined through a study of the Tweet's features and those of its author and the latter's relationship to others on the social graph. The inferences are therefore non-semantic, since they do not make any attempt to understand the content of individual words or phrases in the Tweets' contents. The method was also demonstrated to be suitable for ranking Tweets in order of interestingness \textit{level}, so that Tweets estimated to be more interesting could be shown at a higher priority.
+
+As part of the research, several contributions to social media analytical research have been made, which have been discussed in the relevant chapters of the thesis and are summarised below. 
+
+A comprehensive survey is carried out into relevant literature in information propagation in online social networks, along with evaluations and assessments of some of the research more specific to inferring interestingness.
+
+Retweet properties and the way they are influenced by the social graph are thoroughly researched in order to provide a general background and understanding of the notions relating to propagation in online social networks, propagation and information penetration, Tweet `audience', and how these factors are related to the arrangement of users on the social graph. The definition of terms, such as `retweet group' and `maximum path-length' are useful for discussing various properties relating to retweeting on Twitter.
+
+An investigative study is made into the use of machine learning techniques and classifiers in the field of social media, and the ways in which they can be useful for different purposes.
+
+Finally, a numerical `definition' (or quantification) of estimated interestingness is contributed. A method for suitably predicting estimated retweet counts as dynamically nominal categories is described, implemented and verified, leading to the development of a method for assigning interestingness scores to Tweets as part of an effort to support the ranking of Tweets and of highlighting interesting Tweets from the noise of everyday communication on Twitter.
+
+\section{Limitations}
+Although the Tweet-scoring method has the strengths identified above, it is also compromised.
+
+In its current form, the technique can only be used on non-live Tweets that exist as part of a `static' dataset. This limitation stems from the necessity of target Tweets having a representative observed retweet count associated with them. Tweets, on average, do see the significant part of their overall retweet action occur within the first hour to the first day, but this does mean that Tweets cannot be scored and suggested as interesting as they arrive on a timeline. This problem could be partially addressed by developing a model to extrapolate retweet \textit{rates} for Tweets, which could be used in conjunction with the present model in order to predict a `final' retweet count. 
+
+Even on static data sets, however, the accuracy is not particularly high. The results from the evaluation do indicate that identification of interesting Tweets is possible through the method, and that the ranking of Tweets based on the score is more useful than a random ordering, but the precision (as indicated in Figure \ref{fig:precision_recall_twinterest}) is quite low. Although the method is designed to be applicable over all Tweets and users and covering the \textit{global} interestingness of information (including that which might not be relevant), it could be improved to produce the accuracy as the threshold level for defining interestingness increases.
+
+Figure \ref{fig:ranked_timelines_2} represents the results of evaluating the scoring method's ability to rank Tweets in ascending order, by assessing how often scored-uninteresting Tweets \textit{weren't} selected by participants. This performance is considerably lower than the inverse (likelihood of selecting scored-interesting Tweets), meaning that the identification of non-interesting or noisy Tweets is less successful. Improvements to the predictive model would provide more scope for the method to filter out Tweets that are less useful for people to read.
+
+In the validations, the predictive model was evaluated against a dataset created by human participants. This set is a \textit{gold standard}, since it represents the `ground truth' on which Tweets are interesting and which are non-interesting. The human participants bridge the gulf between the semantics of Tweet contents and the non-semantic features of the Tweet, its author, and its author's network features. These models are incompatible since the humans cannot incorporate the underlying non-semantic features into their semantic decision-making process when creating the gold standard dataset.
 
 \section{Further and Future Work}
 There are various ways in which the work and research in this thesis could be taken further in extended work and projects.
@@ -168,27 +209,5 @@ Analyses into the validation tests demonstrated the process by which users are a
 The methods are open enough and use resources that are mostly common to many similar social networks. For example, ``shares'' and ``reblogs'' can be examined as the propagation mechanisms in Facebook and Tumblr, respectively, in attempts to apply the same scoring schemes to other platforms.
 
 
-\section{Contributions}
-Throughout the earlier chapters of this thesis, work has been conducted towards answering the hypothetical questions asked in Section \ref{section:research_questions} in the Introduction. The research has highlighted the inappropriateness of using retweet counts alone in indicating interestingness, and has shown the impact of the layout of users on the social graph on message propagation and how this can be useful for estimating Tweet interestingness. In particular, the questions are now answered more formally.
-
-\textit{\textbf{RQ1} - Does Tweet popularity, measured in terms of retweets, \textbf{define} interesting (or non-`noisy') information?}\\
-The number of retweets a particular Tweet receives cannot appropriately be used for defining interesting information. A Tweet that has been retweeted at least once is not necessarily interesting.
-
-\textit{\textbf{RQ2} - Can Tweet popularity, measured in terms of retweets, \textbf{be an indicator} of interesting information?}\\
-The number of retweets a Tweet has achieved is not alone indicative of its level of interestingness. The overall retweet count of a Tweet is produced as a function of its author's influence, and therefore Tweets written by different authors cannot have their Tweets' interestingness measured on the same scale.
-
-\textit{\textbf{RQ3} - Is the arrangement of Twitter's social graph an important factor in retweet propagation, and thus perceived popularity?}\\
-The layout of users and the edges connecting them on the social graph has been shown to strongly affect the permitted propagation of Tweets; some structures facilitate retweet spread, whilst others throttle it. The edge density also partially dictates users' influence levels, in that those users who are assigned a larger in-degree are more likely to achieve more retweets due to the magnitude of spread of the original Tweets. This importance was brought forward to the later work in identifying interesting Tweets.
-
-\textit{\textbf{RQ4} - Can Tweet interestingness be inferred \textbf{non-semantically}?}\\
-Chapter 5 showed that a Tweet's interestingness can be determined through a study of the Tweet's features and those of its author and the latter's relationship to others on the social graph. The inferences are therefore non-semantic, since they do not make any attempt to understand the content of individual words or phrases in the Tweets' contents. The method was also demonstrated to be suitable for ranking Tweets in order of interestingness \textit{level}, so that Tweets estimated to be more interesting could be shown at a higher priority.
-
-As part of the research, several contributions to social media analytical research have been made, which have been discussed in the relevant chapters of the thesis and are summarised below. 
-
-A comprehensive survey is carried out into relevant literature in information propagation in online social networks, along with evaluations and assessments of some of the research more specific to inferring interestingness.
-
-Retweet properties and the way they are influenced by the social graph are thoroughly researched in order to provide a general background and understanding of the notions relating to propagation in online social networks, propagation and information penetration, Tweet `audience', and how these factors are related to the arrangement of users on the social graph. The definition of terms, such as `retweet group' and `maximum path-length' are useful for discussing various properties relating to retweeting on Twitter.
-
-An investigative study is made into the use of machine learning techniques and classifiers in the field of social media, and the ways in which they can be useful for different purposes.
-
-Finally, a numerical `definition' (or quantification) of estimated interestingness is contributed. A method for suitably predicting estimated retweet counts as dynamically nominal categories is described, implemented and verified, leading to the development of a method for assigning interestingness scores to Tweets as part of an effort to support the ranking of Tweets and of highlighting interesting Tweets from the noise of everyday communication on Twitter.
+\section{Final Remarks}
+The research work represented by this thesis is being developed further towards applications in other projects. Specifically, it is being used to identify the more outstanding and controversial Tweets posted by particular users in research projects involved with police. Using a pre-trained model means the method does not need to be tailored for any particular use-case, and the application's necessity to produce information on-demand as part of a conversational interface makes the method useful and appropriate.

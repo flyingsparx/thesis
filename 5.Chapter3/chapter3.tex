@@ -393,23 +393,31 @@ Table \ref{table:classifierperformance} shows the Bayesian network to be accurat
 Although the dataset used in this analysis is not the complete set used in practice, the cardinality of the dataset was sufficient to cause the outputs to be indicative of the Bayesian network's relative advantages over the other assessed classifiers.
 
 
-\subsubsection{Evaluation of classifier performance}
-The data observed in Table \ref{table:classifierperformance} illustrate how different algorithms approach classification in various ways. In addition to the \textit{type} of the data in the instance features, the cardinality of the dataset can also impact training efficiency.
+\subsubsection{Overview \& evaluation of classifier performance}
+The data observed in Table \ref{table:classifierperformance} illustrate how different algorithms approach classification in various ways. In addition to the \textit{type} of the data in the instance features, the cardinality of the dataset can also impact training efficiency. Following is an overview of the different classifiers assessed. `Independent variables' represent the input values to be classified in each case, and a `dependent variable' is the output class given by the inputs. 
 
+% independent = inputs, dependent = outputs
 \textbf{Simple logistic}\\
-Stuff
+Linear regression involves the prediction of a dependent scalar value dervied from a set of independent variables. For example, consider the case of one dependent, one independent variable, and their modelled relationship. Previously-seen values for the independent variable can be used to estimate an associated value for the dependent variable. Predictions for the dependent variable with unseen independent instances can be inferred from surrounding `known' instances.
+
+Simple logistic regression is analogous to linear regression, except the dependent variable is nominal, and the regression allows for producing probabilities that the independent variables belong to a particular class \cite{sumner05}.
 
 \textbf{Logistic}\\
-More stuff
+As with its `simple' counterpart, logistic regression involves the prediction of a nominal variable derived from a set of independent values. Analyses in this scope are categorised as binary (two nominal classes) or multinomial (three or more binary output classes), and the output probability is produced through the natural logarithm of the dependent variable being the case given the independent variables.
 
 \textbf{SMO}\\
-Smo stuff
+Sequential minimal optimisation (SMO) is an algorithm for producing support vector machines (SVMs) quickly and cheaply \cite{platt98}. SVMs are non-probabilistic graph models for nominal classification, and work by representing independent variables in space, but separated into clusters representing the class of the dependent variable. The output class of new independent variables is given by the cluster they are mapped to.
 
 \textbf{Na\"{i}ve Bayesian}\\
-stuff
+Na\"{i}ve Bayesian classification is able to consider many multi-dimensional (including nominal and scalar) features. In particular, Bayesian probability is applied towards prediction of the value of the dependent variable, yet \textit{without} considering any relationships or weightings between the independent variables. For example, a soda bottle is long, thin, and cylindrical. A na\"{i}ve Bayesian classifier trained on these independent variables may still classify instances as being a soda bottle if there is enough evidence to suggest it is cylindrical, even if it is \textit{not} long and thin.
 
 \textbf{Bayesian network}\\
-ada
+A Bayesian network classifier involves a graph model, whose nodes represent the independent and dependent variables and whose edges indicate the influences between variables. Upon training and testing, a Bayesian probability distribution is generated over the variables, which is used to indicate the resultant class of the dependent variable given the relationships between the independent variables and itself.
+
+\textbf{Evaluation}\\
+As seen in Table \ref{table:classifierperformance}, the two Bayesian probability-based approaches are significantly faster than the logistic and support vector machine methods. Classification through logistic regression involves further searches through its matrix model upon addition of training instances\footnote{http://www.academia.edu/5167325/Weka\_Classifiers\_Summary}, which takes longer to complete as training data siza increases. Similarly, when producing the support vector machines, the sequential minimal optimisation algorithm must normalise the input features as new instances are added.
+
+ The Bayesian network is able to model relationships between indepdendent variables, and the na\"{i}ve Bayesian classifier is not. This means that these relationships allow for representation of the ties between features in the underlying social graph, such as observed relationships between follower and friend count for `measuring' influence. Therefore, they can be used to more accurately infer a projected retweet count than when they are not considered, and the more complex computation accounts for the quicker training time achievable with the na\"{i}ve approach. 
 
 
 \subsection{Effects of varying the Cardinality of Nominal Retweet Counts}
