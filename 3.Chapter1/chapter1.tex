@@ -1,6 +1,4 @@
 \chapter{Understanding The Behaviour of Retweeting in Twitter}
-
-
 It is clear how the popularity of a Tweet can be related to its propagation characteristics as it travels through Twitter's social structure. That is to say, that the greater the number of times a Tweet is retweeted by users, the more people have found its contents to be interesting enough to be worth sharing.
 
 It has also been shown that this retweet count metric alone cannot be a direct implication of the actual interestingness level of a Tweet. Reasoning for this is related to the notion of user influence, which dictates that some Tweets are naturally immediately available to more people and thus have a higher chance of achieving a retweet. Indeed, \citet{suh10} demonstrated that a user's Tweets' retweet rates increase as the user's follower count increases.
@@ -20,6 +18,8 @@ Since a Tweet can be retweeted multiple times, and that a retweet itself can als
 The notion of `global interest' is used in this thesis as a definition of interestingness. Although it is not feasible to say that a particular Tweet is unanimously interesting, it is possible to identify Tweets that are \textit{generally} more outstanding than noise. 
 
 In this chapter, several contributions are made. Key terms, such as retweet group and path-length, are defined in the context of Twitter and Tweet propagation and become a model for much of the remaining work in the thesis; an in-depth analysis into retweet behaviour, including the dynamics of Tweet spread, audience, and temporal characteristics, is made; and discussions are conducted over the penetration of retweets and their relationships to communities on the social graph. Questions \textbf{RQ1} and \textbf{RQ2} from Section \ref{section:research_questions} are addressed, reinforcing the need for the non-semantic inference of globally interesting information.
+
+Understanding these concepts is useful fow highlighting the problem area further, as they reinforce the disconnect between the graph produced by retweet propagation between users and the underlying social structure of Twitter. The interestingness model developed in Chapter 4 exploits this disconnect and the users' abilities to identify information that is interesting. The notation discussed in this chapter also helps support the mathematical definition of interestingness discussed later in Chapter 5. 
 
 
 \section{Tweet and Retweet Properties}
@@ -656,3 +656,5 @@ These inferences have helped to describe the multi-dimensional principles of ret
 Twitter's social structure has been found to have a large effect on Tweet propagation, since it combines the features observed around user influence (in the na{\"i}ve form of a user's follower count) with that of communities and sub-graphs of dense and sparse user interconnections.
 
 In the following chapter, interests are focused on research questions \textbf{RQ3} and \textbf{RQ4}, in which the topological structure of user followships is studied through investigations into the flow of information between users arranged differently on the social graph. This research is conducted in order to develop a method to infer information interestingness, taking into account these information flow properties and user influence. It is clear that different Tweets can have a different level of \textit{quality} in that Tweets that are retweeted have a greater chance of being interesting, but does the way in which the social structure of users is formed also have a `quality' in terms of the propagation characteristics exhibited?
+
+In the Background chapter, it was discussed that interestingness is a property of information that occurs when the information is different to what was expected. The interestingness inference method developed in the following chapter exploits this feature by comparing the expected popularity of Tweets to what was actually observed. From the research in this chapter, and from what is learned from the literature in the Background, it is clear that the retweet count of a Tweet is a good representation of Tweet popularity. Thus, understanding methods for producing an expected count is required for deducing interestingness, and this is addressed further as part of the network analyses in the following chapter.
